@@ -89,8 +89,8 @@ public class LoginPostive1
 	public void passCollegeApplicationUrl()	
 	{
 
-		driver.get("http://metacampus1.appspot.com/");
-		//driver.get("http://icg.qa-icgmetacampus.appspot.com/");
+		//driver.get("http://metacampus1.appspot.com/");
+		driver.get("http://icg.qa-icgmetacampus.appspot.com/");
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
@@ -175,12 +175,12 @@ public class LoginPostive1
 		try {
             Robot robot = new Robot();
             String format = "jpg";
-            fileName = fileNameMethod(format);
+            fileName = "kuldeep.jpg";//fileNameMethod(format);
             
             Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
             BufferedImage screenFullImage = robot.createScreenCapture(screenRect);
             ImageIO.write(screenFullImage, format, new File(fileName));
-            System.out.println("A full screenshot saved!");
+            System.out.println("A full screenshot saved!"+fileName);
         } catch (AWTException | IOException ex)
 		{
             System.err.println(ex);
@@ -204,7 +204,7 @@ public class LoginPostive1
 	public void sendAttachmentThroughEmail(String fileName)
 	{
 		 // Recipient's email ID needs to be mentioned.
-	      String to = "ashok.singh@metacube.com";
+	      String to = "kuldeep.joshi@metacube.com";
 
 	      // Sender's email ID needs to be mentioned
 	      String from = "singhashokqa@gmail.com";
@@ -260,7 +260,7 @@ public class LoginPostive1
 
 	         // Part two is attachment
 	         messageBodyPart = new MimeBodyPart();
-	         String filename = "D:\\tpoHUBAutomation\\College\\" + fileName;
+	         String filename = "D:\\" + fileName;
 	         DataSource source = new FileDataSource(filename);
 	         messageBodyPart.setDataHandler(new DataHandler(source));
 	         messageBodyPart.setFileName(filename);

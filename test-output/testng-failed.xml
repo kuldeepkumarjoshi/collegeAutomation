@@ -5,6 +5,8 @@
     <classes>
       <class name="LoginTestCases.LoginPostive1">
         <methods>
+          <include name="closeBrowser"/>
+          <include name="passCollegeApplicationUrl"/>
           <include name="loginMethod"/>
           <include name="launchBrowser"/>
         </methods>

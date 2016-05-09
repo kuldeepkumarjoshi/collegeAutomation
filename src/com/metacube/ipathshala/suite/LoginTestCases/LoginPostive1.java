@@ -1,4 +1,4 @@
-package LoginTestCases;
+package com.metacube.ipathshala.suite.LoginTestCases;
 
 import java.awt.AWTException;
 import java.awt.Rectangle;

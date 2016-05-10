@@ -31,14 +31,51 @@ div.shootout {padding:2em;border:3px #4854A8 solid}
 <body>
 <table cellspacing="0" cellpadding="0" class="result">
 <tr><th>Test</th><th class="numi">Methods<br/>Passed</th><th class="numi">Scenarios<br/>Passed</th><th class="numi"># skipped</th><th class="numi"># failed</th><th class="numi">Total<br/>Time</th><th class="numi">Included<br/>Groups</th><th class="numi">Excluded<br/>Groups</th></tr>
-<tr><td style="text-align:left;padding-right:2em">Default test</td><td class="numi">1</td><td class="numi">1</td><td class="numi">0</td><td class="numi">0</td><td class="numi">22.8 seconds</td><td class="numi"></td><td class="numi"></td></tr>
+<tr><td style="text-align:left;padding-right:2em">Default test</td><td class="numi">0</td><td class="numi">0</td><td class="numi">0</td><td class="numi_attn">1</td><td class="numi">20.5 seconds</td><td class="numi"></td><td class="numi"></td></tr>
 </table>
 <table cellspacing="0" cellpadding="0" class="passed" id="summary">
 <tr><th>Class</th><th>Method</th><th># of<br/>Scenarios</th><th>Start</th><th>Time<br/>(ms)</th></tr>
-<tr><th colspan="4">Default test &#8212; passed</th></tr>
-<tr class="passedodd"><td rowspan="1">LoginTestCases.LoginPostive1</td><td><a href="#m1"><b>loginMethod</b>  </a></td><td class="numi">1</td><td>1462195585455</td><td class="numi">12762</td></tr>
+<tr><th colspan="4">Default test &#8212; failed</th></tr>
+<tr class="failedodd"><td rowspan="1">LoginTestCases.LoginPostive1</td><td><a href="#m1"><b>loginMethod</b>  </a></td><td class="numi">1</td><td>1462198477148</td><td class="numi">10036</td></tr>
 </table>
 <h1>Default test</h1>
 <h2 id="m1">LoginTestCases.LoginPostive1:loginMethod</h2>
+<div style="padding-left:3em">
+<p>javax.mail.MessagingException: IOException while sending message;
+  nested exception is:
+	java.io.FileNotFoundException: D:\kuldeep.jpg (The system cannot find the file specified)</p>
+LoginTestCases.LoginPostive1.sendAttachmentThroughEmail(LoginPostive1.java:278)
+<br/>at LoginTestCases.LoginPostive1.takesScreenshot(LoginPostive1.java:188)
+<br/>at LoginTestCases.LoginPostive1.loginMethod(LoginPostive1.java:165)
+<br/>25 lines not shown
+<p>Caused by IOException while sending message</p>
+com.sun.mail.smtp.SMTPTransport.sendMessage(SMTPTransport.java:1245)
+<br/>at javax.mail.Transport.send0(Transport.java:254)
+<br/>at javax.mail.Transport.send(Transport.java:124)
+<br/>at LoginTestCases.LoginPostive1.sendAttachmentThroughEmail(LoginPostive1.java:273)
+<br/>at LoginTestCases.LoginPostive1.takesScreenshot(LoginPostive1.java:188)
+<br/>at LoginTestCases.LoginPostive1.loginMethod(LoginPostive1.java:165)
+<br/>25 lines not shown
+<p>Caused by D:\kuldeep.jpg (The system cannot find the file specified)</p>
+java.io.FileInputStream.open(Native Method)
+<br/>at java.io.FileInputStream.&lt;init&gt;(FileInputStream.java:146)
+<br/>at javax.activation.FileDataSource.getInputStream(FileDataSource.java:97)
+<br/>at javax.activation.DataHandler.writeTo(DataHandler.java:305)
+<br/>at javax.mail.internet.MimeBodyPart.writeTo(MimeBodyPart.java:1627)
+<br/>at javax.mail.internet.MimeBodyPart.writeTo(MimeBodyPart.java:961)
+<br/>at javax.mail.internet.MimeMultipart.writeTo(MimeMultipart.java:553)
+<br/>at com.sun.mail.handlers.multipart_mixed.writeTo(multipart_mixed.java:103)
+<br/>at javax.activation.ObjectDataContentHandler.writeTo(DataHandler.java:884)
+<br/>at javax.activation.DataHandler.writeTo(DataHandler.java:317)
+<br/>at javax.mail.internet.MimeBodyPart.writeTo(MimeBodyPart.java:1627)
+<br/>at javax.mail.internet.MimeMessage.writeTo(MimeMessage.java:1849)
+<br/>at com.sun.mail.smtp.SMTPTransport.sendMessage(SMTPTransport.java:1196)
+<br/>at javax.mail.Transport.send0(Transport.java:254)
+<br/>at javax.mail.Transport.send(Transport.java:124)
+<br/>at LoginTestCases.LoginPostive1.sendAttachmentThroughEmail(LoginPostive1.java:273)
+<br/>at LoginTestCases.LoginPostive1.takesScreenshot(LoginPostive1.java:188)
+<br/>at LoginTestCases.LoginPostive1.loginMethod(LoginPostive1.java:165)
+<br/>25 lines not shown
+</div>
 <p class="totop"><a href="#summary">back to summary</a></p>
 </body></html>

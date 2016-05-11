@@ -31,7 +31,7 @@ public class uploadFile
 
 	public void fileDownload(String title ) throws AWTException, InterruptedException
 	{
-		String pathOfDownload = "C:\\1AutomationDrive\\Download";
+		//String pathOfDownload = "C:\\1AutomationDrive\\Download";
 	 
 	    try
 	    {

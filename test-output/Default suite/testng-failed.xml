@@ -3,14 +3,12 @@
 <suite name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="LoginTestCases.LoginPostive1">
+      <class name="com.metacube.ipathshala.suite.Login.LoginByAdmin">
         <methods>
-          <include name="closeBrowser"/>
-          <include name="passCollegeApplicationUrl"/>
-          <include name="loginMethod"/>
-          <include name="launchBrowser"/>
+          <include name="createDriver"/>
+          <include name="loginByAdmin"/>
         </methods>
-      </class> <!-- LoginTestCases.LoginPostive1 -->
+      </class> <!-- com.metacube.ipathshala.suite.Login.LoginByAdmin -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

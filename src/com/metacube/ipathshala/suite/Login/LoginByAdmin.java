@@ -17,14 +17,7 @@ import com.metacube.ipathshala.exicution.Initializer;
 public class LoginByAdmin extends Initializer
 {
 	public WebDriver driver;
-	public static LoginByAdmin objAdmin;
-	//Create object of this class
-	public static void main(String[] args) 
-	{
-	    objAdmin = new LoginByAdmin();
-	}
-	
-	
+	public static LoginByAdmin objAdmin = new LoginByAdmin();
 	
 	//Call function for lunching firefox browser
 	@BeforeClass

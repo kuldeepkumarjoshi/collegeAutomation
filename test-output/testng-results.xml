@@ -2,20 +2,20 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="30685" started-at="2016-05-11T09:05:19Z" finished-at="2016-05-11T09:05:50Z">
+  <suite name="Default suite" duration-ms="25276" started-at="2016-05-11T09:33:02Z" finished-at="2016-05-11T09:33:28Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="30685" started-at="2016-05-11T09:05:19Z" finished-at="2016-05-11T09:05:50Z">
+    <test name="Default test" duration-ms="25276" started-at="2016-05-11T09:33:02Z" finished-at="2016-05-11T09:33:28Z">
       <class name="com.metacube.ipathshala.suite.Login.LoginByAdmin">
-        <test-method status="PASS" signature="createDriver()[pri:0, instance:com.metacube.ipathshala.suite.Login.LoginByAdmin@1077e76]" name="createDriver" is-config="true" duration-ms="10902" started-at="2016-05-11T14:35:19Z" finished-at="2016-05-11T14:35:30Z">
+        <test-method status="PASS" signature="createDriver()[pri:0, instance:com.metacube.ipathshala.suite.Login.LoginByAdmin@109c9c0]" name="createDriver" is-config="true" duration-ms="7030" started-at="2016-05-11T15:03:02Z" finished-at="2016-05-11T15:03:09Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- createDriver -->
-        <test-method status="PASS" signature="passUrl()[pri:0, instance:com.metacube.ipathshala.suite.Login.LoginByAdmin@1077e76]" name="passUrl" is-config="true" duration-ms="5178" started-at="2016-05-11T14:35:30Z" finished-at="2016-05-11T14:35:35Z">
+        <test-method status="PASS" signature="passUrl()[pri:0, instance:com.metacube.ipathshala.suite.Login.LoginByAdmin@109c9c0]" name="passUrl" is-config="true" duration-ms="3191" started-at="2016-05-11T15:03:09Z" finished-at="2016-05-11T15:03:13Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- passUrl -->
-        <test-method status="PASS" signature="loginByAdmin()[pri:0, instance:com.metacube.ipathshala.suite.Login.LoginByAdmin@1077e76]" name="loginByAdmin" duration-ms="14590" started-at="2016-05-11T14:35:35Z" finished-at="2016-05-11T14:35:50Z">
+        <test-method status="PASS" signature="loginByAdmin()[pri:0, instance:com.metacube.ipathshala.suite.Login.LoginByAdmin@109c9c0]" name="loginByAdmin" duration-ms="15040" started-at="2016-05-11T15:03:13Z" finished-at="2016-05-11T15:03:28Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- loginByAdmin -->

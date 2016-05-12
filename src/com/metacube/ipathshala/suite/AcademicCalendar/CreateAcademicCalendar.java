@@ -1,11 +1,17 @@
 package com.metacube.ipathshala.suite.AcademicCalendar;
 import java.io.IOException;
+import java.util.Map;
 
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
+import com.metacube.ipathshala.manager.AcademicCalendarManager;
 import com.metacube.ipathshala.utility.*;
 
-public class CreateAcademicCalendar extends AssignFilePath
+public class CreateAcademicCalendar 
 {
 	ReadExcel FilePath = null;	
 	String SheetName = null;
@@ -16,11 +22,33 @@ public class CreateAcademicCalendar extends AssignFilePath
 	String testData = "AcademicCalendar";
 	static int DataSet=-1;	
 	static boolean Testskip=false;
-	
+	public WebDriver driver;
+	private DriverUtility driverUtility = new DriverUtility();
+	private CommanUtility commanUtility = new CommanUtility(); 
+	private AcademicCalendarManager academicCalendarManager = new AcademicCalendarManager();
+	@BeforeClass
+	public void applicationLogin()
+	{
+	    driver = driverUtility.launchBrowser();
+	    String url = "http://metacampus1.appspot.com/" ;
+	    driver = driverUtility.passCollegeApplicationUrl(driver,url);
+	    driver = commanUtility.loginByAdmin(driver);
+	}
+	 	 
+	//Passing url to open site
 	@BeforeTest
-	public void createFilePath() throws IOException{
+	public void testData()
+	{
+	  Map<String,String> academicCalendarMap = academicCalendarManager.getAcademicCalendar();
+	}
+	
+	
+	@Test
+	public void c() throws IOException{
+		//----open tab
+		//driver = driverUtility.openTab(driver ,"academicCalendar");
 		//Called xlsFilePath() function from SuiteBase class to Initialize .xls Files
-		FilePath = xlsFilePath(testData);	
+		//FilePath = xlsFilePath(testData);	
 		
 		//This test cases name is same as class name
 		TestCaseName = this.getClass().getSimpleName();
@@ -29,14 +57,5 @@ public class CreateAcademicCalendar extends AssignFilePath
 		SheetName = TestCaseName;
 	}
 	
-			
-	public Object[][] createAcademicCalendarData()
-	{
-		//To retrieve data from Data 1 Column,Data 2 Column and Expected Result column of SuiteTwoCaseOne data Sheet.
-		//Last two columns (DataToRun and Pass/Fail/Skip) are Ignored programatically when reading test data.
-		return SuiteUtility.GetTestDataUtility(FilePath, TestCaseName);
-	}
-	
-	
-
+		
 }

@@ -19,7 +19,7 @@ import com.metacube.ipathshala.utility.*;
 
 public class CreateAcademicCalendar 
 {
-	ReadExcel FilePath = null;	
+	/*ReadExcel FilePath = null;	
 	String SheetName = null;
 	String TestCaseName = null;	
 	String ToRunColumnNameTestCase = null;
@@ -27,7 +27,7 @@ public class CreateAcademicCalendar
 	String TestDataToRun[]=null;
 	String testData = "AcademicCalendar";
 	static int DataSet=-1;	
-	static boolean Testskip=false;
+	static boolean Testskip=false;*/
 	public WebDriver driver;
 	private DriverUtility driverUtility = new DriverUtility();
 	private CommanUtility commanUtility = new CommanUtility(); 
@@ -49,7 +49,7 @@ public class CreateAcademicCalendar
 	public void testData()
 	{
 		//System.out.println(" under Test case");
-		// academicCalendarMap = academicCalendarManager.getAcademicCalendar();
+		academicCalendarMap = academicCalendarManager.getAcademicCalendar();
 	  
 	}
 	

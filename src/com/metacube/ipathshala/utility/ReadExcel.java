@@ -24,6 +24,7 @@ public class ReadExcel
 			wb = new HSSFWorkbook(ipstr);
 			ws = wb.getSheetAt(0);
 			ipstr.close();
+			System.out.println(" under readexcel constructor");
 		} catch (Exception e) {			
 			e.printStackTrace();
 		} 
@@ -148,33 +149,42 @@ public class ReadExcel
 	//To retrieve test data from test case data sheets.
 	public Object[][] retrieveTestData(String wsName){
 		int sheetIndex=wb.getSheetIndex(wsName);
+		
 		if(sheetIndex==-1)
 			return null;
 		else{
 				int rowNum = retrieveNoOfRows(wsName);
 				int colNum = retrieveNoOfCols(wsName);
+				Object data[][] = new Object[rowNum][colNum];
 		
-				Object data[][] = new Object[rowNum-1][colNum-2];
-		
-				for (int i=0; i<rowNum-1; i++){
-					HSSFRow row = ws.getRow(i+1);
-					for(int j=0; j< colNum-2; j++){					
-						if(row==null){
+				for (int i=0; i<rowNum; i++){
+					int k= i+1;
+					//System.out.print("Row (" + k +"): " );
+					HSSFRow row = ws.getRow(i);
+					for(int j=0; j< colNum; j++)
+					{					
+						if(row==null)
+						{
 							data[i][j] = "";
 						}
-						else{
+						else
+						{
 							HSSFCell cell = row.getCell(j);	
 					
-							if(cell==null){
+							if(cell==null)
+							{
 								data[i][j] = "";							
 							}
-							else{
+							else
+							{
 								cell.setCellType(Cell.CELL_TYPE_STRING);
 								String value = cellToString(cell);
-								data[i][j] = value;						
+								data[i][j] = value.trim();		
+								//System.out.print(value + "; ");
 							}
 						}
-					}				
+					}
+					//System.out.println();
 				}			
 				return data;		
 		}

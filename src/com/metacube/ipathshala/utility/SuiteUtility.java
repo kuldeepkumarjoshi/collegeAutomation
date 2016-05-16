@@ -19,7 +19,8 @@ public class SuiteUtility
 	}
  
 	public static Object[][] GetTestDataUtility(ReadExcel xls, String sheetName){
-	 	return xls.retrieveTestData(sheetName);	
+		//System.out.println(" under GetTestDataUtility");
+		return xls.retrieveTestData(sheetName);	
 	}
  
 	public static boolean WriteResultUtility(ReadExcel xls, String sheetName, String ColName, int rowNum, String Result){			

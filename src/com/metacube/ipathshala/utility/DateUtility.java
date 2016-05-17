@@ -6,12 +6,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateUtility
 {
-	public WebDriver selectDateFromDatePicker(WebDriver driver, String date)
+	public WebDriver selectDateFromDatePicker(WebDriver driver, String date) throws InterruptedException
 	{
 		//Date format example "20-July 2017"; Date is breaked into date, month and year
 		String Spliter[] = date.split("-");
@@ -41,7 +42,7 @@ public class DateUtility
         }
 	    else
 	    {  
-	    	 driver=futureMonthCurrentYear(assignmentDay,assignentYear,assignentMonthNumber,driver);
+	    	 driver=futureMonthYear(assignmentDay,assignentYear,assignentMonthNumber,driver);
   			    
         }  
 				
@@ -101,8 +102,8 @@ public class DateUtility
 	
 	/*---------------------------------------------*/
 	//This method for date selection of submission of assignment when assignment date is Future month but current year
-  public WebDriver futureMonthCurrentYear(String assignmentDay,String assignentYear,String assignmentMonthNumber,WebDriver driver )
-  {
+  public WebDriver futureMonthYear(String assignmentDay,String assignentYear,String assignmentMonthNumber,WebDriver driver ) throws InterruptedException
+ {
 					  
 		//driver.findElement(By.xpath("//table/thead/tr[1]/th[2]/button/strong")).click();
 		WebElement calenderMonthYear =driver.findElement(By.xpath("//thead/tr/th[2]/button/strong"));
@@ -123,7 +124,8 @@ public class DateUtility
 	    	calenderMonthYear.click();
 	    	WebElement calenderYear1 =driver.findElement(By.xpath("//thead/tr/th[2]/button/strong"));
 	    	calenderYear1.click();
-	    	String yearUpto2020FromCurrentYear = calenderYear1.getText();
+	    	WebElement calenderYear2=driver.findElement(By.xpath("//thead/tr/th[2]/button/strong"));
+	    	String yearUpto2020FromCurrentYear = calenderYear2.getText();
 	    	String Spliter2[] = yearUpto2020FromCurrentYear.split("-");
 			String year = Spliter2[1].trim();
 			if(Integer.parseInt(assignentYear)<=Integer.parseInt(year))
@@ -140,7 +142,7 @@ public class DateUtility
   } 
 	
 
-public WebDriver futureMonth(String assignmentMonthNumber,WebDriver driver )
+  public WebDriver futureMonth(String assignmentMonthNumber,WebDriver driver )
  {   
 		int j=0;
 		String[] activeMonth = new String[12];
@@ -149,12 +151,12 @@ public WebDriver futureMonth(String assignmentMonthNumber,WebDriver driver )
         {
        	     String monthNumeric = convertMonthInNumber(month.getText());
        	     // System.out.println(month.getText());
-         	 if(Integer.parseInt(monthNumeric)>=Integer.parseInt(assignmentMonthNumber)) // If(2)
+         	 if(Integer.parseInt(monthNumeric)<=Integer.parseInt(assignmentMonthNumber)) // If(2)
        	     {
        			   activeMonth[j] = month.getText();
-       			   System.out.println("Assignment Submission Month: " +activeMonth[j]);
+       			   //System.out.println("Assignment Submission Month: " +activeMonth[j]);
        			   j++;
-       			   if(assignmentMonthNumber.equals(month.getText()))
+       			   if(assignmentMonthNumber.equals(monthNumeric))
        			   {
        			      month.click();
        			      break;
@@ -165,7 +167,7 @@ public WebDriver futureMonth(String assignmentMonthNumber,WebDriver driver )
  } //End of method futureMonth
 	
   public WebDriver futureDate(String assignmentDay,WebDriver driver )
-  {
+ {
 		 boolean monthStart1 = false;
     	 boolean monthEnd1 = false;
 		 Integer oldDate1 = 0;
@@ -194,9 +196,9 @@ public WebDriver futureMonth(String assignmentMonthNumber,WebDriver driver )
 				    i++;
 				    if(assignmentDay.equals(day2.getText())) // If(5)
 				    {
-				        	    System.out.println("Assignment Submission Date:"+ day2.getText());
-						        day2.click();
-						        break;
+				          //System.out.println("Assignment Submission Date:"+ day2.getText());
+						   day2.click();
+						   break;
 					 }  // If(5)
 			     }  // If(4)
 			      oldDate1 = Integer.parseInt(day2.getText());
@@ -260,7 +262,7 @@ public WebDriver futureMonth(String assignmentMonthNumber,WebDriver driver )
 		String currentYear = Spliter1[0];
 		return currentYear;
    }
-  private WebDriver yearSelect(WebDriver driver, String assignentYear)
+  private WebDriver yearSelect(WebDriver driver, String assignentYear) throws InterruptedException
   {
 	  int j=0;
 	  String[] activeYear = new String[20];
@@ -268,15 +270,16 @@ public WebDriver futureMonth(String assignmentMonthNumber,WebDriver driver )
 	  for(WebElement year : allFutureYearTill2020)  //for(1)
 	  {
 	       	   
-	       	     // System.out.println(month.getText());
+	       	     //System.out.println(year.getText());
 	         	 if(Integer.parseInt(year.getText())>=Integer.parseInt(assignentYear)) // If(2)
 	       	     {
 	         		  activeYear[j] = year.getText();
-	       			   System.out.println("Assignment Submission Month: " +activeYear[j]);
+	       			  // System.out.println("Assignment Submission Month: " +activeYear[j]);
 	       			   j++;
 	       			 if(assignentYear.equals(year.getText()))
 	       			 {
 	       				year.click();
+	       				Thread.sleep(5000);
 	       			    break;
 	       			 }
 	       			   
@@ -288,5 +291,16 @@ public WebDriver futureMonth(String assignmentMonthNumber,WebDriver driver )
  	return driver;
    }
 	
-
+  public String timeStamp(String name) throws IOException
+ {
+		Date date = new Date() ;
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss") ;
+		String name1 = name + dateFormat.format(date);
+		//File file = new File(dateFormat.format(date) + ".format") ;
+		//BufferedWriter out = new BufferedWriter(new FileWriter(file));
+		//out.write("Writing to file");
+		//out.close();
+		return name1;
+		
+	}
 }

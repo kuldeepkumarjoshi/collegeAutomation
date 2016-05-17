@@ -10,7 +10,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 
 
-
 public class ReadExcel
 {
 	public  String filelocation;
@@ -26,7 +25,7 @@ public class ReadExcel
 			wb = new HSSFWorkbook(ipstr);
 			ws = wb.getSheetAt(0);
 			ipstr.close();
-			System.out.println(" under readexcel constructor");
+			//System.out.println(" under readexcel constructor");
 		} catch (Exception e) {			
 			e.printStackTrace();
 		} 

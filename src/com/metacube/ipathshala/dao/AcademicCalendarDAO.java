@@ -15,7 +15,7 @@ public class AcademicCalendarDAO
 	
 	private SuiteUtility suiteUtility = new SuiteUtility();
 	public Object[][] getAcademicCalendar() {
-		System.out.println(" under dao");
+		//System.out.println(" under dao");
 		AssignFilePath assignFilePath = new AssignFilePath();
 		ReadExcel readExcel = assignFilePath.xlsFilePath("AcademicCalendar");
 		Object[][] rowData = suiteUtility.GetTestDataUtility(readExcel, "CreateAcademicCalendar");

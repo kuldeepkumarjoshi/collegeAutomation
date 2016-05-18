@@ -1,7 +1,5 @@
 package com.metacube.ipathshala.suite.AcademicCalendar;
 
-
-import java.awt.Dimension;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -9,12 +7,8 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.collections.MultiMap;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -24,60 +18,55 @@ import com.metacube.ipathshala.utility.CommanUtility;
 import com.metacube.ipathshala.utility.DateUtility;
 import com.metacube.ipathshala.utility.DriverUtility;
 import com.metacube.ipathshala.utility.ReadExcel;
-import com.metacube.ipathshala.utility.screenShotUtil;
 
-public class CreateAcademicCalendar 
+
+public class EditAcademicCalendar
 {
-	 public WebDriver driver;
+	
+	public WebDriver driver;
 	 private DriverUtility driverUtility = new DriverUtility();
 	 private CommanUtility commanUtility = new CommanUtility(); 
 	 private DateUtility dateUtility = new DateUtility(); 
-		
-	MultiMap academicCalendarMap;
-	private AcademicCalendarManager academicCalendarManager = new AcademicCalendarManager();
-		
-	ReadExcel FilePath = null;	
-	String SheetName = null;
-	String TestCaseName = null;	
-	String ToRunColumnNameTestCase = null;
-	String ToRunColumnNameTestData = null;
-	String TestDataToRun[]=null;
-	String testData = "AcademicCalendar";
-	static int DataSet=-1;	
-	static boolean Testskip=false;
-		
+	 MultiMap academicCalendarMap;
+	 private AcademicCalendarManager academicCalendarManager = new AcademicCalendarManager();
+	  
+	 
+	 ReadExcel FilePath = null;	
+	 String SheetName = null;
+	 String TestCaseName = null;	
+	 String ToRunColumnNameTestCase = null;
+	 String ToRunColumnNameTestData = null;
+	 String TestDataToRun[]=null;
+	 String testData = "AcademicCalendar";
+	 static int DataSet=-1;	
+	 static boolean Testskip=false;
+	 
+	 
 	@BeforeClass
 	public void applicationLogin()
 	{
-	    driver = driverUtility.launchBrowser();
+	   
+		driver = driverUtility.launchBrowser();
 	    String url = "http://metacampus1.appspot.com/" ;
 	    driver = driverUtility.passCollegeApplicationUrl(driver,url);
-	    driver = commanUtility.loginByAdmin(driver);
-	   
-	    
+	   	driver = commanUtility.loginByAdmin(driver);
 	   
 	}
-	 	 
-
+	
 	@BeforeTest
 	public void testData()
 	{
-		TestCaseName = this.getClass().getSimpleName();
-		
+        TestCaseName = this.getClass().getSimpleName();
 		System.out.println(TestCaseName);
+		//System.out.println(" under Test case");
 		academicCalendarMap = academicCalendarManager.getAcademicCalendar(TestCaseName);
 	  
 	}
 	
-	
 	@Test
-	public void createAcademicCalendar() throws InterruptedException, IOException
-	{	
-		
-	   //TestCaseName = this.getClass().getSimpleName();
-		//SheetName = TestCaseName;
-		
-		//Click on notification tab
+	public void editAcademicCalendar() throws IOException, InterruptedException
+	{
+		String eventToBeEdit ="AcadCalHOLIDAY2016-05-17 18-07-50T";					
 		WebElement notificationTab = driver.findElement(By.xpath("//*[@class ='nav nav-list']/li[2]/a/i"));
 		notificationTab.click();
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
@@ -86,19 +75,15 @@ public class CreateAcademicCalendar
 		Academic_Calendar.click();
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		
-		
-		//Click on  createAcadCalendar
-		Thread.sleep(5000);
-		WebElement createAcadCalendar = driver.findElement(By.xpath("//div[@id='main-container']/div[2]/div[3]/div[2]/div/div/div/div/button"));
-		createAcadCalendar.click();                                  
-		                                                            
-		
-		//find elements Name and its text box
-		//String name = driver.findElement(By.xpath("//div[@class='ng-scope']/div[2]/div[1]/b")).getText();
-		WebElement nameText = driver.findElement(By.xpath("//div[@class='ng-scope']/div[2]/div[1]/input"));
+		//Open Event in Edit form to be updated
+		driver=OpeneEventToBeEdit(driver,eventToBeEdit);
+				
 		List<String> ListName = (List<String>)academicCalendarMap.get("Name");
 		String name1 = ListName.get(0);
 		String name2= dateUtility.timeStamp(name1);
+				
+		WebElement nameText = driver.findElement(By.xpath("//div[@class='ng-scope']/div[2]/div[1]/input"));
+		nameText.clear();
 		nameText.sendKeys(name2);
 		
 		//find elements Type and select value
@@ -116,15 +101,25 @@ public class CreateAcademicCalendar
 		typeInput.click();
 		
 		
-		//////////////////////////
+		
 		List<String> attandence = (List<String>)academicCalendarMap.get("Attendance Allowed");
 		String attandenceAllow = attandence.get(0);
-		if(!attandenceAllow.equals("Yes"))
+		WebElement lableYesNo= driver.findElement(By.xpath("//div[@class='ng-scope']/div[3]/div[2]/input"));
+		 
+		if(attandenceAllow.toLowerCase().equals("yes"))
 		{
-			WebElement selectItem = driver.findElement(By.xpath("//div[@class='ng-scope']/div[3]/div[2]/input"));
-			selectItem.click();
+			if(!lableYesNo.isSelected())
+				lableYesNo.click();
+			Thread.sleep(5000);	
 		}
-		
+		else
+		{
+			if(lableYesNo.isSelected())
+				lableYesNo.click();
+			Thread.sleep(5000);	
+		}
+			
+					
 		
 		//find date element and select value from date picker
 		List<String> date = (List<String>)academicCalendarMap.get("Date");
@@ -135,29 +130,65 @@ public class CreateAcademicCalendar
 		WebElement datePicker = driver.findElement(By.xpath("//div[@class='input-group']/input"));
 		datePicker.click();
 		driver = dateUtility.selectDateFromDatePicker(driver, date1);
-	
+		
 		//Click on save button
 		WebElement saveButton = driver.findElement(By.xpath("//div[@class='ng-scope']/div[1]/button[1]"));
 		saveButton.click();
 		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
-		
-		//Verify weather Academic Calendar is created or not 
-		
+				
+		//Verify weather Academic Calendar is edited or not 
+				
 		boolean flag= false;
 		List<WebElement> evenNames = driver.findElements(By.xpath("//div[@class='ngCanvas']/div/div[3]/div/div/span"));
 		for(WebElement evenName :evenNames)
 		{
 			if(name2.equals(evenName.getText()))
 			{
-				flag = true;
-				break;
+						flag = true;
+						break;
 			}
-				
-			
+						
+					
 		}
-		Assert.assertTrue(flag);
+			Assert.assertTrue(flag);
+				
+		
+		
+		
+		
 		
 	}
-	
+	private WebDriver OpeneEventToBeEdit(WebDriver driver, String eventToBeEdit)
+	{  
+		int i=1,j=1;
+		List<WebElement> evenNames = driver.findElements(By.xpath("//div[@class='ngCanvas']/div/div[3]/div/div/span"));
+		for(WebElement evenName :evenNames)
+		{
+			i++;
+			if(evenName.getText().equals(eventToBeEdit))
+			{
+				
+				break;
+				
+			}
+		}	
+		List<WebElement> editIcons = driver.findElements(By.xpath("//a[1][@class='ng-scope']/i"));
+		for(WebElement editIcon :editIcons)
+		{
+			j++;
+			if(i==j)
+			{
+				editIcon.click();
+				break;
+				
+			}
+		}	
 		
+		return driver;
+		
+		
+		
+	}
+	 	 
+
 }

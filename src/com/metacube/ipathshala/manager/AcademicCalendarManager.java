@@ -18,12 +18,11 @@ public class AcademicCalendarManager
 	MultiMap academicCalendarMap;
 	private DateUtility dateUtility = new DateUtility(); 
 	private AcademicCalendarService academicCalendarService = new AcademicCalendarService();
-	public MultiMap getAcademicCalendar()
+	public MultiMap getAcademicCalendar(String TestCaseName)
 	{
 		//System.out.println(" under Manager");
-		return academicCalendarService.getAcademicCalendar();
+		return academicCalendarService.getAcademicCalendar(TestCaseName);
 	}
-	
-	
+		
 	
 }

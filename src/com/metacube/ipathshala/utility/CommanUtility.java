@@ -46,8 +46,8 @@ public class CommanUtility
 	{
 		int rows = rowData.length;
 		int cols = rowData[0].length;
-		//System.out.println("rows: "+ rows);
-		//System.out.println("cols: "+ cols);
+		System.out.println("rows: "+ rows);
+		System.out.println("cols: "+ cols);
 		
 		MultiMap multiMap = new MultiValueMap();  // Reference: https://dzone.com/articles/hashmap-%E2%80%93-single-key-and
 		//---convertion from object to map .
@@ -57,7 +57,7 @@ public class CommanUtility
 		    	multiMap.put(rowData[0][i], rowData[j][i]);
 
 		}
-		//System.out.println("map::"+multiMap);
+		System.out.println("map::"+multiMap);
 		return multiMap;
 	}
 	

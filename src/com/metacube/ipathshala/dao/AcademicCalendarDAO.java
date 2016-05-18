@@ -14,11 +14,11 @@ public class AcademicCalendarDAO
 	
 	
 	private SuiteUtility suiteUtility = new SuiteUtility();
-	public Object[][] getAcademicCalendar() {
+	public Object[][] getAcademicCalendar(String TestCaseName) {
 		//System.out.println(" under dao");
 		AssignFilePath assignFilePath = new AssignFilePath();
 		ReadExcel readExcel = assignFilePath.xlsFilePath("AcademicCalendar");
-		Object[][] rowData = suiteUtility.GetTestDataUtility(readExcel, "CreateAcademicCalendar");
+		Object[][] rowData = suiteUtility.GetTestDataUtility(readExcel,TestCaseName);
 		//int rows = rowData.length;
 		//int cols = rowData[0].length;
 		//System.out.println("rows: "+ rows);

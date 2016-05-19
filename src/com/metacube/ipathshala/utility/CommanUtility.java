@@ -11,6 +11,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,8 +51,8 @@ public class CommanUtility
 	{
 		int rows = rowData.length;
 		int cols = rowData[0].length;
-		System.out.println("rows: "+ rows);
-		System.out.println("cols: "+ cols);
+		//System.out.println("rows: "+ rows);
+		//System.out.println("cols: "+ cols);
 		
 		MultiMap multiMap = new MultiValueMap();  // Reference: https://dzone.com/articles/hashmap-%E2%80%93-single-key-and
 		//---convertion from object to map .
@@ -59,6 +64,26 @@ public class CommanUtility
 		}
 		System.out.println("map::"+multiMap);
 		return multiMap;
+	}
+
+	public void uploadAttachment(String attachmentFilePath) throws AWTException
+	{
+		StringSelection ss = new StringSelection(attachmentFilePath);
+		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+		
+		///native key strokes for CTRL, V and ENTER keys
+		Robot robot = new Robot();
+		
+		robot.delay(1000);
+		robot.keyPress(KeyEvent.VK_CONTROL);
+		robot.keyPress(KeyEvent.VK_V);
+		robot.keyRelease(KeyEvent.VK_V);
+		robot.keyRelease(KeyEvent.VK_CONTROL);
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
+		robot.delay(1000);
+		//driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+		
 	}
 	
 	

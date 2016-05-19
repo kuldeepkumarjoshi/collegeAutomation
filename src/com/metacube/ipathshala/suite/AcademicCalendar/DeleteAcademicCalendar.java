@@ -72,11 +72,13 @@ public class DeleteAcademicCalendar
 				
 	    List<String> ListName = (List<String>)academicCalendarMap.get("Name");
 	    String name1 = ListName.get(0);
+	    
+	    //Call function for delete 
 	    driver = deleteEventAC(driver,name1);
 	    
 	    
 	   //Verify weather Academic Calendar is edited or not 
-	 	
+	    Thread.sleep(10000);
 	  	boolean flag= true;
 	  	List<WebElement> evenNames = driver.findElements(By.xpath("//div[@class='ngCanvas']/div/div[3]/div/div/span"));
 	  	for(WebElement evenName :evenNames)

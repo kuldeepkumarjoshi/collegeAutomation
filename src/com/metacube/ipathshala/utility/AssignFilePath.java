@@ -12,9 +12,9 @@ public class AssignFilePath
 		case "AcademicCalendar":
 			//System.out.println(" under xlsFilePath");
 			ReadExcelObj = new ReadExcel(System.getProperty("user.dir")+"\\Test Data\\AcademicCalendar.xls");
-			
-		    break;
+			break;
 		case "Announcement":
+			//System.out.println(" under xlsFilePath/Announcement");
 			ReadExcelObj = new ReadExcel(System.getProperty("user.dir")+"\\Test Data\\Announcement.xls");
 		    break;
 		case "AttendanceBlock":

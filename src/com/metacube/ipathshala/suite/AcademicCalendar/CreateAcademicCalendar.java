@@ -67,17 +67,14 @@ public class CreateAcademicCalendar
 	@Test
 	public void createAcademicCalendar() throws InterruptedException, IOException
 	{	
-		
-	   //TestCaseName = this.getClass().getSimpleName();
-		//SheetName = TestCaseName;
-		
+			  
 		//Click on notification tab
 		WebElement notificationTab = driver.findElement(By.xpath("//*[@class ='nav nav-list']/li[2]/a/i"));
 		notificationTab.click();
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		//Click on Academic_Calendar
-		WebElement Academic_Calendar = driver.findElement(By.xpath("//ul[@id='notification']/li[1]/a"));
-		Academic_Calendar.click();
+		WebElement academic_Calendar = driver.findElement(By.xpath("//ul[@id='notification']/li[1]/a"));
+		academic_Calendar.click();
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		
 		

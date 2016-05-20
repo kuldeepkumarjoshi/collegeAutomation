@@ -1,7 +1,6 @@
 package com.metacube.ipathshala.suite.AcademicCalendar;
 
 
-import java.awt.Dimension;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -9,12 +8,8 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.collections.MultiMap;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -24,7 +19,6 @@ import com.metacube.ipathshala.utility.CommanUtility;
 import com.metacube.ipathshala.utility.DateUtility;
 import com.metacube.ipathshala.utility.DriverUtility;
 import com.metacube.ipathshala.utility.ReadExcel;
-import com.metacube.ipathshala.utility.screenShotUtil;
 
 public class CreateAcademicCalendar 
 {

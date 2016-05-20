@@ -291,7 +291,7 @@ public class DateUtility
  	return driver;
    }
 	
-  public String timeStamp(String name) throws IOException
+  public String addTimeStamp(String name) throws IOException
  {
 		Date date = new Date() ;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss") ;

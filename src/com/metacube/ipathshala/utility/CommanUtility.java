@@ -1,8 +1,10 @@
 package com.metacube.ipathshala.utility;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.collections.MultiMap;
@@ -11,17 +13,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.Toolkit;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class CommanUtility
 {
+	 
 	
 	public WebDriver loginByAdmin(WebDriver driver)
 	{
@@ -83,6 +77,33 @@ public class CommanUtility
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		robot.delay(1000);
 		//driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+		
+	}
+
+	public void openModuleTab(WebDriver driver, String tabName) throws InterruptedException {
+		
+		switch(tabName){
+			case TabUtilities.ACADEMIC_CALENDAR_TAB_NAME : //Click on notification tab
+				WebElement notificationTab = driver.findElement(By.xpath(XpathProvider.NOTIFICATION_TAB));
+				notificationTab.click();
+				driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+				//Click on Academic_Calendar
+				WebElement academic_Calendar = driver.findElement(By.xpath(XpathProvider.ACADEMIC_CALENDAR_TAB));
+				academic_Calendar.click();
+				driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+				break;
+			case TabUtilities.ANNOUCEMENT_TAB_NAME:
+			/*	WebElement notificationTab = driver.findElement(By.xpath(XpathProvider.NOTIFICATION_TAB));
+				notificationTab.click();
+				driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+				//Click on Academic_Calendar
+				WebElement academic_Calendar = driver.findElement(By.xpath(XpathProvider.ACADEMIC_CALENDAR_TAB));
+				academic_Calendar.click();
+				driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+				break;*/
+			default :System.out.println("tab name not found in application."); 
+		}
+		
 		
 	}
 	

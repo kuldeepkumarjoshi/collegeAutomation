@@ -13,6 +13,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.metacube.ipathshala.constant.ServerCommonConstant;
+
 public class CommanUtility
 {
 	 
@@ -20,22 +22,29 @@ public class CommanUtility
 	public WebDriver loginByAdmin(WebDriver driver)
 	{
 	
-		WebElement emailTextBox = driver.findElement(By.id("Email"));
-		emailTextBox.sendKeys("admin@xavierjaipur.org");
-		WebElement nextButton = driver.findElement(By.id("next"));
+		WebElement emailTextBox = driver.findElement(By.id(XpathProvider.USER_NAME));
+		emailTextBox.sendKeys(ServerCommonConstant.LOGIN_ID);
+		
+		//Click on Next button after enter user name as login id like email id 
+		WebElement nextButton = driver.findElement(By.id(XpathProvider.NEXT_AFTER_LOGIN_ID));
 		nextButton.click();
-		WebElement stayInSignIn = driver.findElement(By.id("PersistentCookie"));
+	
+		//Uncheck checkbox for not Stay_singed in
+		WebElement stayInSignIn = driver.findElement(By.id(XpathProvider.STAY_SIGNED_IN));
 		stayInSignIn.click();
-
-		WebElement passwordTextBox = driver.findElement(By.id("Passwd"));
+	
+		//Enter Password
+		WebElement passwordTextBox = driver.findElement(By.id(XpathProvider.USER_PASSWORD));
 		passwordTextBox.clear();
-		passwordTextBox.sendKeys("te@mw0rk");
-
-		WebElement signInButton = driver.findElement(By.id("signIn"));
+		passwordTextBox.sendKeys(ServerCommonConstant.PASSWORD);
+       
+		//Click on Sign in button for login
+		WebElement signInButton = driver.findElement(By.id(XpathProvider.SIGN_IN_BUTTON));
 		signInButton.click();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-		 WebElement metaCampusAdmin = driver.findElement(By.className("apps_market_account_name"));
+         
+		//Click on metaCampusAdmin to go in College home page
+		 WebElement metaCampusAdmin = driver.findElement(By.className(XpathProvider.META_CAMPUS_ADMIN_LINK));
 		 metaCampusAdmin.click();
 		 return driver;
 		 

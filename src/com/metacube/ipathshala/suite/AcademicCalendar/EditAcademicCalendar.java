@@ -55,7 +55,7 @@ public class EditAcademicCalendar
 		//Open Event in Edit form to be updated
 		driver=academicCalendarManager.OpeneEventToBeEdit(driver,eventToBeEdit);
 		String academicEventName =academicCalendarManager.createAcademicCalendar(driver,academicCalendarMap);
-		/*List<String> attandence = (List<String>)academicCalendarMap.get("Attendance Allowed");
+		List<String> attandence = (List<String>)academicCalendarMap.get("Attendance Allowed");
 		String attandenceAllow = attandence.get(0);
 		WebElement lableYesNo= driver.findElement(By.xpath("//div[@class='ng-scope']/div[3]/div[2]/input"));
 		 
@@ -70,12 +70,11 @@ public class EditAcademicCalendar
 			if(lableYesNo.isSelected())
 				lableYesNo.click();
 			Thread.sleep(5000);	
-		}*/
-			
+		}		
 					
 		
 		//find date element and select value from date picker
-		Assert.assertTrue(academicCalendarManager.isEventNameMatch(driver,academicEventName));
+		Assert.assertTrue(academicCalendarManager.isAcademicCalendarMatch(driver,academicEventName));
 		}catch(Exception e){
 			e.printStackTrace();
 		}	

@@ -55,9 +55,11 @@ public class CreateAcademicCalendar
 		Thread.sleep(5000);
 		WebElement createAcadCalendar = driver.findElement(By.xpath(XpathProvider.ACADEMIC_CALENDAR_CREATE_BUTTON));
 		createAcadCalendar.click();                                
-		String academicEventName =academicCalendarManager.createAcademicCalendar(driver,academicCalendarMap);
+		String academicCalenderName =academicCalendarManager.createAcademicCalendar(driver,academicCalendarMap);
 		//Verify weather Academic Calendar is created or not 
-		Assert.assertTrue(academicCalendarManager.isEventNameMatch(driver,academicEventName));
+		Boolean flag = academicCalendarManager.isAcademicCalendarMatch(driver,academicCalenderName);
+		System.out.println("Out of Method: "+ flag);
+		Assert.assertTrue(flag);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

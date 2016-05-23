@@ -35,7 +35,7 @@ public class DateUtility
 		//System.out.println(currentDay);
 		
 		//pick current month year from display calendar 
-		String monthYear =driver.findElement(By.xpath("//table/thead/tr[1]/th[2]/button/strong")).getText();
+		String monthYear =driver.findElement(By.xpath(XpathProvider.MONTH_YEAR)).getText();
        if(monthYear.equals(assignmentMonthYear))  //First if of Method
 		{
           driver=currentMonthYear(assignmentDay,driver);
@@ -53,7 +53,7 @@ public class DateUtility
 	public WebDriver currentMonthYear(String assignmentDay,WebDriver driver)
 	{ 
 		String[] activeDate = new String[31];
-		List<WebElement> allDaysListOfcurrentMonthYear = driver.findElements(By.xpath("//table/tbody/tr/td/button/span"));
+		List<WebElement> allDaysListOfcurrentMonthYear = driver.findElements(By.xpath(XpathProvider.ALL_DAYS_LIST_OF_CURRENT_MONTH_YEAR));
 		boolean monthStart = false;
 		boolean monthEnd = false;
 		Integer oldDate = 0;
@@ -105,8 +105,8 @@ public class DateUtility
   public WebDriver futureMonthYear(String assignmentDay,String assignentYear,String assignmentMonthNumber,WebDriver driver ) throws InterruptedException
  {
 					  
-		//driver.findElement(By.xpath("//table/thead/tr[1]/th[2]/button/strong")).click();
-		WebElement calenderMonthYear =driver.findElement(By.xpath("//thead/tr/th[2]/button/strong"));
+		//Future month year 
+		WebElement calenderMonthYear =driver.findElement(By.xpath(XpathProvider.FUTURE_MONTH_YEAR));
 		
 		String monthYear = calenderMonthYear.getText();
 		String Spliter1[] = monthYear.split(" ");
@@ -122,9 +122,10 @@ public class DateUtility
 	    else //When Year is not current
 	    {
 	    	calenderMonthYear.click();
-	    	WebElement calenderYear1 =driver.findElement(By.xpath("//thead/tr/th[2]/button/strong"));
+	    	WebElement calenderYear1 =driver.findElement(By.xpath(XpathProvider.FUTURE_YEAR));
 	    	calenderYear1.click();
-	    	WebElement calenderYear2=driver.findElement(By.xpath("//thead/tr/th[2]/button/strong"));
+	    	
+	    	WebElement calenderYear2=driver.findElement(By.xpath(XpathProvider.FUTURE_YEAR));
 	    	String yearUpto2020FromCurrentYear = calenderYear2.getText();
 	    	String Spliter2[] = yearUpto2020FromCurrentYear.split("-");
 			String year = Spliter2[1].trim();
@@ -146,7 +147,7 @@ public class DateUtility
  {   
 		int j=0;
 		String[] activeMonth = new String[12];
-		List<WebElement> allMonths = driver.findElements(By.xpath("//tbody/tr/td/button/span"));
+		List<WebElement> allMonths = driver.findElements(By.xpath(XpathProvider.LIST_OF_FUTURE_MONTHS));
         for(WebElement month : allMonths)  //for(1)
         {
        	     String monthNumeric = convertMonthInNumber(month.getText());
@@ -173,7 +174,7 @@ public class DateUtility
 		 Integer oldDate1 = 0;
   	     int i=0;
   	     String[] activeDate = new String[31];
-  	     List<WebElement> allDaysAssignmenFuturetMonth = driver.findElements(By.xpath("//table/tbody/tr/td/button/span"));
+  	     List<WebElement> allDaysAssignmenFuturetMonth = driver.findElements(By.xpath(XpathProvider.ALL_DAYS_LIST_OF_FUTURE_MONTH));
   	     for(WebElement day2 :allDaysAssignmenFuturetMonth)  //for (2)
 		 {	
   		      if(day2.getText().equals("01")) // If(1)
@@ -266,7 +267,9 @@ public class DateUtility
   {
 	  int j=0;
 	  String[] activeYear = new String[20];
-	  List<WebElement> allFutureYearTill2020= driver.findElements(By.xpath("//table/tbody/tr/td/button/span"));
+	  
+	  //LIST OF FUTURE YEARS
+	  List<WebElement> allFutureYearTill2020= driver.findElements(By.xpath(XpathProvider.LIST_OF_FUTURE_YEARS));
 	  for(WebElement year : allFutureYearTill2020)  //for(1)
 	  {
 	       	   

@@ -11,11 +11,11 @@ import org.openqa.selenium.WebElement;
 
 import com.metacube.ipathshala.service.AcademicCalendarService;
 import com.metacube.ipathshala.utility.DateUtility;
+import com.metacube.ipathshala.utility.XpathProvider;
 
 public class AcademicCalendarManager
 {
-	
-	
+		
 	private DateUtility dateUtility = new DateUtility(); 
 	private AcademicCalendarService academicCalendarService = new AcademicCalendarService();
 	
@@ -25,77 +25,93 @@ public class AcademicCalendarManager
 		return academicCalendarService.getAcademicCalendar(TestCaseName);
 	}
 	
-	public String createAcademicCalendar(WebDriver driver, MultiMap academicCalendarMap) throws IOException, InterruptedException {
-		//find elements Name and its text box
-				//String name = driver.findElement(By.xpath("//div[@class='ng-scope']/div[2]/div[1]/b")).getText();
-				WebElement nameText = driver.findElement(By.xpath("//div[@class='ng-scope']/div[2]/div[1]/input"));
-				List<String> ListName = (List<String>)academicCalendarMap.get("Name");
+	public String createAcademicCalendar(WebDriver driver, MultiMap academicCalendarMap) throws IOException, InterruptedException
+	{		
+		//This is list of items of academicCalendarName from Excel data Set
+		List<String> listAcademicCalendarName = (List<String>)academicCalendarMap.get("Name");
+		//String acaCalName= listAcademicCalendarName.get(0);
+		String acaCalName= dateUtility.addTimeStamp(listAcademicCalendarName.get(0));
 				
+		//find element  academicCalendar Name text box
+		WebElement academicCalendarName = driver.findElement(By.xpath(XpathProvider.ACADEMIC_CALENDAR_NAME));
+		academicCalendarName.sendKeys(acaCalName);
 				
-				String eventName= dateUtility.addTimeStamp(ListName.get(0));
+		
+		//This type  of academicCalendarName from Excel data Set
+		List<String> listType = (List<String>)academicCalendarMap.get("Type");
+		
+		//Select value from Type drop down list based on value of type is coming from excel data set		
+		WebElement typeDropdwon1 = driver.findElement(By.xpath(XpathProvider.TYPE_DROP_DOWN_CLICK));
+		typeDropdwon1.click();
 				
+	    //Go to Text when we can enter search values
+		WebElement typeDropdwon2 = driver.findElement(By.xpath(XpathProvider.TYPE_DROP_DOWN_ENTER_VLAUE));
+        typeDropdwon2.sendKeys( listType.get(0));
 				
-				nameText.sendKeys(eventName);
+		 //Select value from search result in drop down list
+		WebElement typeDropdwon3 = driver.findElement(By.xpath(XpathProvider.TYPE_DROP_DOWN_CLICK_SEARCHED_VALUE));
+		typeDropdwon3.click();
 				
-				//find elements Type and select value
-				//String type = driver.findElement(By.xpath("//div[@class='ng-scope']/div[2]/div[2]/b")).getText();
-				WebElement typeDropdwon = driver.findElement(By.xpath("//div[@id='s2id_autogen3']/a"));
-				typeDropdwon.click();
+		//Value for attendance allow is coming from excel data set Check/uncheck attendance allow check box
+		List<String> attandence = (List<String>)academicCalendarMap.get("Attendance Allowed");
+		String attandenceAllow = attandence.get(0);
+		
+		WebElement labelYesNo= driver.findElement(By.xpath(XpathProvider.ATTENDANCE_ALLOWED));
+		 
+		if(attandenceAllow.toLowerCase().equals("yes"))
+		{
+			if(!labelYesNo.isSelected())
+				labelYesNo.click();
+			Thread.sleep(5000);	
+		}
+		else
+		{
+			if(labelYesNo.isSelected())
+				labelYesNo.click();
+			Thread.sleep(5000);	
+		}
+		
+						
+		//find date element and select value from date picker
+		List<String> date = (List<String>)academicCalendarMap.get("Date");
+		String date1 = date.get(0);
 				
-				//Go to Text when we can enter search values
-				WebElement typeDropdwon1 = driver.findElement(By.xpath("//div[@id='select2-drop']/div/input"));
-				List<String> listType = (List<String>)academicCalendarMap.get("Type");
-				typeDropdwon1.sendKeys( listType.get(0));
-				
-			   //Select value from search result in drop down list
-				WebElement typeInput = driver.findElement(By.xpath("//div[@id='select2-drop']/ul/li"));
-				typeInput.click();
-				
-				List<String> attandence = (List<String>)academicCalendarMap.get("Attendance Allowed");
-				String attandenceAllow = attandence.get(0);
-				if(!attandenceAllow.equals("Yes"))//---implement it as edit functionality.
-				{
-					WebElement selectItem = driver.findElement(By.xpath("//div[@class='ng-scope']/div[3]/div[2]/input"));
-					selectItem.click();
-				}
-				
-				
-				//find date element and select value from date picker
-				List<String> date = (List<String>)academicCalendarMap.get("Date");
-				String date1 = date.get(0);
-				
-				//System.out.println("Date from Excel: "+ date1);
-				//Call selectDateFromDatePicker for selecting date 
-				WebElement datePicker = driver.findElement(By.xpath("//div[@class='input-group']/input"));
-				datePicker.click();
-				driver = dateUtility.selectDateFromDatePicker(driver, date1);
+		//System.out.println("Date from Excel: "+ date1);
+		//Call selectDateFromDatePicker for selecting date 
+		WebElement datePicker = driver.findElement(By.xpath(XpathProvider.DATE));
+		datePicker.click();
+		driver = dateUtility.selectDateFromDatePicker(driver, date1);
 			
-				//Click on save button
-				WebElement saveButton = driver.findElement(By.xpath("//div[@class='ng-scope']/div[1]/button[1]"));
-				saveButton.click();
-				driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+		//Click on save button FOR  Create Academic calendar
+		WebElement saveButton = driver.findElement(By.xpath(XpathProvider.SAVE_BUTTON));
+		saveButton.click();
+		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+		Thread.sleep(10000);
 				
-		return eventName;
+		return acaCalName;
 	}
 	
-	public boolean isEventNameMatch(WebDriver driver, String academicEventName) {
+	public boolean isAcademicCalendarMatch(WebDriver driver, String academicEventName)
+	{
 		boolean flag= false;
-		List<WebElement> evenNames = driver.findElements(By.xpath("//div[@class='ngCanvas']/div/div[3]/div/div/span"));
+		List<WebElement> evenNames = driver.findElements(By.xpath(XpathProvider.ACADEMIC_CALENDAR_EVENT_NAME));
 		for(WebElement evenName :evenNames)
 		{
-			if(academicEventName.equals(evenName.getText()))
+			System.out.println("even::"+evenName.getText().trim()+"  match :: " +academicEventName.trim());
+			if(academicEventName.trim().equals(evenName.getText().trim()))
 			{
 				flag = true;
 				break;
 			}
 		}
+		System.out.println("Method: "+ flag);
 		return flag;
 	}
 
 	public WebDriver deleteEventAC(WebDriver driver, String eventToBedelete) throws InterruptedException
 	 {
 		 int eventNameIndex=1,buttonIndex=1;
-	     List<WebElement> evenNames = driver.findElements(By.xpath("//div[@class='ngCanvas']/div/div[3]/div/div/span"));
+	     List<WebElement> evenNames = driver.findElements(By.xpath(XpathProvider.ACADEMIC_CALENDAR_EVENT_NAME));
 	  	 for(WebElement evenName :evenNames)
 	  	 {
 	  	    eventNameIndex++;
@@ -104,14 +120,14 @@ public class AcademicCalendarManager
 	  			break;
 	  		}
 	  	}	
-	  	List<WebElement> deleteIcons = driver.findElements(By.xpath("//a[2][@class='ng-scope']/i"));
+	  	List<WebElement> deleteIcons = driver.findElements(By.xpath(XpathProvider.ACADEMIC_CALENDAR_EVENT_DELETE_ICON));
 	  	for(WebElement deleteIcon :deleteIcons)
 	  	{
 	  		buttonIndex++;
 	  		if(eventNameIndex==buttonIndex)
 	  		{
 	  			deleteIcon.click();
-	  			WebElement delete = driver.findElement(By.xpath("//div[@class='modal-footer']/button[2]"));
+	  			WebElement delete = driver.findElement(By.xpath(XpathProvider.ACADEMIC_CALENDAR_EVENT_DELETE_BUTTON));
 	  			delete.click();	
 	  			Thread.sleep(10000);
 	  			break;
@@ -125,7 +141,7 @@ public class AcademicCalendarManager
 	public WebDriver OpeneEventToBeEdit(WebDriver driver, String eventToBeEdit)
 		{  
 			int i=1,j=1;
-			List<WebElement> evenNames = driver.findElements(By.xpath("//div[@class='ngCanvas']/div/div[3]/div/div/span"));
+			List<WebElement> evenNames = driver.findElements(By.xpath(XpathProvider.ACADEMIC_CALENDAR_EVENT_NAME));
 			for(WebElement evenName :evenNames)
 			{
 				i++;
@@ -135,7 +151,7 @@ public class AcademicCalendarManager
 				}
 			}	
 			
-			List<WebElement> editIcons = driver.findElements(By.xpath("//a[1][@class='ng-scope']/i"));
+			List<WebElement> editIcons = driver.findElements(By.xpath(XpathProvider.ACADEMIC_CALENDAR_EVENT_EDIT_ICON));
 			for(WebElement editIcon :editIcons)
 			{
 				j++;

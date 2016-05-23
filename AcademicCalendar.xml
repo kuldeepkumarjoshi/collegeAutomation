@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="AcademicCalendar">
+
+<!-- If add more test cases In this suite, You need to add them as bellow. -->
+
+<test name="CreateAcademicCalendar">
+    <classes>
+        <class name="com.metacube.ipathshala.suite.AcademicCalendar.CreateAcademicCalendar" ></class>  
+    </classes>
+</test>
+
+<test name="EditAcademicCalendar">
+    <classes>
+        <class name="com.metacube.ipathshala.suite.AcademicCalendar.EditAcademicCalendar" ></class>  
+    </classes>
+</test>
+
+
+<test name="DeleteAcademicCalendar">
+    <classes>
+        <class name="com.metacube.ipathshala.suite.AcademicCalendar.DeleteAcademicCalendar" ></class>  
+    </classes>
+</test>
+
+</suite>

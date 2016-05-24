@@ -102,14 +102,16 @@ public class CommanUtility
 				driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 				break;
 			case TabUtilities.ANNOUCEMENT_TAB_NAME:
-			/*	WebElement notificationTab = driver.findElement(By.xpath(XpathProvider.NOTIFICATION_TAB));
-				notificationTab.click();
-				driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-				//Click on Academic_Calendar
-				WebElement academic_Calendar = driver.findElement(By.xpath(XpathProvider.ACADEMIC_CALENDAR_TAB));
-				academic_Calendar.click();
-				driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-				break;*/
+			  //Click on notification tab
+			   WebElement notificationTab1 = driver.findElement(By.xpath(XpathProvider.NOTIFICATION_TAB));
+		       notificationTab1.click();
+		       driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		  
+		      //Click on Announcement
+		      WebElement announcement = driver.findElement(By.xpath("//ul[@id='notification']/li[2]/a"));
+		      announcement.click();
+		      driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+				break;
 			default :System.out.println("tab name not found in application."); 
 		}
 		

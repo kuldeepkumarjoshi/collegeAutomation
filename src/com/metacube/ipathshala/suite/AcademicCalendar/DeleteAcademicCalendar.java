@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -48,16 +49,23 @@ public class DeleteAcademicCalendar
 	public void deleteAcademicCalendar() throws InterruptedException
 	{		
 		try{
-			commanUtility.openModuleTab(driver, TabUtilities.ACADEMIC_CALENDAR_TAB_NAME); 			
+			commanUtility.openModuleTab(driver, TabUtilities.ACADEMIC_CALENDAR_TAB_NAME); 	
+			Thread.sleep(5000);
 			WebElement createAcadCalendar = driver.findElement(By.xpath(XpathProvider.ACADEMIC_CALENDAR_CREATE_BUTTON));
-			createAcadCalendar.click();                                
+			createAcadCalendar.click();
+			
 			String academicEventName =academicCalendarManager.createAcademicCalendar(driver,academicCalendarMap);
 			
 			academicCalendarManager.deleteEventAC(driver,academicEventName);
 			//Verify weather Academic Calendar is created or not 
-			Assert.assertTrue(!academicCalendarManager.isEventNameMatch(driver,academicEventName));
+			Assert.assertTrue(!academicCalendarManager.isAcademicCalendarMatch(driver,academicEventName));
 			}catch(Exception e){
 				e.printStackTrace();
 			}
+	}
+	@AfterClass
+	public void Closebrowser()
+	{
+		driverUtility.closeBrowser();
 	}
 }

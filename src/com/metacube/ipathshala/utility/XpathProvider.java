@@ -27,6 +27,7 @@ public class XpathProvider {
 	public static final String  ACADEMIC_CALENDAR_EVENT_DELETE_ICON = "//a[2][@class='ng-scope']/i";
 	public static final String  ACADEMIC_CALENDAR_EVENT_EDIT_ICON = "//a[1][@class='ng-scope']/i";
 	public static final String  ACADEMIC_CALENDAR_EVENT_DELETE_BUTTON = "//div[@class='modal-footer']/button[2]";
+	//public static final String  ATTENDANCE_ALLOWED = "//div[@class='ng-scope']/div[3]/div[2]/input";
 	                                                           
                                                             	
 	//Date picker 

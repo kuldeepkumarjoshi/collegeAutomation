@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -16,6 +17,7 @@ import com.metacube.ipathshala.manager.AcademicCalendarManager;
 import com.metacube.ipathshala.utility.CommanUtility;
 import com.metacube.ipathshala.utility.DriverUtility;
 import com.metacube.ipathshala.utility.TabUtilities;
+import com.metacube.ipathshala.utility.XpathProvider;
 
 
 public class EditAcademicCalendar
@@ -50,34 +52,30 @@ public class EditAcademicCalendar
 	public void editAcademicCalendar()
 	{
 		try{
-		String eventToBeEdit ="AcadCalHOLIDAY2016-05-17 18-07-50T";					
-		commanUtility.openModuleTab(driver, TabUtilities.ACADEMIC_CALENDAR_TAB_NAME); 		
+				
+		commanUtility.openModuleTab(driver, TabUtilities.ACADEMIC_CALENDAR_TAB_NAME); 
+		Thread.sleep(5000);
 		//Open Event in Edit form to be updated
-		driver=academicCalendarManager.OpeneEventToBeEdit(driver,eventToBeEdit);
-		String academicEventName =academicCalendarManager.createAcademicCalendar(driver,academicCalendarMap);
-		List<String> attandence = (List<String>)academicCalendarMap.get("Attendance Allowed");
-		String attandenceAllow = attandence.get(0);
-		WebElement lableYesNo= driver.findElement(By.xpath("//div[@class='ng-scope']/div[3]/div[2]/input"));
-		 
-		if(attandenceAllow.toLowerCase().equals("yes"))
-		{
-			if(!lableYesNo.isSelected())
-				lableYesNo.click();
-			Thread.sleep(5000);	
-		}
-		else
-		{
-			if(lableYesNo.isSelected())
-				lableYesNo.click();
-			Thread.sleep(5000);	
-		}		
-					
+		//driver=academicCalendarManager.OpeneEventToBeEdit(driver,eventToBeEdit);
 		
-		//find date element and select value from date picker
-		Assert.assertTrue(academicCalendarManager.isAcademicCalendarMatch(driver,academicEventName));
+		//Create Academic Calendar for edit 
+		WebElement createAcadCalendar = driver.findElement(By.xpath(XpathProvider.ACADEMIC_CALENDAR_CREATE_BUTTON));
+		createAcadCalendar.click(); 
+		String academicCalenderName =academicCalendarManager.createAcademicCalendar(driver,academicCalendarMap);
+		String editAcademicCalenderName = academicCalendarManager.academicCalendarToBeEdit(driver,academicCalendarMap,academicCalenderName);
+		
+	
+		Boolean flag = academicCalendarManager.isAcademicCalendarMatch(driver, editAcademicCalenderName);
+		//System.out.println("Out of Method: "+ flag);
+		Assert.assertTrue(flag);
 		}catch(Exception e){
 			e.printStackTrace();
 		}	
+	}
+	@AfterClass
+	public void Closebrowser()
+	{
+		driverUtility.closeBrowser();
 	}
 	
 }

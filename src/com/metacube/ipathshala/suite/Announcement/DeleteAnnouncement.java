@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -19,6 +20,7 @@ import com.metacube.ipathshala.utility.CommanUtility;
 import com.metacube.ipathshala.utility.DateUtility;
 import com.metacube.ipathshala.utility.DriverUtility;
 import com.metacube.ipathshala.utility.ReadExcel;
+import com.metacube.ipathshala.utility.TabUtilities;
 
 public class DeleteAnnouncement
 {
@@ -64,70 +66,27 @@ public class DeleteAnnouncement
 	@Test
 	public void createAnnouncement() throws InterruptedException, AWTException, IOException
 	{
-		//Click on notification tab
-		WebElement notificationTab = driver.findElement(By.xpath("//*[@class ='nav nav-list']/li[2]/a/i"));
-		notificationTab.click();
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		  
-		//Click on Announcement
-		WebElement announcement = driver.findElement(By.xpath("//ul[@id='notification']/li[2]/a"));
-		announcement.click();
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		  
-		//Get Title of announcement which to be edited///
-		  
-		 List<String> announcementTitle1 = (List<String>)announcementMap.get("Title");
-		 String titleName = announcementTitle1.get(0);
-		
-		 //Call function for delete 
-		 driver = deleteEventAC(driver,titleName);
-		
-	    Thread.sleep(10000);
-		 //Verify weather Academic Calendar is edited or not 
-		 	
-		boolean flag= true;
-		List<WebElement> evenNames = driver.findElements(By.xpath("//div[@class='ngCanvas']/div/div[2]/div/div/a"));
-		for(WebElement evenName :evenNames)
-		{
-		 	if(titleName.equals(evenName.getText()))
-		  	{
-		  			flag = false;
-		  			break;
-		  	}
-		  						
-		  				
-		}   System.out.println(flag);
-		  	Assert.assertTrue(flag);
-    }
-	private WebDriver deleteEventAC(WebDriver driver, String eventToBedelete) throws InterruptedException
-	{
-		int i=1,j=1;
-		List<WebElement> evenNames = driver.findElements(By.xpath("//div[@class='ngCanvas']/div/div[2]/div/div/a"));
-		for(WebElement evenName :evenNames)
-		{
-		    i++;
-		  	if(evenName.getText().equals(eventToBedelete))
-		  	{
-		  			break;
-		   	}
-		}	
-		List<WebElement> deleteIcons = driver.findElements(By.xpath("//a[2][@class='ng-scope']/i"));
-		for(WebElement deleteIcon :deleteIcons)
-		{
-			j++;
-			if(i==j)
-		 	{
-		  		deleteIcon.click();
-		  		WebElement delete = driver.findElement(By.xpath("//div[@class='modal-footer']/button[2]"));
-		  		delete.click();	
-		  		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		  		break;
-		  					
-		  	}
-		}
-		  			
-	    return driver;
-			  			
+		try{
+			commanUtility.openModuleTab(driver, TabUtilities.ANNOUCEMENT_TAB_NAME); 
+			Thread.sleep(5000);
+			
+			//Click on  createAnnouncement button
+			WebElement createAnnouncement = driver.findElement(By.xpath("//div[@class='row']/div[1]/button"));
+		    createAnnouncement.click();
+		   //Call function for creating AcademicCalendarManager
+			String announcementName =announcementManager.createAnnouncementName(driver,announcementMap);
+			Thread.sleep(5000);
+			announcementManager.deleteEventannouncement(driver,announcementName);
+			Thread.sleep(5000);
+			//Verify weather Academic Calendar is created or not 
+			Assert.assertTrue(!announcementManager.isAnnouncementMatch(driver,announcementName));
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 	}
-
+	@AfterClass
+	public void Closebrowser()
+	{
+		driverUtility.closeBrowser();
+	}	
 }

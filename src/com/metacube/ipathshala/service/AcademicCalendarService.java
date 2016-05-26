@@ -25,7 +25,7 @@ public class AcademicCalendarService
 		return academicCalendarData; 
 	}
 
-	public MultiMap getAcademicCalendarSuiteS(String suiteFileName, String sheetName) 
+	/*public MultiMap getAcademicCalendarSuiteS(String suiteFileName, String sheetName) 
 	{
 		System.out.println(" under service");
 		MultiMap academicCalendarData = new MultiValueMap();
@@ -42,6 +42,6 @@ public class AcademicCalendarService
 	{
 		academicCalendarDAO.writeResultInSuiteAC(suiteFileName,sheetName,suiteName,columnSkipped_Executed,testSuiteStatus);
 		
-	}
+	}*/
 
 }

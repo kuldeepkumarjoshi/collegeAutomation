@@ -27,7 +27,7 @@ public class AcademicCalendarManager
 		return academicCalendarService.getAcademicCalendar(TestCaseName);
 	}
 	
-	//Data required for test suite status whether it is to be executed or not
+	/*//Data required for test suite status whether it is to be executed or not
 	public MultiMap getAcademicCalendarSuiteM(String suiteFileName, String sheetName)
 	{
 		System.out.println(" under Manager");
@@ -40,7 +40,7 @@ public class AcademicCalendarManager
 		academicCalendarService.writeResultInSuiteAC(suiteFileName,sheetName,suiteName,columnSkipped_Executed,testSuiteStatus);
 		
 	}
-
+*/
 	public String createAcademicCalendar(WebDriver driver, MultiMap academicCalendarMap) throws IOException, InterruptedException
 	{		
 		//This is list of items of academicCalendarName from Excel data Set

@@ -8,12 +8,14 @@ import org.testng.SkipException;
 import org.testng.annotations.BeforeSuite;
 
 import com.metacube.ipathshala.manager.AcademicCalendarManager;
+import com.metacube.ipathshala.manager.SuiteRunManager;
 import com.metacube.ipathshala.utility.ReadExcel;
 
 public class AnnouncementSuite 
 {
-	MultiMap academicCalendarMap;
-	private AcademicCalendarManager academicCalendarManager = new AcademicCalendarManager();
+	MultiMap suiteRunMap;
+	//private AcademicCalendarManager academicCalendarManager = new AcademicCalendarManager();
+	private SuiteRunManager suiteRunManager = new SuiteRunManager();
 	ReadExcel FilePath = null;
 	String SheetName = null;
 	String SuiteName = null;
@@ -32,8 +34,8 @@ public class AnnouncementSuite
 		SuiteName = "Announcement";
 		ToRunColumnName = "SuiteToRun";
 		
-		academicCalendarMap = academicCalendarManager.getAcademicCalendarSuiteM(suiteFileName,SheetName);	
-		List<String> suiteToRun = (List<String>)academicCalendarMap.get("SuiteToRun");
+		suiteRunMap = suiteRunManager.getAcademicCalendarSuiteM(suiteFileName,SheetName);	
+		List<String> suiteToRun = (List<String>)suiteRunMap.get("SuiteToRun");
 		String suiteAcademicCalendar= suiteToRun.get(1);
 		System.out.println(suiteAcademicCalendar);
 		
@@ -41,11 +43,11 @@ public class AnnouncementSuite
 		if (!suiteAcademicCalendar.toLowerCase().equals("yes"))
 		{
 			//To report SuiteOne as 'Skipped' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = no.
-			academicCalendarManager.writeResultInSuiteAC(suiteFileName,SheetName,SuiteName,"Skipped/Executed","Skipped");
+			suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,SuiteName,"Skipped/Executed","Skipped");
 			//It will throw SkipException to skip test suite's execution and suite will be marked as skipped In testng report.
 			throw new SkipException(SuiteName+"'s SuiteToRun  Is 'No' Or Blank. So Skipping Execution Of "+SuiteName);
 		}
 		  //To report SuiteOne as 'Executed' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = Y.
-		  academicCalendarManager.writeResultInSuiteAC(suiteFileName,SheetName,SuiteName,"Skipped/Executed","Executed");
+		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,SuiteName,"Skipped/Executed","Executed");
 	}
 }

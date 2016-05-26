@@ -3,8 +3,25 @@ package com.metacube.ipathshala.utility;
 public class AssignFilePath
 {
 	public static ReadExcel ReadExcelObj=null;
-		 
-	public ReadExcel xlsFilePath(String testdata)
+		
+	
+	public static ReadExcel xlsFilePath(String testdata)
+	{
+		ReadExcelObj = new ReadExcel(System.getProperty("user.dir")+"\\Test Data\\" + testdata + ".xls");
+		return ReadExcelObj;
+		
+	}
+	
+	public static ReadExcel xlsFilePathForTestSuite(String testdata)
+	{
+		ReadExcelObj = new ReadExcel(System.getProperty("user.dir")+"\\Suite running status\\" + testdata + ".xls");
+		return ReadExcelObj;
+		
+	}
+	
+	
+		
+	/*public ReadExcel xlsFilePath1(String testdata)
 	{
 		
 		switch (testdata)
@@ -60,7 +77,7 @@ public class AssignFilePath
 		    System.out.println("This test data for "+testdata+" not present"  );		    
 		}
 		return ReadExcelObj;
-	}
+	}*/
 	
 	
 

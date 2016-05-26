@@ -2,6 +2,11 @@
 <suite name="Announcement">
 
 <!-- If add more test cases In this suite, You need to add them as bellow. -->
+<test name="AnnouncementSuite">
+    <classes>
+        <class name="com.metacube.ipathshala.suite.Announcement.AnnouncementSuite" ></class>  
+    </classes>
+</test>
 
 <test name="CreateAnnouncement">
     <classes>

@@ -106,7 +106,7 @@ public class AnnouncementManager
 	     
 	     //Calling function for upload file after click on Attachment button
 	     commanUtility.uploadAttachment(attachmentFilePath);
-	     //driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+	     driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
 	       
 	     Thread.sleep(10000);
 	     //click on save button for saving Announcement

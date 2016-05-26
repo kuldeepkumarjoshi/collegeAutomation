@@ -304,5 +304,60 @@ public class ReadExcel
 		}
 		return true;
 	}
+	
+	//Write test suite status in test suite excel file 
+	public void writeResultToSuiteList(String sheetName,String columnSkipped_Executed, String suiteName,String testSuiteStatus)
+	{
+		try{
+			int rowNum = retrieveNoOfRows(sheetName);
+			int rowNumber=-1;
+			int sheetIndex=wb.getSheetIndex(sheetName);
+			//if(sheetIndex==-1)
+			//	return false;			
+			int colNum = retrieveNoOfCols(sheetName);
+			int colNumber=-1;
+					
+			
+			HSSFRow Suiterow = ws.getRow(0);			
+			for(int i=0; i<colNum; i++){				
+				if(Suiterow.getCell(i).getStringCellValue().equals(columnSkipped_Executed.trim())){
+					colNumber=i;					
+				}					
+			}
+			
+			//if(colNumber==-1){
+				//return false;				
+			//}
+			
+			for (int i=0; i<rowNum-1; i++){
+				HSSFRow row = ws.getRow(i+1);				
+				HSSFCell cell = row.getCell(0);	
+				cell.setCellType(Cell.CELL_TYPE_STRING);
+				String value = cellToString(cell);	
+				if(value.equals(suiteName)){
+					rowNumber=i+1;
+					break;
+				}
+			}		
+			
+			HSSFRow Row = ws.getRow(rowNumber);
+			HSSFCell cell = Row.getCell(colNumber);
+			if (cell == null)
+		        cell = Row.createCell(colNumber);			
+			
+			cell.setCellValue(testSuiteStatus);
+			
+			opstr = new FileOutputStream(filelocation);
+			wb.write(opstr);
+			opstr.close();
+			
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			//return false;
+		}
+		//return true;
+		
+	}
 
 }

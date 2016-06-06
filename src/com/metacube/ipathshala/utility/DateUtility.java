@@ -1,6 +1,7 @@
 package com.metacube.ipathshala.utility;
 
 import java.util.List;
+import java.util.Random;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -295,7 +296,7 @@ public class DateUtility
    }
 	
   public String addTimeStamp(String name) throws IOException
- {
+  {
 		Date date = new Date() ;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss") ;
 		String name1 = name + dateFormat.format(date);
@@ -305,5 +306,17 @@ public class DateUtility
 		//out.close();
 		return name1;
 		
-	}
+  }
+  
+   public String getRandom(String label)
+   {
+	   /*int array [] = {A,B,C,D,E,F,G,8,9,10,11,12};
+       int rnd = new Random().nextInt(array.length);*/
+	   Random randomno = new Random();
+	   int rnd= randomno.nextInt(1000);
+       String label1 = label + String.valueOf(rnd) ;
+       return label1;
+    }
+
+
 }

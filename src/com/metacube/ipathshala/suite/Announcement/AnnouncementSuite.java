@@ -34,13 +34,13 @@ public class AnnouncementSuite
 		SuiteName = "Announcement";
 		ToRunColumnName = "SuiteToRun";
 		
-		suiteRunMap = suiteRunManager.getAcademicCalendarSuiteM(suiteFileName,SheetName);	
+		suiteRunMap = suiteRunManager.getRunStatusOfSuiteOrTestCaseAtManager(suiteFileName,SheetName);	
 		List<String> suiteToRun = (List<String>)suiteRunMap.get("SuiteToRun");
-		String suiteAcademicCalendar= suiteToRun.get(1);
-		System.out.println(suiteAcademicCalendar);
+		String suiteStatusOfAnnouncement= suiteToRun.get(1);
+		//System.out.println(suiteStatusOfAnnouncement);
 		
 		//If SuiteToRun == "no" suiteToRunhen AcademicCalendarSuite will be skipped from execution.
-		if (!suiteAcademicCalendar.toLowerCase().equals("yes"))
+		if (!suiteStatusOfAnnouncement.toLowerCase().equals("yes"))
 		{
 			//To report SuiteOne as 'Skipped' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = no.
 			suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,SuiteName,"Skipped/Executed","Skipped");

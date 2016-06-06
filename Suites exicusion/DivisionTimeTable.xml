@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="DivisionTimeTable">
+
+<!-- If add more test cases In this suite, You need to add them as bellow. -->
+<test name="DivisionTimeTableSuite">
+    <classes>
+        <class name="com.metacube.ipathshala.suite.DivisionTimeTable.DivisionTimeTableSuite" ></class>  
+    </classes>
+</test>
+
+<test name="CreateDivisionTimeTable">
+    <classes>
+        <class name="com.metacube.ipathshala.suite.DivisionTimeTable.CreateDivisionTimeTable" ></class>  
+    </classes>
+</test>
+
+
+<test name="EditDivisionTimeTable">
+    <classes>
+        <class name="com.metacube.ipathshala.suite.DivisionTimeTable.EditDivisionTimeTable" ></class>  
+    </classes>
+</test>
+
+<test name="DeleteDivisionTimeTable">
+    <classes>
+        <class name="com.metacube.ipathshala.suite.DivisionTimeTable.DeleteDivisionTimeTable" ></class>  
+    </classes>
+</test>
+
+</suite>

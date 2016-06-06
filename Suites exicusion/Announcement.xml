@@ -20,8 +20,6 @@
     </classes>
 </test>
 
-
-
 <test name="DeleteAnnouncement">
     <classes>
         <class name="com.metacube.ipathshala.suite.Announcement.DeleteAnnouncement" ></class>  

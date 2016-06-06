@@ -8,16 +8,16 @@ public class SuiteRunDao
 {
 	private SuiteUtility suiteUtility = new SuiteUtility();
 	
-	public Object[][] getAcademicCalendarSuiteDao(String suitefileName,String sheetName)
+	public Object[][] getRunStatusOfSuiteOrTestCaseAtDao(String suitefileName,String sheetName)
 	{
-		System.out.println(" under dao");
+		//System.out.println(" under dao");
 		AssignFilePath assignFilePath = new AssignFilePath();
 		ReadExcel readExcel = assignFilePath.xlsFilePathForTestSuite(suitefileName);
 		Object[][] rowData = suiteUtility.GetTestDataUtility(readExcel,sheetName);
 		int rows = rowData.length;
 		int cols = rowData[0].length;
-		System.out.println("rows: "+ rows);
-		System.out.println("cols: "+ cols);
+		//System.out.println("rows: "+ rows);
+		//System.out.println("cols: "+ cols);
 		
 		 return rowData;
 	}

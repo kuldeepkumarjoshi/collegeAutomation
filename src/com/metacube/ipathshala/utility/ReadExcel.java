@@ -181,7 +181,7 @@ public class ReadExcel
 								cell.setCellType(Cell.CELL_TYPE_STRING);
 								String value = cellToString(cell);
 								data[i][j] = value.trim();		
-								//System.out.print(value + "; ");
+								System.out.print(value + "; ");
 							}
 						}
 					}

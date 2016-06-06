@@ -21,10 +21,10 @@ public class SuiteRunManager
 	private SuiteRunService suiteRunService = new SuiteRunService();
 	
 	
-	public MultiMap getAcademicCalendarSuiteM(String suiteFileName, String sheetName)
+	public MultiMap getRunStatusOfSuiteOrTestCaseAtManager(String suiteFileName, String sheetName)
 	{
-		System.out.println(" under Manager");
-		return suiteRunService.getAcademicCalendarSuiteS(suiteFileName,sheetName);
+		//System.out.println(" under Manager");
+		return suiteRunService.getRunStatusOfSuiteOrTestCaseAtService(suiteFileName,sheetName);
 		
 	}
     //Write test suite status in test suite excel file 

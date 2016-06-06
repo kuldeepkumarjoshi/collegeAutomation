@@ -13,15 +13,15 @@ public class SuiteRunService
 	private CommanUtility commanUtility = new CommanUtility();
 	
 	
-	public MultiMap getAcademicCalendarSuiteS(String suiteFileName, String sheetName) 
+	public MultiMap getRunStatusOfSuiteOrTestCaseAtService(String suiteFileName, String sheetName) 
 	{
-		System.out.println(" under service");
+		//System.out.println(" under service");
 		MultiMap academicCalendarData = new MultiValueMap();
-		Object[][] rowData =  suiteRunDao.getAcademicCalendarSuiteDao(suiteFileName,sheetName);
-		System.out.println(rowData);
+		Object[][] rowData =  suiteRunDao.getRunStatusOfSuiteOrTestCaseAtDao(suiteFileName,sheetName);
+		//System.out.println(rowData);
 		// create multimap to store key and values from 2d Array
 		academicCalendarData = commanUtility.createMapFromData(rowData);
-		System.out.println(academicCalendarData);
+		//System.out.println(academicCalendarData);
 		return academicCalendarData; 
 	}
     

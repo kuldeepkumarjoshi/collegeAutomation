@@ -1,10 +1,8 @@
-package com.metacube.ipathshala.suite.AcademicCalendar;
-
+package com.metacube.ipathshala.suite.DivisionTimeTable;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.FileHandler;
-import java.util.logging.SimpleFormatter;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.collections.MultiMap;
 import org.apache.log4j.Logger;
@@ -12,36 +10,43 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.ITestResult;
 import org.testng.SkipException;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.metacube.ipathshala.constant.ServerCommonConstant;
 import com.metacube.ipathshala.manager.AcademicCalendarManager;
+import com.metacube.ipathshala.manager.DivisionTimeTableManager;
 import com.metacube.ipathshala.manager.SuiteRunManager;
+import com.metacube.ipathshala.suite.AcademicCalendar.CreateAcademicCalendar;
 import com.metacube.ipathshala.utility.CommanUtility;
 import com.metacube.ipathshala.utility.DriverUtility;
+import com.metacube.ipathshala.utility.LoginUtility;
 import com.metacube.ipathshala.utility.ReadExcel;
 import com.metacube.ipathshala.utility.TabUtilities;
 import com.metacube.ipathshala.utility.TestCaseResult;
 import com.metacube.ipathshala.utility.XpathProvider;
 
-public class CreateAcademicCalendar 
+public class CreateDivisionTimeTable
 {
 	public WebDriver driver;
 	private DriverUtility driverUtility = new DriverUtility();
 	private CommanUtility commanUtility = new CommanUtility(); 
 	 
 	MultiMap suiteRunMap;
-	MultiMap academicCalendarMap;
+	MultiMap divisionTimeTableMap;
 	private SuiteRunManager suiteRunManager = new SuiteRunManager();
-	private AcademicCalendarManager academicCalendarManager = new AcademicCalendarManager();
+	private DivisionTimeTableManager divisionTimeTableManager =new DivisionTimeTableManager();
+	
+	private LoginUtility loginutility = new LoginUtility();
 		
-	String TestCaseName = null;	
+	String testCaseName = null;	
 	ReadExcel FilePath = null;
 	String SheetName = null;
 	String SuiteName = null;
@@ -50,10 +55,9 @@ public class CreateAcademicCalendar
 	/*SuiteName = "AcademicCalendar";
 	ToRunColumnName = "SuiteToRun"*/
 			
-	 Logger logger = Logger.getLogger(CreateAcademicCalendar.class.getName());
-	 
+		 
 	@BeforeClass
-	public void applicationLogin() throws InterruptedException
+	public void applicationAdminLogin() throws InterruptedException
 	{
 		driver = driverUtility.launchBrowser();
 	    String url = ServerCommonConstant.URL;
@@ -61,29 +65,35 @@ public class CreateAcademicCalendar
 	    driver = commanUtility.loginByAdmin(driver);
 	    
 	}
-	 	 
+	
+	@BeforeClass(dependsOnMethods="applicationAdminLogin")
+	public void applicationTeacherLogin() throws InterruptedException
+	{
+		loginutility.loginAsTeacher(driver);
+	}
+
 	@BeforeTest 
 	public void testData()
 	{
 		
-		TestCaseName = this.getClass().getSimpleName();
+		testCaseName = this.getClass().getSimpleName();
 		
-		academicCalendarMap = academicCalendarManager.getAcademicCalendar(TestCaseName);	
+		divisionTimeTableMap = divisionTimeTableManager.getdivisionTimeTableAtManager(testCaseName);	
 		
 	}
 	
 	@BeforeTest (dependsOnMethods="testData")
-	public void checkTestCaseToRun() throws IOException
+	public void checkSuiteToRun() throws IOException
 	{		
-		logger.info("Ashok Singh1");
+	
 		//System.out.println("checkSuiteToRun");
 		//To set TestSuiteList.xls file's path In FilePath Variable.
 		//FilePath = "TestSuiteList";
-		SheetName = "AcademicCalendar";
+		SheetName = "DivisionTimeTable";
 		suiteFileName = "CollegeTestSuites";
-		SuiteName = "AcademicCalendar";
+		SuiteName = "DivisionTimeTable";
 		ToRunColumnName = "SuiteToRun";
-		TestCaseName = this.getClass().getSimpleName();
+		testCaseName = this.getClass().getSimpleName();
 		suiteRunMap = suiteRunManager.getRunStatusOfSuiteOrTestCaseAtManager(suiteFileName,SheetName);	
 		List<String> suiteToRun = (List<String>)suiteRunMap.get("CaseToRun");
 		String testCaseStatus= suiteToRun.get(0);
@@ -94,36 +104,47 @@ public class CreateAcademicCalendar
 		if (!testCaseStatus.toLowerCase().equals("yes"))
 		{
 			//To report SuiteOne as 'Skipped' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = no.
-			suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,TestCaseName,"Pass/Fail/Skip","Skipped");
+			suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,testCaseName,"Pass/Fail/Skip","Skipped");
 			//It will throw SkipException to skip test suite's execution and suite will be marked as skipped In testng report.
-			logger.info("Ashok Singh2");
-			throw new SkipException(TestCaseName+"'s TestCaseToRun  Is 'No' Or Blank. So Skipping Execution Of "+SuiteName);
+			
+			throw new SkipException(testCaseName+"'s TestCaseToRun  Is 'No' Or Blank. So Skipping Execution Of "+SuiteName);
 			
 		}
 		  //To report SuiteOne as 'Executed' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = Y.
-		logger.info("Ashok Singh3");
-		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,TestCaseName,"Pass/Fail/Skip","Executed");
+		
+		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,testCaseName,"Pass/Fail/Skip","Executed");
 		
 				
 	}	
-
+       
 		
 	
 	@Test
-	public void createAcademicCalendar() 
+	public void createDivisionTimeTable() 
 	{	
 		try{
-		commanUtility.openModuleTab(driver, TabUtilities.ACADEMIC_CALENDAR_TAB_NAME);
+		commanUtility.openModuleTab(driver, TabUtilities.DIVISION_TIMETABLE_TAB_NAME);
 		Thread.sleep(5000);
-		//Click on  AcademicCalendarManager button
-		WebElement createAcadCalendar = driver.findElement(By.xpath(XpathProvider.ACADEMIC_CALENDAR_CREATE_BUTTON));
-		createAcadCalendar.click(); 
+		//Click on  DivisionTimeTable button
+		WebElement createCreateTimeTable = driver.findElement(By.xpath(XpathProvider.DIVISION_TIME_TABLE_CREATE_BUTTON));
+		createCreateTimeTable.click(); 
 		
-		//Call function for creating AcademicCalendarManager
-		String academicCalenderName =academicCalendarManager.createAcademicCalendar(driver,academicCalendarMap);
-		//Verify weather Academic Calendar is created or not 
-		Boolean flag = academicCalendarManager.isAcademicCalendarMatch(driver,academicCalenderName);
-		//System.out.println("Out of Method: "+ flag);
+		//Call function for creating divisionTimeTableName
+		String divisionTimeTableName =divisionTimeTableManager.creaeDivisionTimeTable(driver,divisionTimeTableMap);
+		System.out.println("Time Table: " + divisionTimeTableName);
+		
+		String  TimeTableButton =  XpathProvider.TIME_TABLE_PERIOD_MONDAY_BUTTON;
+		String  TimeTableEditButton =  XpathProvider.TIME_TABLE_PERIOD_MONDAY_EDIT_ICON;
+		
+		//divisionTimeTableManager.createTimeTableEntry(driver,divisionTimeTableMap);
+		divisionTimeTableManager.createTimeTableEntryNew(driver,divisionTimeTableMap,TimeTableButton,TimeTableEditButton);
+		Thread.sleep(5000);
+		driver.navigate().refresh();
+		
+		
+		//Write code after clicking on Period of time table
+		Boolean flag = divisionTimeTableManager.isDivisionTimeTableMatch(driver,divisionTimeTableName);
+		System.out.println("Out of Method: "+ flag);
 		
 		Assert.assertTrue(flag);
 		}catch(Exception e){
@@ -135,12 +156,12 @@ public class CreateAcademicCalendar
 	@AfterMethod
 	public void tearDown(ITestResult result)
 	{   
-		TestCaseName = this.getClass().getSimpleName();
-		SheetName = "AcademicCalendar";
+		testCaseName = this.getClass().getSimpleName();
+		SheetName = "DivisionTimeTable";
 		suiteFileName = "CollegeTestSuites";
-		TestCaseResult testCaseResult = new TestCaseResult();
-		String status = testCaseResult.testCaseResult(result);
-		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,TestCaseName,"Pass/Fail/Skip",status);
+		TestCaseResult testCaseResult1 = new TestCaseResult();
+		String status = testCaseResult1.testCaseResult(result);
+		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,testCaseName,"Pass/Fail/Skip",status);
 	}
 	
 	
@@ -150,7 +171,5 @@ public class CreateAcademicCalendar
 	{
 		driverUtility.closeBrowser();
 	}
-	
-		
-	
+
 }

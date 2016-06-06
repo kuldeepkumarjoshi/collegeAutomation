@@ -42,7 +42,7 @@ public class AcademicCalendarManager
 	}
 */
 	public String createAcademicCalendar(WebDriver driver, MultiMap academicCalendarMap) throws IOException, InterruptedException
-	{		
+	{	
 		//This is list of items of academicCalendarName from Excel data Set
 		List<String> listAcademicCalendarName = (List<String>)academicCalendarMap.get("Name");
 		//String acaCalName= listAcademicCalendarName.get(0);
@@ -120,7 +120,7 @@ public class AcademicCalendarManager
 				break;
 			}
 		}
-		System.out.println("Method: "+ flag);
+		//System.out.println("Method: "+ flag);
 		return flag;
 	}
 

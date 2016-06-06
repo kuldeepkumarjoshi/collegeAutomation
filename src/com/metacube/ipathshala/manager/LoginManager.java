@@ -61,7 +61,7 @@ public class LoginManager
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 		String actualTitle1= driver.getTitle();
-	    System.out.println("Title Just After Login: "+ actualTitle1 +" But Expected was 'Google Accounts'");
+	   // System.out.println("Title Just After Login: "+ actualTitle1 +" But Expected was 'Google Accounts'");
 	    String expectedTitle1= "Google Accounts";
 	    flag1 = actualTitle1.equals(expectedTitle1);
 		if(flag1)
@@ -70,14 +70,14 @@ public class LoginManager
 		   metaCampusAdmin.click();
 		   driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		   String actualTitle= driver.getTitle();
-		   System.out.println("Title College Site: " + actualTitle);
+		  // System.out.println("Title College Site: " + actualTitle);
 		   String expectedTitle="Metacampus";
 		   flag =actualTitle.equals(expectedTitle);
 		   if (flag)
 		   {
 			   WebElement message1 = driver.findElement(By.xpath("//*[@class='container ng-scope']/div[1]/span[1]"));
 			   WebElement message2 = driver.findElement(By.xpath("//*[@class='container ng-scope']/div[1]/span[2]"));
-			   System.out.println(message1.getText() + message2.getText());
+			   //System.out.println(message1.getText() + message2.getText());
 	 	       Assert.assertTrue(flag);
 		   }
 		   else

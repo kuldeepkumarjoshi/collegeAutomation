@@ -13,10 +13,10 @@ public class AnnouncementDAO
 	   AssignFilePath assignFilePath = new AssignFilePath();
 	   ReadExcel readExcel = assignFilePath.xlsFilePath("Announcement");
 	   Object[][] rowData = suiteUtility.GetTestDataUtility(readExcel,TestCaseName);
-	   int rows = rowData.length;
-	   int cols = rowData[0].length;
-	   System.out.println("rows dao: "+ rows);
-	   System.out.println("cols dao: "+ cols);
+	  // int rows = rowData.length;
+	  // int cols = rowData[0].length;
+	  // System.out.println("rows dao: "+ rows);
+	  // System.out.println("cols dao: "+ cols);
 	  // System.out.println(" under dao:" +rowData);	
 		
 		return rowData;

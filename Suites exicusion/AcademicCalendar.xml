@@ -4,7 +4,7 @@
 <!-- If add more test cases In this suite, You need to add them as bellow. -->
 <test name="AcademicCalendarSuite">
     <classes>
-        <class name="com.metacube.ipathshala.suite.AcademicCalendar.AcademicCalendarSuite" ></class>  
+        <class name="test.java.suite.AcademicCalendar.AcademicCalendarSuite" ></class>  
     </classes>
 </test>
 

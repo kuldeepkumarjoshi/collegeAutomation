@@ -16,7 +16,7 @@ public class uploadFile
 	public void fileUploadMethod() throws IOException, InterruptedException
 	{
 		
-		WebElement uploadButton =driver.findElement(By.xpath("//div[@id='upd']"));
+		WebElement uploadButton =driver.findElement(By.xpath(XpathProvider.UPLOAD_BUTTON));
 		uploadButton.click();
 		Thread.sleep(5000);
 		

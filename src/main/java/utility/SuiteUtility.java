@@ -14,11 +14,13 @@ public class SuiteUtility
 		return Flag;		
 	}
 	
-	public static String[] checkToRunUtilityOfData(ReadExcel xls, String sheetName, String ColName){		
+	/*public static String[] checkToRunUtilityOfData(ReadExcel xls, String sheetName, String ColName)
+	{		
 		return xls.retrieveToRunFlagTestData(sheetName,ColName);		 	
-	}
+	}*/
  
-	public static Object[][] GetTestDataUtility(ReadExcel xls, String sheetName){
+	public static Object[][] GetTestDataUtility(ReadExcel xls, String sheetName)
+	{
 		//System.out.println(" under GetTestDataUtility");
 		return xls.retrieveTestData(sheetName);	
 	}

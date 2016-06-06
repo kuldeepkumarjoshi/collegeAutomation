@@ -5,10 +5,12 @@ public class TabUtilities {
 	//----index as integer value of tab.
 	public static final int ACADEMIC_CALENDAR_TAB_INDEX = 1;
 	public static final int ANNOUCEMENT_TAB_INDEX = 2;
+	public static final int DIVISION_TIMETABLE_INDEX = 3;
 	
 	//----Name as string value of tab.
 	public static final String  ACADEMIC_CALENDAR_TAB_NAME = "academic_calendar";
 	public static final String  ANNOUCEMENT_TAB_NAME = "annoucement";
+	public static final String  DIVISION_TIMETABLE_TAB_NAME = "DivisionTimeTable";
 	
 	
 	public static int toInt(String tabName){

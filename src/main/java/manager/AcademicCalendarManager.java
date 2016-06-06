@@ -20,14 +20,29 @@ public class AcademicCalendarManager
 	MultiMap academicCalendarMap;
 	private AcademicCalendarService academicCalendarService = new AcademicCalendarService();
 	
+	//Data required for test cases execution
 	public MultiMap getAcademicCalendar(String TestCaseName)
 	{
 		//System.out.println(" under Manager");
 		return academicCalendarService.getAcademicCalendar(TestCaseName);
 	}
 	
+	/*//Data required for test suite status whether it is to be executed or not
+	public MultiMap getAcademicCalendarSuiteM(String suiteFileName, String sheetName)
+	{
+		System.out.println(" under Manager");
+		return academicCalendarService.getAcademicCalendarSuiteS(suiteFileName,sheetName);
+		
+	}
+    //Write test suite status in test suite excel file 
+	public void writeResultInSuiteAC(String suiteFileName, String sheetName,String suiteName, String columnSkipped_Executed, String testSuiteStatus) 
+	{
+		academicCalendarService.writeResultInSuiteAC(suiteFileName,sheetName,suiteName,columnSkipped_Executed,testSuiteStatus);
+		
+	}
+*/
 	public String createAcademicCalendar(WebDriver driver, MultiMap academicCalendarMap) throws IOException, InterruptedException
-	{		
+	{	
 		//This is list of items of academicCalendarName from Excel data Set
 		List<String> listAcademicCalendarName = (List<String>)academicCalendarMap.get("Name");
 		//String acaCalName= listAcademicCalendarName.get(0);
@@ -105,7 +120,7 @@ public class AcademicCalendarManager
 				break;
 			}
 		}
-		System.out.println("Method: "+ flag);
+		//System.out.println("Method: "+ flag);
 		return flag;
 	}
 
@@ -233,6 +248,7 @@ public class AcademicCalendarManager
 			
 			
 	}
-		
+
+	
 	
 }

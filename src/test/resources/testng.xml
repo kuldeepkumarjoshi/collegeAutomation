@@ -6,6 +6,7 @@
 <!-- If you have more test suites, Please add them bellow. -->
    		<suite-file path="./Suites exicusion/AcademicCalendar.xml" />
    		<suite-file path="./Suites exicusion/Announcement.xml" />
+   		<suite-file path="./Suites exicusion/DivisionTimeTable.xml" />
    
   </suite-files>
   

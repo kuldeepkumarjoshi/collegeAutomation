@@ -2,19 +2,26 @@ package test.java.suite.Announcement;
 
 import java.awt.AWTException;
 import java.io.IOException;
+import java.util.List;
 
 import main.java.manager.AnnouncementManager;
+import main.java.manager.SuiteRunManager;
 import main.java.utility.CommanUtility;
 import main.java.utility.DriverUtility;
 import main.java.utility.ReadExcel;
 import main.java.utility.TabUtilities;
+import main.java.utility.TestCaseResult;
+import main.java.utility.XpathProvider;
 
 import org.apache.commons.collections.MultiMap;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.ITestResult;
+import org.testng.SkipException;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -22,29 +29,38 @@ import org.testng.annotations.Test;
 public class EditAnnouncement
 {
 	public WebDriver driver;
+	
 		
 	MultiMap announcementMap;
 	private AnnouncementManager announcementManager = new AnnouncementManager();
+	
+	MultiMap suiteRunMap;
+	 private SuiteRunManager suiteRunManager = new SuiteRunManager();
 		
 	ReadExcel FilePath = null;	
 	String SheetName = null;
 	String TestCaseName = null;	
 	String ToRunColumnNameTestCase = null;
 	String ToRunColumnNameTestData = null;
-	String TestDataToRun[]=null;
+	String TestDataToRun[] =null;
 	String testData = "AcademicCalendar";
 	static int DataSet=-1;	
 	static boolean Testskip=false;
 		
+	
+	String SuiteName = null;
+	String ToRunColumnName = null;	
+	String suiteFileName = null;
+	
+		
+	
 	@BeforeClass
-	public void applicationLogin()
+	public void applicationLogin() throws InterruptedException
 	{
 	    driver = DriverUtility.launchBrowser();
 	    String url = "http://metacampus1.appspot.com/" ;
 	    driver = DriverUtility.passCollegeApplicationUrl(driver,url);
 	    driver = CommanUtility.loginByAdmin(driver);
-	   
-	    
 	   
 	}
 	 	 
@@ -58,6 +74,37 @@ public class EditAnnouncement
 	  
 	}
 	
+	@BeforeTest
+	public void checkTestCaseToRun() throws IOException
+	{
+		System.out.println("checkSuiteToRun");
+		//To set TestSuiteList.xls file's path In FilePath Variable.
+		//FilePath = "TestSuiteList";
+		SheetName = "Announcement";
+		suiteFileName = "CollegeTestSuites";
+		SuiteName = "Announcement";
+		ToRunColumnName = "SuiteToRun";
+		TestCaseName = this.getClass().getSimpleName();
+		suiteRunMap = suiteRunManager.getRunStatusOfSuiteOrTestCaseAtManager(suiteFileName,SheetName);	
+		List<String> suiteToRun = (List<String>)suiteRunMap.get("CaseToRun");
+		String testCaseStatus= suiteToRun.get(1);
+		System.out.println("Test Case: "+testCaseStatus);
+		
+		//If SuiteToRun == "no" suiteToRunhen AcademicCalendarSuite will be skipped from execution.
+		if (!testCaseStatus.toLowerCase().equals("yes"))
+		{
+			//To report SuiteOne as 'Skipped' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = no.
+			suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,TestCaseName,"Pass/Fail/Skip","Skipped");
+			//It will throw SkipException to skip test suite's execution and suite will be marked as skipped In testng report.
+			throw new SkipException(TestCaseName+"'s TestCaseToRun  Is 'No' Or Blank. So Skipping Execution Of "+TestCaseName);
+		}
+		  //To report SuiteOne as 'Executed' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = Y.
+		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,TestCaseName,"Pass/Fail/Skip","Executed");
+		
+				
+	}	
+	
+	
 	
 	@Test
 	public void editAnnouncement() throws InterruptedException, AWTException, IOException
@@ -67,7 +114,7 @@ public class EditAnnouncement
 			Thread.sleep(5000);
 			
 			//Click on  createAnnouncement button
-			WebElement createAnnouncement = driver.findElement(By.xpath("//div[@class='row']/div[1]/button"));
+			WebElement createAnnouncement = driver.findElement(By.xpath(XpathProvider.ANNOUNCEMENT_CREATE_BUTTON));
 		    createAnnouncement.click();
 		   //Call function for creating AcademicCalendarManager
 			String announcementName =announcementManager.createAnnouncementName(driver,announcementMap);
@@ -75,6 +122,7 @@ public class EditAnnouncement
 			Thread.sleep(5000);
 			Boolean flag = announcementManager.isAnnouncementMatch(driver, editAannouncementName);
 			//System.out.println("Out of Method: "+ flag);
+			//flag=false;
 			Assert.assertTrue(flag);
 			}catch(Exception e){
 				e.printStackTrace();
@@ -82,6 +130,17 @@ public class EditAnnouncement
 		 
 	  }
 
+	@AfterMethod
+	public void tearDown(ITestResult result)
+	{   
+		TestCaseName = this.getClass().getSimpleName();
+		SheetName = "Announcement";
+		suiteFileName = "CollegeTestSuites";
+		TestCaseResult testCaseResult = new TestCaseResult();
+		String status = testCaseResult.testCaseResult(result);
+		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,TestCaseName,"Pass/Fail/Skip",status);
+	}
+	
 	@AfterClass
 	public void Closebrowser()
 	{

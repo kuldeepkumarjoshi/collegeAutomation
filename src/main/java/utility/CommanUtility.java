@@ -19,7 +19,7 @@ public class CommanUtility
 {
 	 
 	
-	public static WebDriver loginByAdmin(WebDriver driver)
+	public static WebDriver loginByAdmin(WebDriver driver) throws InterruptedException
 	{
 	
 		WebElement emailTextBox = driver.findElement(By.id(XpathProvider.USER_NAME));
@@ -46,7 +46,30 @@ public class CommanUtility
 		//Click on metaCampusAdmin to go in College home page
 		 WebElement metaCampusAdmin = driver.findElement(By.className(XpathProvider.META_CAMPUS_ADMIN_LINK));
 		 metaCampusAdmin.click();
-		 return driver;
+		 driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
+		 //Select session year
+		 //String currentSession = "2016-17";
+		 
+		/* 
+		 Actions actions = new Actions(driver);
+		 WebElement session1 = driver.findElement(By.xpath("//div[@id='navbar-container']/div[2]/ul/li[2]/a/span"));
+		 session1.click();
+		 actions.moveToElement(session1);
+		 actions.click().build().perform();
+		 
+		 WebElement session2 = driver.findElement(By.xpath("//div[@id='navbar-container']/div[2]/ul/li[2]/ul/li[1]/a/div/span"));
+		 actions.moveToElement(session2);
+		 WebElement session3= driver.findElement(By.xpath("//div[@id='navbar-container']/div[2]/ul/li[2]/ul/li[2]/a/div/span"));
+		 actions.moveToElement(session3);
+		 WebElement session4 = driver.findElement(By.xpath("//div[@id='navbar-container']/div[2]/ul/li[2]/ul/li[3]/a/div/span"));
+		 actions.moveToElement(session4);
+		 session4.click();
+		// actions.click().build().perform();
+		
+		 //session4.click();
+		// driver.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
+		// driver.close();*/	
+    	 return driver;
 		 
 	}
 
@@ -65,7 +88,7 @@ public class CommanUtility
 		    	multiMap.put(rowData[0][i], rowData[j][i]);
 
 		}
-		System.out.println("map::"+multiMap);
+		//System.out.println("map::"+multiMap);
 		return multiMap;
 	}
 
@@ -108,10 +131,19 @@ public class CommanUtility
 		       driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		  
 		      //Click on Announcement
-		      WebElement announcement = driver.findElement(By.xpath("//ul[@id='notification']/li[2]/a"));
+		      WebElement announcement = driver.findElement(By.xpath(XpathProvider.ANNOUNCEMENT_TAB));
 		      announcement.click();
 		      driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 				break;
+			case TabUtilities.DIVISION_TIMETABLE_TAB_NAME:
+				 //Click on Attendance
+				 WebElement attendanceTab = driver.findElement(By.xpath(XpathProvider.Attendance_TAB));	
+				 attendanceTab.click();
+				 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+				//Click on Division Time Table
+				 WebElement divisionTimeTable = driver.findElement(By.xpath(XpathProvider.DIVISION_TIME_TABLE));	
+				 divisionTimeTable.click();
+				 break;
 			default :System.out.println("tab name not found in application."); 
 		}
 		

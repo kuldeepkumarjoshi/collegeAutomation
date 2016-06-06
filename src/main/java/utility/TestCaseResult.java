@@ -1,4 +1,4 @@
-package com.metacube.ipathshala.utility;
+package main.java.utility;
 
 import org.testng.ITestResult;
 

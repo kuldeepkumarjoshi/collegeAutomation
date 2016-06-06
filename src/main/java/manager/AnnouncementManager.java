@@ -1,26 +1,23 @@
-package com.metacube.ipathshala.manager;
+package main.java.manager;
 
 import java.awt.AWTException;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import main.java.service.AnnouncementService;
+import main.java.utility.CommanUtility;
+import main.java.utility.DateUtility;
+import main.java.utility.XpathProvider;
+
 import org.apache.commons.collections.MultiMap;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.metacube.ipathshala.service.AcademicCalendarService;
-import com.metacube.ipathshala.service.AnnouncementService;
-import com.metacube.ipathshala.utility.CommanUtility;
-import com.metacube.ipathshala.utility.DateUtility;
-import com.metacube.ipathshala.utility.XpathProvider;
-
 public class AnnouncementManager
 {
-	private CommanUtility commanUtility = new CommanUtility(); 
-	private DateUtility dateUtility = new DateUtility();
+	
 	MultiMap academicCalendarMap;
 	private AnnouncementService announcementService = new AnnouncementService();
 	
@@ -35,7 +32,7 @@ public class AnnouncementManager
 		 //Input in Title
 	     List<String> announcementTitle = (List<String>)announcementMap.get("Title");
 		 String name1 = announcementTitle.get(0);
-		 String title= dateUtility.addTimeStamp(name1);
+		 String title= DateUtility.addTimeStamp(name1);
 		 
 		 WebElement inputTitle = driver.findElement(By.xpath(XpathProvider.ANNOUNCEMENT_TITLE));
 		 inputTitle.sendKeys(title);
@@ -106,7 +103,7 @@ public class AnnouncementManager
 	     driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
 	     
 	     //Calling function for upload file after click on Attachment button
-	     commanUtility.uploadAttachment(attachmentFilePath);
+	     CommanUtility.uploadAttachment(attachmentFilePath);
 	    // driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
 	       
 	     Thread.sleep(10000);
@@ -151,7 +148,7 @@ public class AnnouncementManager
 		  List<String> announcementTitle = (List<String>)announcementMap.get("EditTitle");
 		  String oldTitle = announcementTitle.get(0);
 		 	     
-	     String title= dateUtility.addTimeStamp(oldTitle);
+	     String title= DateUtility.addTimeStamp(oldTitle);
 		 WebElement inputTitle = driver.findElement(By.xpath(XpathProvider.ANNOUNCEMENT_TITLE));
 		 inputTitle.clear();
 		 inputTitle.sendKeys(title);
@@ -175,7 +172,7 @@ public class AnnouncementManager
 	     driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
 	     
 	     //Calling function for upload file after click on Attachment button
-	     commanUtility.uploadAttachment(attachmentFilePath);
+	     CommanUtility.uploadAttachment(attachmentFilePath);
 	     //driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
 	       
 	     Thread.sleep(10000);

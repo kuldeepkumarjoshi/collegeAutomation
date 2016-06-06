@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import main.java.manager.AnnouncementManager;
 import main.java.utility.CommanUtility;
-import main.java.utility.DateUtility;
 import main.java.utility.DriverUtility;
 import main.java.utility.ReadExcel;
 import main.java.utility.TabUtilities;
@@ -43,7 +42,12 @@ public class DeleteAnnouncement
 	    driver = DriverUtility.launchBrowser();
 	    String url = "http://metacampus1.appspot.com/" ;
 	    driver = DriverUtility.passCollegeApplicationUrl(driver,url);
-	    driver = CommanUtility.loginByAdmin(driver);
+	    try {
+			driver = CommanUtility.loginByAdmin(driver);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	   
 	}
 	 	 

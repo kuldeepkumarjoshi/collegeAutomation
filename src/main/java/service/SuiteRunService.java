@@ -1,17 +1,14 @@
-package com.metacube.ipathshala.service;
+package main.java.service;
+
+import main.java.dao.SuiteRunDao;
+import main.java.utility.CommanUtility;
 
 import org.apache.commons.collections.MultiMap;
 import org.apache.commons.collections.map.MultiValueMap;
 
-import com.metacube.ipathshala.dao.AcademicCalendarDAO;
-import com.metacube.ipathshala.dao.SuiteRunDao;
-import com.metacube.ipathshala.utility.CommanUtility;
-
 public class SuiteRunService
 {
-	private SuiteRunDao suiteRunDao = new SuiteRunDao();
-	private CommanUtility commanUtility = new CommanUtility();
-	
+	private SuiteRunDao suiteRunDao = new SuiteRunDao();	
 	
 	public MultiMap getRunStatusOfSuiteOrTestCaseAtService(String suiteFileName, String sheetName) 
 	{
@@ -20,7 +17,7 @@ public class SuiteRunService
 		Object[][] rowData =  suiteRunDao.getRunStatusOfSuiteOrTestCaseAtDao(suiteFileName,sheetName);
 		//System.out.println(rowData);
 		// create multimap to store key and values from 2d Array
-		academicCalendarData = commanUtility.createMapFromData(rowData);
+		academicCalendarData = CommanUtility.createMapFromData(rowData);
 		//System.out.println(academicCalendarData);
 		return academicCalendarData; 
 	}

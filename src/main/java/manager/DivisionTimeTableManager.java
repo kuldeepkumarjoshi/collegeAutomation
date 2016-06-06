@@ -1,8 +1,12 @@
-package com.metacube.ipathshala.manager;
+package main.java.manager;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import main.java.service.DivisionTimeTableService;
+import main.java.utility.DateUtility;
+import main.java.utility.XpathProvider;
 
 import org.apache.commons.collections.MultiMap;
 import org.openqa.selenium.By;
@@ -10,13 +14,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
-import com.metacube.ipathshala.service.DivisionTimeTableService;
-import com.metacube.ipathshala.utility.DateUtility;
-import com.metacube.ipathshala.utility.XpathProvider;
-
 public class DivisionTimeTableManager 
 {
-	private DateUtility dateUtility = new DateUtility();
+	
 	MultiMap divisionTimeTable;
 	DivisionTimeTableService divisionTimeTableService =new DivisionTimeTableService();
 
@@ -31,7 +31,7 @@ public class DivisionTimeTableManager
 		//This is list of items of listDivisionTimeTableProgram from Excel data Set
 		List<String> listDivisionTimeTableProgram = (List<String>)divisionTimeTableMap.get("Program");
 		String timeTableProgram= listDivisionTimeTableProgram.get(0);
-		//String timeTableProgram= dateUtility.addTimeStamp(listDivisionTimeTableProgram.get(0));
+		//String timeTableProgram= DateUtility.addTimeStamp(listDivisionTimeTableProgram.get(0));
 		
 		//find element  Program Name text box
 		WebElement enterProgramName = driver.findElement(By.xpath(XpathProvider.TIME_TABLE_PROGRAM));
@@ -44,7 +44,7 @@ public class DivisionTimeTableManager
 		//This is list of items of listDivisionTimeTableSemester from Excel data Set
 		List<String> listDivisionTimeTableSemester = (List<String>)divisionTimeTableMap.get("Semester");
 		String timeTableSemester= listDivisionTimeTableSemester.get(0);
-		// timeTableSemester= dateUtility.addTimeStamp(listDivisionTimeTableProgram.get(0));
+		// timeTableSemester= DateUtility.addTimeStamp(listDivisionTimeTableProgram.get(0));
 		
 		//find element  Program Name text box
 		List<WebElement> listOfSemester = driver.findElements(By.xpath(XpathProvider.LIST_OF_SEMESTERS));
@@ -61,8 +61,8 @@ public class DivisionTimeTableManager
 		//This is list of items of listDivisionTimeTableLabel from Excel data Set
 		List<String> listDivisionTimeTableLabel = (List<String>)divisionTimeTableMap.get("Label");
 		//String timeTableLabel= listDivisionTimeTableLabel.get(0);
-		String timeTableLabel= dateUtility.getRandom(listDivisionTimeTableLabel.get(0));
-		//String timeTableLabel= dateUtility.addTimeStamp(listDivisionTimeTableLabel.get(0));
+		String timeTableLabel= DateUtility.getRandom(listDivisionTimeTableLabel.get(0));
+		//String timeTableLabel= DateUtility.addTimeStamp(listDivisionTimeTableLabel.get(0));
 		WebElement enterLabel = driver.findElement(By.xpath(XpathProvider.TIME_TABLE_LABEL));
 		enterLabel.sendKeys(timeTableLabel);
 		
@@ -108,7 +108,7 @@ public class DivisionTimeTableManager
 		//Select Location of Period 
 		List<String> locationValue = (List<String>)divisionTimeTableMap.get("Location");
 		String periodLocation= locationValue.get(0);
-		//String periodLocation= dateUtility.addTimeStamp(listDivisionTimeTableLabel.get(0));
+		//String periodLocation= DateUtility.addTimeStamp(listDivisionTimeTableLabel.get(0));
 		System.out.println("Location: "+periodLocation);
 		WebElement location = driver.findElement(By.xpath(XpathProvider.LOCATION_OF_PERIOD));
 		location.click();
@@ -124,7 +124,7 @@ public class DivisionTimeTableManager
 			
 		List<String> superClassName  = (List<String>)divisionTimeTableMap.get("SuperClassName");
 		String superClassValue= superClassName.get(0);
-		//String superClassValue= dateUtility.addTimeStamp(listDivisionTimeTableLabel.get(0));
+		//String superClassValue= DateUtility.addTimeStamp(listDivisionTimeTableLabel.get(0));
 		WebElement superClassTextField = driver.findElement(By.xpath(XpathProvider.SUPER_CLASS_NAME));
 		superClassTextField.sendKeys(superClassValue);
 		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
@@ -136,7 +136,7 @@ public class DivisionTimeTableManager
 		List<String> teacherName  = (List<String>)divisionTimeTableMap.get("Teachers");
 		String teacherName1= teacherName.get(0);
 		System.out.println("Teacher: "+teacherName1);
-		//String teacherName1= dateUtility.addTimeStamp(teacherName.get(0));
+		//String teacherName1= DateUtility.addTimeStamp(teacherName.get(0));
 		WebElement teacherInput = driver.findElement(By.xpath(XpathProvider.TEACHER_TEXT_BOX));
 		teacherInput.sendKeys(teacherName1);
 		Thread.sleep(5000);
@@ -178,7 +178,7 @@ public class DivisionTimeTableManager
 		//Select Location of Period 
 		List<String> locationValue = (List<String>)divisionTimeTableMap.get("Location");
 		String periodLocation= locationValue.get(0);
-		//String periodLocation= dateUtility.addTimeStamp(listDivisionTimeTableLabel.get(0));
+		//String periodLocation= DateUtility.addTimeStamp(listDivisionTimeTableLabel.get(0));
 		System.out.println("Location: "+periodLocation);
 		WebElement location = driver.findElement(By.xpath(XpathProvider.LOCATION_OF_PERIOD));
 		location.click();
@@ -194,7 +194,7 @@ public class DivisionTimeTableManager
 			
 		List<String> superClassName  = (List<String>)divisionTimeTableMap.get("SuperClassName");
 		String superClassValue= superClassName.get(0);
-		//String superClassValue= dateUtility.addTimeStamp(listDivisionTimeTableLabel.get(0));
+		//String superClassValue= DateUtility.addTimeStamp(listDivisionTimeTableLabel.get(0));
 		WebElement superClassTextField = driver.findElement(By.xpath(XpathProvider.SUPER_CLASS_NAME));
 		superClassTextField.sendKeys(superClassValue);
 		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
@@ -206,7 +206,7 @@ public class DivisionTimeTableManager
 		List<String> teacherName  = (List<String>)divisionTimeTableMap.get("Teachers");
 		String teacherName1= teacherName.get(0);
 		System.out.println("Teacher: "+teacherName1);
-		//String teacherName1= dateUtility.addTimeStamp(teacherName.get(0));
+		//String teacherName1= DateUtility.addTimeStamp(teacherName.get(0));
 		WebElement teacherInput = driver.findElement(By.xpath(XpathProvider.TEACHER_TEXT_BOX));
 		teacherInput.sendKeys(teacherName1);
 		Thread.sleep(5000);

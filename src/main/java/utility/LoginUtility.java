@@ -1,4 +1,4 @@
-package com.metacube.ipathshala.utility;
+package main.java.utility;
 
 import java.util.concurrent.TimeUnit;
 
@@ -6,14 +6,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import org.testng.Assert;
 
 
 public class LoginUtility
 {
 	
 	
-	public WebDriver loginAsTeacher(WebDriver driver) throws InterruptedException
+	public static WebDriver loginAsTeacher(WebDriver driver) throws InterruptedException
 	{
 		String expectedInfo ="JAY SHRI LAITA";
 		WebElement logAsTeacher = driver.findElement(By.xpath(XpathProvider.LOG_AS_USER));

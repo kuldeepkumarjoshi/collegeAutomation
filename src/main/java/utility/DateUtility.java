@@ -306,4 +306,8 @@ public class DateUtility
 		return name1;
 		
 	}
+public static String getRandom(String string) {
+	// TODO Auto-generated method stub
+	return null;
+}
 }

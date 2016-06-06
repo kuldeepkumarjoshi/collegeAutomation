@@ -1,19 +1,23 @@
-package com.metacube.ipathshala.suite.DivisionTimeTable;
+package test.java.suite.AcademicCalendar;
 
 import java.io.IOException;
 import java.util.List;
 
+import main.java.manager.SuiteRunManager;
+import main.java.utility.ReadExcel;
+
 import org.apache.commons.collections.MultiMap;
+import org.apache.log4j.Logger;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeSuite;
 
-import com.metacube.ipathshala.manager.SuiteRunManager;
-import com.metacube.ipathshala.utility.ReadExcel;
-
-public class DivisionTimeTableSuite
+public class AcademicCalendarSuite
 {
 	MultiMap suiteRunMap;
+	//private AcademicCalendarManager academicCalendarManager = new AcademicCalendarManager();
 	private SuiteRunManager suiteRunManager = new SuiteRunManager();
+	
+	public static Logger Add_Log = null;
 	ReadExcel FilePath = null;
 	String SheetName = null;
 	String SuiteName = null;
@@ -24,21 +28,22 @@ public class DivisionTimeTableSuite
 	@BeforeSuite
 	public void checkSuiteToRun() throws IOException
 	{
+		
 		//System.out.println("checkSuiteToRun");
 		//To set TestSuiteList.xls file's path In FilePath Variable.
 		//FilePath = "TestSuiteList";
 		SheetName = "TestSuiteList";
 		suiteFileName = "CollegeTestSuites";
-		SuiteName = "DivisionTimeTable";
+		SuiteName = "AcademicCalendar";
 		ToRunColumnName = "SuiteToRun";
 		
 		suiteRunMap = suiteRunManager.getRunStatusOfSuiteOrTestCaseAtManager(suiteFileName,SheetName);	
 		List<String> suiteToRun = (List<String>)suiteRunMap.get("SuiteToRun");
-		String suiteStatusOfDivisionTimeTable= suiteToRun.get(1);
-		//System.out.println(suiteStatusOfDivisionTimeTable);
+		String suiteStatusOfAcademicCalendar= suiteToRun.get(0);
+		//System.out.println(suiteStatusOfAcademicCalendar);
 		
 		//If SuiteToRun == "no" suiteToRunhen AcademicCalendarSuite will be skipped from execution.
-		if (!suiteStatusOfDivisionTimeTable.toLowerCase().equals("yes"))
+		if (!suiteStatusOfAcademicCalendar.toLowerCase().equals("yes"))
 		{
 			//To report SuiteOne as 'Skipped' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = no.
 			suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,SuiteName,"Skipped/Executed","Skipped");
@@ -47,6 +52,10 @@ public class DivisionTimeTableSuite
 		}
 		  //To report SuiteOne as 'Executed' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = Y.
 		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,SuiteName,"Skipped/Executed","Executed");
-	}
+		
+				
+	}	
 
 }
+
+

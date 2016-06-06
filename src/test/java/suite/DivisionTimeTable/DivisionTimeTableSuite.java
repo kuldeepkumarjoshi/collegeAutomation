@@ -1,20 +1,18 @@
-package com.metacube.ipathshala.suite.Announcement;
+package test.java.suite.DivisionTimeTable;
 
 import java.io.IOException;
 import java.util.List;
+
+import main.java.manager.SuiteRunManager;
+import main.java.utility.ReadExcel;
 
 import org.apache.commons.collections.MultiMap;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeSuite;
 
-import com.metacube.ipathshala.manager.AcademicCalendarManager;
-import com.metacube.ipathshala.manager.SuiteRunManager;
-import com.metacube.ipathshala.utility.ReadExcel;
-
-public class AnnouncementSuite 
+public class DivisionTimeTableSuite
 {
 	MultiMap suiteRunMap;
-	//private AcademicCalendarManager academicCalendarManager = new AcademicCalendarManager();
 	private SuiteRunManager suiteRunManager = new SuiteRunManager();
 	ReadExcel FilePath = null;
 	String SheetName = null;
@@ -26,21 +24,21 @@ public class AnnouncementSuite
 	@BeforeSuite
 	public void checkSuiteToRun() throws IOException
 	{
-		System.out.println("checkSuiteToRun");
+		//System.out.println("checkSuiteToRun");
 		//To set TestSuiteList.xls file's path In FilePath Variable.
 		//FilePath = "TestSuiteList";
 		SheetName = "TestSuiteList";
 		suiteFileName = "CollegeTestSuites";
-		SuiteName = "Announcement";
+		SuiteName = "DivisionTimeTable";
 		ToRunColumnName = "SuiteToRun";
 		
 		suiteRunMap = suiteRunManager.getRunStatusOfSuiteOrTestCaseAtManager(suiteFileName,SheetName);	
 		List<String> suiteToRun = (List<String>)suiteRunMap.get("SuiteToRun");
-		String suiteStatusOfAnnouncement= suiteToRun.get(1);
-		//System.out.println(suiteStatusOfAnnouncement);
+		String suiteStatusOfDivisionTimeTable= suiteToRun.get(1);
+		//System.out.println(suiteStatusOfDivisionTimeTable);
 		
 		//If SuiteToRun == "no" suiteToRunhen AcademicCalendarSuite will be skipped from execution.
-		if (!suiteStatusOfAnnouncement.toLowerCase().equals("yes"))
+		if (!suiteStatusOfDivisionTimeTable.toLowerCase().equals("yes"))
 		{
 			//To report SuiteOne as 'Skipped' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = no.
 			suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,SuiteName,"Skipped/Executed","Skipped");
@@ -50,4 +48,5 @@ public class AnnouncementSuite
 		  //To report SuiteOne as 'Executed' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = Y.
 		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,SuiteName,"Skipped/Executed","Executed");
 	}
+
 }

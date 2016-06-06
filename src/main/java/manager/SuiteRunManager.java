@@ -1,22 +1,12 @@
-package com.metacube.ipathshala.manager;
+package main.java.manager;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import main.java.service.SuiteRunService;
+import main.java.utility.DateUtility;
 
 import org.apache.commons.collections.MultiMap;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import com.metacube.ipathshala.service.AcademicCalendarService;
-import com.metacube.ipathshala.service.SuiteRunService;
-import com.metacube.ipathshala.utility.DateUtility;
-import com.metacube.ipathshala.utility.XpathProvider;
 
 public class SuiteRunManager
 {
-	private DateUtility dateUtility = new DateUtility();
 	MultiMap academicCalendarMap;
 	private SuiteRunService suiteRunService = new SuiteRunService();
 	

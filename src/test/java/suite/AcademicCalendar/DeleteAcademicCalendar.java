@@ -25,7 +25,7 @@ public class DeleteAcademicCalendar
 	 String TestCaseName = null;	
 	
 	@BeforeClass
-	public void applicationLogin()
+	public void applicationLogin() throws InterruptedException
 	{
 		driver = DriverUtility.launchBrowser();
 	    String url = "http://metacampus1.appspot.com/" ;

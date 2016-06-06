@@ -1,7 +1,18 @@
-package com.metacube.ipathshala.suite.DivisionTimeTable;
+package test.java.suite.DivisionTimeTable;
 
 import java.io.IOException;
 import java.util.List;
+
+import main.java.constant.ServerCommonConstant;
+import main.java.manager.DivisionTimeTableManager;
+import main.java.manager.SuiteRunManager;
+import main.java.utility.CommanUtility;
+import main.java.utility.DriverUtility;
+import main.java.utility.LoginUtility;
+import main.java.utility.ReadExcel;
+import main.java.utility.TabUtilities;
+import main.java.utility.TestCaseResult;
+import main.java.utility.XpathProvider;
 
 import org.apache.commons.collections.MultiMap;
 import org.junit.Assert;
@@ -16,22 +27,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.metacube.ipathshala.constant.ServerCommonConstant;
-import com.metacube.ipathshala.manager.DivisionTimeTableManager;
-import com.metacube.ipathshala.manager.SuiteRunManager;
-import com.metacube.ipathshala.utility.CommanUtility;
-import com.metacube.ipathshala.utility.DriverUtility;
-import com.metacube.ipathshala.utility.LoginUtility;
-import com.metacube.ipathshala.utility.ReadExcel;
-import com.metacube.ipathshala.utility.TabUtilities;
-import com.metacube.ipathshala.utility.TestCaseResult;
-import com.metacube.ipathshala.utility.XpathProvider;
-
-public class DeleteDivisionTimeTable
+public class EditDivisionTimeTable
 {
 	public WebDriver driver;
-	private DriverUtility driverUtility = new DriverUtility();
-	private CommanUtility commanUtility = new CommanUtility(); 
 	 
 	MultiMap suiteRunMap;
 	MultiMap divisionTimeTableMap;
@@ -53,17 +51,17 @@ public class DeleteDivisionTimeTable
 	@BeforeClass
 	public void applicationAdminLogin() throws InterruptedException
 	{
-		driver = driverUtility.launchBrowser();
+		driver = DriverUtility.launchBrowser();
 	    String url = ServerCommonConstant.URL;
-	    driver = driverUtility.passCollegeApplicationUrl(driver,url);
-	    driver = commanUtility.loginByAdmin(driver);
+	    driver = DriverUtility.passCollegeApplicationUrl(driver,url);
+	    driver = CommanUtility.loginByAdmin(driver);
 	    
 	}
 	
 	@BeforeClass(dependsOnMethods="applicationAdminLogin")
 	public void applicationTeacherLogin() throws InterruptedException
 	{
-		loginutility.loginAsTeacher(driver);
+		LoginUtility.loginAsTeacher(driver);
 	}
 
 	@BeforeTest 
@@ -115,11 +113,11 @@ public class DeleteDivisionTimeTable
 		
 	
 	@Test
-	public void deleteDivisionTimeTableMethod()
+	public void editDivisionTimeTable() 
 	{	
 		
 		try{
-		commanUtility.openModuleTab(driver, TabUtilities.DIVISION_TIMETABLE_TAB_NAME);
+		CommanUtility.openModuleTab(driver, TabUtilities.DIVISION_TIMETABLE_TAB_NAME);
 		Thread.sleep(5000);
 		//Check weather timetables are exist or not
 		Boolean flag = false;
@@ -130,12 +128,10 @@ public class DeleteDivisionTimeTable
 			{  		
 				timeTableName = timeTable.getText().trim();
 				timeTable.click();
-				String  TimeTableButton =  XpathProvider.TIME_TABLE_PERIOD_WEDNESDAY_BUTTON;
-				String  TimeTableEditButton =  XpathProvider.TIME_TABLE_PERIOD_WEDNESDAY_EDIT_ICON;
+				String  TimeTableButton =  XpathProvider.TIME_TABLE_PERIOD_TUESDAY_BUTTON;
+				String  TimeTableEditButton =  XpathProvider.TIME_TABLE_PERIOD_TUESDAY_EDIT_ICON;
 				
 				divisionTimeTableManager.createTimeTableEntryNew(driver,divisionTimeTableMap,TimeTableButton,TimeTableEditButton);
-				Thread.sleep(10000);
-				divisionTimeTableManager.deleteTimeTableEntry(driver,timeTable);
 				flag =true;
 				break;
 			 }
@@ -178,10 +174,8 @@ public class DeleteDivisionTimeTable
 	@AfterClass
 	public void Closebrowser()
 	{
-		driverUtility.closeBrowser();
+		DriverUtility.closeBrowser();
 	}
 
 
-
-	
 }

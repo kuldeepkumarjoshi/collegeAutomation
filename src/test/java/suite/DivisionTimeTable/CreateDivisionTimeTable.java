@@ -1,7 +1,18 @@
-package com.metacube.ipathshala.suite.DivisionTimeTable;
+package test.java.suite.DivisionTimeTable;
 
 import java.io.IOException;
 import java.util.List;
+
+import main.java.constant.ServerCommonConstant;
+import main.java.manager.DivisionTimeTableManager;
+import main.java.manager.SuiteRunManager;
+import main.java.utility.CommanUtility;
+import main.java.utility.DriverUtility;
+import main.java.utility.LoginUtility;
+import main.java.utility.ReadExcel;
+import main.java.utility.TabUtilities;
+import main.java.utility.TestCaseResult;
+import main.java.utility.XpathProvider;
 
 import org.apache.commons.collections.MultiMap;
 import org.junit.Assert;
@@ -16,22 +27,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.metacube.ipathshala.constant.ServerCommonConstant;
-import com.metacube.ipathshala.manager.DivisionTimeTableManager;
-import com.metacube.ipathshala.manager.SuiteRunManager;
-import com.metacube.ipathshala.utility.CommanUtility;
-import com.metacube.ipathshala.utility.DriverUtility;
-import com.metacube.ipathshala.utility.LoginUtility;
-import com.metacube.ipathshala.utility.ReadExcel;
-import com.metacube.ipathshala.utility.TabUtilities;
-import com.metacube.ipathshala.utility.TestCaseResult;
-import com.metacube.ipathshala.utility.XpathProvider;
-
-public class EditDivisionTimeTable
+public class CreateDivisionTimeTable
 {
 	public WebDriver driver;
-	private DriverUtility driverUtility = new DriverUtility();
-	private CommanUtility commanUtility = new CommanUtility(); 
 	 
 	MultiMap suiteRunMap;
 	MultiMap divisionTimeTableMap;
@@ -48,15 +46,15 @@ public class EditDivisionTimeTable
 	String suiteFileName = null;
 	/*SuiteName = "AcademicCalendar";
 	ToRunColumnName = "SuiteToRun"*/
-	String timeTableName = null;		
+			
 		 
 	@BeforeClass
 	public void applicationAdminLogin() throws InterruptedException
 	{
-		driver = driverUtility.launchBrowser();
+		driver = DriverUtility.launchBrowser();
 	    String url = ServerCommonConstant.URL;
-	    driver = driverUtility.passCollegeApplicationUrl(driver,url);
-	    driver = commanUtility.loginByAdmin(driver);
+	    driver = DriverUtility.passCollegeApplicationUrl(driver,url);
+	    driver = CommanUtility.loginByAdmin(driver);
 	    
 	}
 	
@@ -92,7 +90,6 @@ public class EditDivisionTimeTable
 		List<String> suiteToRun = (List<String>)suiteRunMap.get("CaseToRun");
 		String testCaseStatus= suiteToRun.get(0);
 		
-		
 		//System.out.println("Test Case: "+testCaseStatus);
 		
 		//If SuiteToRun == "no" suiteToRunhen AcademicCalendarSuite will be skipped from execution.
@@ -115,42 +112,30 @@ public class EditDivisionTimeTable
 		
 	
 	@Test
-	public void editDivisionTimeTable() 
+	public void createDivisionTimeTable() 
 	{	
-		
 		try{
-		commanUtility.openModuleTab(driver, TabUtilities.DIVISION_TIMETABLE_TAB_NAME);
+		CommanUtility.openModuleTab(driver, TabUtilities.DIVISION_TIMETABLE_TAB_NAME);
 		Thread.sleep(5000);
-		//Check weather timetables are exist or not
-		Boolean flag = false;
-		List<WebElement> listOfTimeTable = driver.findElements(By.xpath("//ul[@role='tree']/li/span/span"));
-		if(!listOfTimeTable.isEmpty())
-		{ 
-			for(WebElement timeTable :listOfTimeTable)
-			{  		
-				timeTableName = timeTable.getText().trim();
-				timeTable.click();
-				String  TimeTableButton =  XpathProvider.TIME_TABLE_PERIOD_TUESDAY_BUTTON;
-				String  TimeTableEditButton =  XpathProvider.TIME_TABLE_PERIOD_TUESDAY_EDIT_ICON;
-				
-				divisionTimeTableManager.createTimeTableEntryNew(driver,divisionTimeTableMap,TimeTableButton,TimeTableEditButton);
-				flag =true;
-				break;
-			 }
-		} 
-		else
-		{
-			String divisionTimeTableName =divisionTimeTableManager.creaeDivisionTimeTable(driver,divisionTimeTableMap);
-			System.out.println("Time Table: " + divisionTimeTableName);
-			divisionTimeTableManager.createTimeTableEntry(driver,divisionTimeTableMap);
-			Thread.sleep(5000);
-			driver.navigate().refresh();
-			Boolean flag1 = divisionTimeTableManager.isDivisionTimeTableMatch(driver,divisionTimeTableName);
-			
-		}
+		//Click on  DivisionTimeTable button
+		WebElement createCreateTimeTable = driver.findElement(By.xpath(XpathProvider.DIVISION_TIME_TABLE_CREATE_BUTTON));
+		createCreateTimeTable.click(); 
+		
+		//Call function for creating divisionTimeTableName
+		String divisionTimeTableName =divisionTimeTableManager.creaeDivisionTimeTable(driver,divisionTimeTableMap);
+		System.out.println("Time Table: " + divisionTimeTableName);
+		
+		String  TimeTableButton =  XpathProvider.TIME_TABLE_PERIOD_MONDAY_BUTTON;
+		String  TimeTableEditButton =  XpathProvider.TIME_TABLE_PERIOD_MONDAY_EDIT_ICON;
+		
+		//divisionTimeTableManager.createTimeTableEntry(driver,divisionTimeTableMap);
+		divisionTimeTableManager.createTimeTableEntryNew(driver,divisionTimeTableMap,TimeTableButton,TimeTableEditButton);
+		Thread.sleep(5000);
+		driver.navigate().refresh();
 		
 		
-		
+		//Write code after clicking on Period of time table
+		Boolean flag = divisionTimeTableManager.isDivisionTimeTableMatch(driver,divisionTimeTableName);
 		System.out.println("Out of Method: "+ flag);
 		
 		Assert.assertTrue(flag);
@@ -176,8 +161,7 @@ public class EditDivisionTimeTable
 	@AfterClass
 	public void Closebrowser()
 	{
-		driverUtility.closeBrowser();
+		DriverUtility.closeBrowser();
 	}
-
 
 }

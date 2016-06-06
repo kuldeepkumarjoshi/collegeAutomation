@@ -6,8 +6,6 @@ import java.util.List;
 import org.apache.commons.collections.MultiMap;
 import org.apache.commons.collections.map.MultiValueMap;
 
-import com.metacube.ipathshala.entity.AcademicCalendar;
-
 
 public class EntityUtil
 {
@@ -30,7 +28,7 @@ public class EntityUtil
 		return entityList;
 	}
 
-	public static <E> List<E> getEntityListByObjectArray(Object[][] rowData) {
+	/*public static <E> List<E> getEntityListByObjectArray(Object[][] rowData) {
 		List<E> entityList = new ArrayList<E>();
 		
 		int rows = rowData.length;
@@ -42,6 +40,7 @@ public class EntityUtil
 		//---convertion from object to map .
 		for (int i =0; i<cols; i++)
 		{
+			E record;
 			E entity = (E) record;
 			
 		    for (int j=1; j<rows; j++)
@@ -49,6 +48,7 @@ public class EntityUtil
 
 		}
 		
+		Object records;
 		for (Object record : records) {
 			E entity = null;
 			try {
@@ -62,7 +62,7 @@ public class EntityUtil
 
 		}
 		return entityList;
-	}
+	}*/
 	
 	
 }

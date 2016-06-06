@@ -31,7 +31,12 @@ public class EditAcademicCalendar
 		driver = DriverUtility.launchBrowser();
 	    String url = "http://metacampus1.appspot.com/" ;
 	    driver = DriverUtility.passCollegeApplicationUrl(driver,url);
-	   	driver = CommanUtility.loginByAdmin(driver);	   
+	   	try {
+			driver = CommanUtility.loginByAdmin(driver);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	   
 	}
 	
 	@BeforeTest

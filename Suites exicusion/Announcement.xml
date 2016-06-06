@@ -4,25 +4,25 @@
 <!-- If add more test cases In this suite, You need to add them as bellow. -->
 <test name="AnnouncementSuite">
     <classes>
-        <class name="src.test.java.suite.Announcement.AnnouncementSuite" ></class>  
+        <class name="test.java.suite.Announcement.AnnouncementSuite" ></class>  
     </classes>
 </test>
 
 <test name="CreateAnnouncement">
     <classes>
-        <class name="src.test.java.suite.Announcement.CreateAnnouncement" ></class>  
+        <class name="test.java.suite.Announcement.CreateAnnouncement" ></class>  
     </classes>
 </test>
 
 <test name="EditAnnouncement">
     <classes>
-        <class name="src.test.java.suite.Announcement.EditAnnouncement" ></class>  
+        <class name="test.java.suite.Announcement.EditAnnouncement" ></class>  
     </classes>
 </test>
 
 <test name="DeleteAnnouncement">
     <classes>
-        <class name="src.test.java.suite.Announcement.DeleteAnnouncement" ></class>  
+        <class name="test.java.suite.Announcement.DeleteAnnouncement" ></class>  
     </classes>
 </test>
 

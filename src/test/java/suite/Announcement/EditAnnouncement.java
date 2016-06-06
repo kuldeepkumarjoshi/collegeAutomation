@@ -7,6 +7,7 @@ import java.util.List;
 import main.java.manager.AnnouncementManager;
 import main.java.manager.SuiteRunManager;
 import main.java.utility.CommanUtility;
+import main.java.utility.DateUtility;
 import main.java.utility.DriverUtility;
 import main.java.utility.ReadExcel;
 import main.java.utility.TabUtilities;
@@ -29,7 +30,9 @@ import org.testng.annotations.Test;
 public class EditAnnouncement
 {
 	public WebDriver driver;
-	
+	 private DriverUtility driverUtility = new DriverUtility();
+	 private CommanUtility commanUtility = new CommanUtility(); 
+	 private DateUtility dateUtility = new DateUtility(); 
 		
 	MultiMap announcementMap;
 	private AnnouncementManager announcementManager = new AnnouncementManager();
@@ -42,7 +45,7 @@ public class EditAnnouncement
 	String TestCaseName = null;	
 	String ToRunColumnNameTestCase = null;
 	String ToRunColumnNameTestData = null;
-	String TestDataToRun[] =null;
+	String TestDataToRun[]=null;
 	String testData = "AcademicCalendar";
 	static int DataSet=-1;	
 	static boolean Testskip=false;
@@ -57,10 +60,10 @@ public class EditAnnouncement
 	@BeforeClass
 	public void applicationLogin() throws InterruptedException
 	{
-	    driver = DriverUtility.launchBrowser();
+	    driver = driverUtility.launchBrowser();
 	    String url = "http://metacampus1.appspot.com/" ;
-	    driver = DriverUtility.passCollegeApplicationUrl(driver,url);
-	    driver = CommanUtility.loginByAdmin(driver);
+	    driver = driverUtility.passCollegeApplicationUrl(driver,url);
+	    driver = commanUtility.loginByAdmin(driver);
 	   
 	}
 	 	 
@@ -110,7 +113,7 @@ public class EditAnnouncement
 	public void editAnnouncement() throws InterruptedException, AWTException, IOException
 	{
 		try{
-			CommanUtility.openModuleTab(driver, TabUtilities.ANNOUCEMENT_TAB_NAME); 
+			commanUtility.openModuleTab(driver, TabUtilities.ANNOUCEMENT_TAB_NAME); 
 			Thread.sleep(5000);
 			
 			//Click on  createAnnouncement button
@@ -144,7 +147,7 @@ public class EditAnnouncement
 	@AfterClass
 	public void Closebrowser()
 	{
-		DriverUtility.closeBrowser();
+		driverUtility.closeBrowser();
 	}
 
 }

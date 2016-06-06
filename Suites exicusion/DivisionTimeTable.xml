@@ -4,26 +4,26 @@
 <!-- If add more test cases In this suite, You need to add them as bellow. -->
 <test name="DivisionTimeTableSuite">
     <classes>
-        <class name="src.test.java.suite.DivisionTimeTable.DivisionTimeTableSuite" ></class>  
+        <class name="test.java.suite.DivisionTimeTable.DivisionTimeTableSuite" ></class>  
     </classes>
 </test>
 
 <test name="CreateDivisionTimeTable">
     <classes>
-        <class name="src.test.java.suite.DivisionTimeTable.CreateDivisionTimeTable" ></class>  
+        <class name="test.java.suite.DivisionTimeTable.CreateDivisionTimeTable" ></class>  
     </classes>
 </test>
 
 
 <test name="EditDivisionTimeTable">
     <classes>
-        <class name="src.test.java.suite.DivisionTimeTable.EditDivisionTimeTable" ></class>  
+        <class name="test.java.suite.DivisionTimeTable.EditDivisionTimeTable" ></class>  
     </classes>
 </test>
 
 <test name="DeleteDivisionTimeTable">
     <classes>
-        <class name="src.test.java.suite.DivisionTimeTable.DeleteDivisionTimeTable" ></class>  
+        <class name="test.java.suite.DivisionTimeTable.DeleteDivisionTimeTable" ></class>  
     </classes>
 </test>
 

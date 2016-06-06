@@ -4,26 +4,26 @@
 <!-- If add more test cases In this suite, You need to add them as bellow. -->
 <test name="AcademicCalendarSuite">
     <classes>
-        <class name="com.metacube.ipathshala.suite.AcademicCalendar.AcademicCalendarSuite" ></class>  
+        <class name="src.test.java.suite.AcademicCalendar.AcademicCalendarSuite" ></class>  
     </classes>
 </test>
 
 <test name="CreateAcademicCalendar">
     <classes>
-        <class name="test.java.suite.AcademicCalendar.CreateAcademicCalendar" ></class>  
+        <class name="src.test.java.suite.AcademicCalendar.CreateAcademicCalendar" ></class>  
     </classes>
 </test>
 
 <test name="EditAcademicCalendar">
     <classes>
-        <class name="test.java.suite.AcademicCalendar.EditAcademicCalendar" ></class>  
+        <class name="src.test.java.suite.AcademicCalendar.EditAcademicCalendar" ></class>  
     </classes>
 </test>
 
 
 <test name="DeleteAcademicCalendar">
     <classes>
-        <class name="test.java.suite.AcademicCalendar.DeleteAcademicCalendar" ></class>  
+        <class name="src.test.java.suite.AcademicCalendar.DeleteAcademicCalendar" ></class>  
     </classes>
 </test>
 

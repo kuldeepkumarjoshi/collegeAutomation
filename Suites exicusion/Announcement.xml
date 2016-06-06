@@ -5,13 +5,13 @@
 
 <test name="CreateAnnouncement">
     <classes>
-        <class name="com.metacube.ipathshala.suite.Announcement.CreateAnnouncement" ></class>  
+        <class name="test.java.suite.Announcement.CreateAnnouncement" ></class>  
     </classes>
 </test>
 
 <test name="EditAnnouncement">
     <classes>
-        <class name="com.metacube.ipathshala.suite.Announcement.EditAnnouncement" ></class>  
+        <class name="test.java.suite.Announcement.EditAnnouncement" ></class>  
     </classes>
 </test>
 
@@ -19,7 +19,7 @@
 
 <test name="DeleteAnnouncement">
     <classes>
-        <class name="com.metacube.ipathshala.suite.Announcement.DeleteAnnouncement" ></class>  
+        <class name="test.java.suite.Announcement.DeleteAnnouncement" ></class>  
     </classes>
 </test>
 

@@ -5,20 +5,20 @@
 
 <test name="CreateAcademicCalendar">
     <classes>
-        <class name="com.metacube.ipathshala.suite.AcademicCalendar.CreateAcademicCalendar" ></class>  
+        <class name="test.java.suite.AcademicCalendar.CreateAcademicCalendar" ></class>  
     </classes>
 </test>
 
 <test name="EditAcademicCalendar">
     <classes>
-        <class name="com.metacube.ipathshala.suite.AcademicCalendar.EditAcademicCalendar" ></class>  
+        <class name="test.java.suite.AcademicCalendar.EditAcademicCalendar" ></class>  
     </classes>
 </test>
 
 
 <test name="DeleteAcademicCalendar">
     <classes>
-        <class name="com.metacube.ipathshala.suite.AcademicCalendar.DeleteAcademicCalendar" ></class>  
+        <class name="test.java.suite.AcademicCalendar.DeleteAcademicCalendar" ></class>  
     </classes>
 </test>
 

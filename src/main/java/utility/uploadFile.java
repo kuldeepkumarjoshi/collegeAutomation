@@ -13,7 +13,7 @@ import org.openqa.selenium.WebElement;
 public class uploadFile
 {
 	WebDriver driver;
-	public void fileUploadMethod() throws IOException, InterruptedException
+	public  void fileUploadMethod() throws IOException, InterruptedException
 	{
 		
 		WebElement uploadButton =driver.findElement(By.xpath(XpathProvider.UPLOAD_BUTTON));
@@ -29,7 +29,7 @@ public class uploadFile
 	}
 
 
-	public void fileDownload(String title ) throws AWTException, InterruptedException
+	public  void fileDownload(String title ) throws AWTException, InterruptedException
 	{
 		//String pathOfDownload = "C:\\1AutomationDrive\\Download";
 	 

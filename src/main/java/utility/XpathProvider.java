@@ -79,6 +79,7 @@ public class XpathProvider {
 	public static final String  TIME_TABLE_ADD_BUTTON = "//div[@class='row']/div[4]/button";
 	public static final String  TIME_TABLE_PERIOD_MONDAY_BUTTON = "//div[@class='panel-body']/div/table/tbody/tr[2]/td[3]/p";
 	public static final String  TIME_TABLE_PERIOD_MONDAY_EDIT_ICON = "//div[@class='panel-body']/div/table/tbody/tr[2]/td[3]/div/button";
+	public static final String  TIME_TABLE_PERIOD_MONDAY_RIVISION_ICON = "//div[@class='panel-body']/div/table/tbody/tr[2]/td[3]/div/div/button[1]";
 	
 	public static final String  TIME_TABLE_PERIOD_TUESDAY_BUTTON = "//div[@class='panel-body']/div/table/tbody/tr[2]/td[4]";
 	public static final String  TIME_TABLE_PERIOD_TUESDAY_EDIT_ICON = "//div[@class='panel-body']/div/table/tbody/tr[2]/td[4]/div/div/button[2]";

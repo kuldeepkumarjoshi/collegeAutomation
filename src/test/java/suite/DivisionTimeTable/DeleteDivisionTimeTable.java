@@ -10,6 +10,7 @@ import main.java.utility.CommanUtility;
 import main.java.utility.DriverUtility;
 import main.java.utility.LoginUtility;
 import main.java.utility.ReadExcel;
+import main.java.utility.RunStatusUtility;
 import main.java.utility.TabUtilities;
 import main.java.utility.TestCaseResult;
 import main.java.utility.XpathProvider;
@@ -35,13 +36,13 @@ public class DeleteDivisionTimeTable
 	MultiMap divisionTimeTableMap;
 	private SuiteRunManager suiteRunManager = new SuiteRunManager();
 	private DivisionTimeTableManager divisionTimeTableManager =new DivisionTimeTableManager();
-	
+	private RunStatusUtility runStatusUtility = new RunStatusUtility();
 	private LoginUtility loginutility = new LoginUtility();
 		
 	String testCaseName = null;	
 	ReadExcel FilePath = null;
-	String SheetName = null;
-	String SuiteName = null;
+	String sheetName = null;
+	String suiteName = null;
 	String ToRunColumnName = null;	
 	String suiteFileName = null;
 	/*SuiteName = "AcademicCalendar";
@@ -77,16 +78,23 @@ public class DeleteDivisionTimeTable
 	@BeforeTest (dependsOnMethods="testData")
 	public void checkSuiteToRun() throws IOException
 	{		
-	
+		
+		int suiterow = 2;
+		sheetName = "DivisionTimeTable";
+		suiteFileName = "CollegeTestSuites";
+		suiteName = "DivisionTimeTable";
+		testCaseName = this.getClass().getSimpleName();
+		runStatusUtility.checkRunTestCaseStatusToBeRun(suiteFileName,sheetName,suiteName,suiterow,testCaseName);
+	/*
 		//System.out.println("checkSuiteToRun");
 		//To set TestSuiteList.xls file's path In FilePath Variable.
 		//FilePath = "TestSuiteList";
-		SheetName = "DivisionTimeTable";
+		sheetName = "DivisionTimeTable";
 		suiteFileName = "CollegeTestSuites";
-		SuiteName = "DivisionTimeTable";
+		suiteName = "DivisionTimeTable";
 		ToRunColumnName = "SuiteToRun";
 		testCaseName = this.getClass().getSimpleName();
-		suiteRunMap = suiteRunManager.getRunStatusOfSuiteOrTestCaseAtManager(suiteFileName,SheetName);	
+		suiteRunMap = suiteRunManager.getRunStatusOfSuiteOrTestCaseAtManager(suiteFileName,sheetName);	
 		List<String> suiteToRun = (List<String>)suiteRunMap.get("CaseToRun");
 		String testCaseStatus= suiteToRun.get(0);
 		
@@ -97,16 +105,16 @@ public class DeleteDivisionTimeTable
 		if (!testCaseStatus.toLowerCase().equals("yes"))
 		{
 			//To report SuiteOne as 'Skipped' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = no.
-			suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,testCaseName,"Pass/Fail/Skip","Skipped");
+			suiteRunManager.writeResultInSuiteAC(suiteFileName,sheetName,testCaseName,"Pass/Fail/Skip","Skipped");
 			//It will throw SkipException to skip test suite's execution and suite will be marked as skipped In testng report.
 			
-			throw new SkipException(testCaseName+"'s TestCaseToRun  Is 'No' Or Blank. So Skipping Execution Of "+SuiteName);
+			throw new SkipException(testCaseName+"'s TestCaseToRun  Is 'No' Or Blank. So Skipping Execution Of "+suiteName);
 			
 		}
 		  //To report SuiteOne as 'Executed' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = Y.
 		
-		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,testCaseName,"Pass/Fail/Skip","Executed");
-		
+		suiteRunManager.writeResultInSuiteAC(suiteFileName,sheetName,testCaseName,"Pass/Fail/Skip","Executed");
+		*/
 				
 	}	
        
@@ -116,44 +124,39 @@ public class DeleteDivisionTimeTable
 	public void deleteDivisionTimeTableMethod()
 	{	
 		
+		
 		try{
-		CommanUtility.openModuleTab(driver, TabUtilities.DIVISION_TIMETABLE_TAB_NAME);
-		Thread.sleep(5000);
-		//Check weather timetables are exist or not
-		Boolean flag = false;
-		List<WebElement> listOfTimeTable = driver.findElements(By.xpath("//ul[@role='tree']/li/span/span"));
-		if(!listOfTimeTable.isEmpty())
-		{ 
-			for(WebElement timeTable :listOfTimeTable)
-			{  		
-				timeTableName = timeTable.getText().trim();
-				timeTable.click();
-				String  TimeTableButton =  XpathProvider.TIME_TABLE_PERIOD_WEDNESDAY_BUTTON;
-				String  TimeTableEditButton =  XpathProvider.TIME_TABLE_PERIOD_WEDNESDAY_EDIT_ICON;
-				
-				divisionTimeTableManager.createTimeTableEntryNew(driver,divisionTimeTableMap,TimeTableButton,TimeTableEditButton);
-				Thread.sleep(10000);
-				divisionTimeTableManager.deleteTimeTableEntry(driver,timeTable);
-				flag =true;
-				break;
-			 }
-		} 
-		else
-		{
+			Boolean flag4=true;
+			CommanUtility.openModuleTab(driver, TabUtilities.DIVISION_TIMETABLE_TAB_NAME);
+			Thread.sleep(5000);
+			//Click on  DivisionTimeTable button
+			WebElement createCreateTimeTable = driver.findElement(By.xpath(XpathProvider.DIVISION_TIME_TABLE_CREATE_BUTTON));
+			createCreateTimeTable.click(); 
+			
+			//Call function for creating divisionTimeTableName
 			String divisionTimeTableName =divisionTimeTableManager.creaeDivisionTimeTable(driver,divisionTimeTableMap);
 			System.out.println("Time Table: " + divisionTimeTableName);
-			divisionTimeTableManager.createTimeTableEntry(driver,divisionTimeTableMap);
+			
+			String  TimeTableButton =  XpathProvider.TIME_TABLE_PERIOD_MONDAY_BUTTON;
+			String  TimeTableEditButton =  XpathProvider.TIME_TABLE_PERIOD_MONDAY_EDIT_ICON;
+			
+			//divisionTimeTableManager.createTimeTableEntry(driver,divisionTimeTableMap);
+			divisionTimeTableManager.createTimeTableEntryNew(driver,divisionTimeTableMap,TimeTableButton,TimeTableEditButton);
 			Thread.sleep(5000);
 			driver.navigate().refresh();
-			Boolean flag1 = divisionTimeTableManager.isDivisionTimeTableMatch(driver,divisionTimeTableName);
+					
+			//Write code after clicking on Period of time table
+			Boolean flag = divisionTimeTableManager.isDivisionTimeTableMatch(driver,divisionTimeTableName);
+			//System.out.println("Out of Method: "+ flag);
+			if(flag)
+			{
+				flag4 = divisionTimeTableManager.deleteTimeTableEntry(driver, divisionTimeTableName);
+			}
+			else
+				System.out.println("Problem is time table creation");
+			System.out.println("Flag value for deletion: " + flag4);
 			
-		}
-		
-		
-		
-		System.out.println("Out of Method: "+ flag);
-		
-		Assert.assertTrue(flag);
+		Assert.assertTrue(!flag4);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -164,11 +167,11 @@ public class DeleteDivisionTimeTable
 	public void tearDown(ITestResult result)
 	{   
 		testCaseName = this.getClass().getSimpleName();
-		SheetName = "DivisionTimeTable";
+		sheetName = "DivisionTimeTable";
 		suiteFileName = "CollegeTestSuites";
 		TestCaseResult testCaseResult1 = new TestCaseResult();
 		String status = testCaseResult1.testCaseResult(result);
-		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,testCaseName,"Pass/Fail/Skip",status);
+		suiteRunManager.writeResultInSuiteAC(suiteFileName,sheetName,testCaseName,"Pass/Fail/Skip",status);
 	}
 	
 	

@@ -10,6 +10,7 @@ import main.java.utility.CommanUtility;
 import main.java.utility.DriverUtility;
 import main.java.utility.LoginUtility;
 import main.java.utility.ReadExcel;
+import main.java.utility.RunStatusUtility;
 import main.java.utility.TabUtilities;
 import main.java.utility.TestCaseResult;
 import main.java.utility.XpathProvider;
@@ -37,11 +38,12 @@ public class CreateDivisionTimeTable
 	private DivisionTimeTableManager divisionTimeTableManager =new DivisionTimeTableManager();
 	
 	private LoginUtility loginutility = new LoginUtility();
-		
+	private RunStatusUtility runStatusUtility = new RunStatusUtility();
+	
 	String testCaseName = null;	
 	ReadExcel FilePath = null;
-	String SheetName = null;
-	String SuiteName = null;
+	String sheetName = null;
+	String suiteName = null;
 	String ToRunColumnName = null;	
 	String suiteFileName = null;
 	/*SuiteName = "AcademicCalendar";
@@ -78,15 +80,23 @@ public class CreateDivisionTimeTable
 	public void checkSuiteToRun() throws IOException
 	{		
 	
-		//System.out.println("checkSuiteToRun");
+		int suiterow = 0;
+		sheetName = "DivisionTimeTable";
+		suiteFileName = "CollegeTestSuites";
+		suiteName = "DivisionTimeTable";
+		testCaseName = this.getClass().getSimpleName();
+		runStatusUtility.checkRunTestCaseStatusToBeRun(suiteFileName,sheetName,suiteName,suiterow,testCaseName);
+		
+		
+		/*//System.out.println("checkSuiteToRun");
 		//To set TestSuiteList.xls file's path In FilePath Variable.
 		//FilePath = "TestSuiteList";
-		SheetName = "DivisionTimeTable";
+		sheetName = "DivisionTimeTable";
 		suiteFileName = "CollegeTestSuites";
-		SuiteName = "DivisionTimeTable";
+		suiteName = "DivisionTimeTable";
 		ToRunColumnName = "SuiteToRun";
 		testCaseName = this.getClass().getSimpleName();
-		suiteRunMap = suiteRunManager.getRunStatusOfSuiteOrTestCaseAtManager(suiteFileName,SheetName);	
+		suiteRunMap = suiteRunManager.getRunStatusOfSuiteOrTestCaseAtManager(suiteFileName,sheetName);	
 		List<String> suiteToRun = (List<String>)suiteRunMap.get("CaseToRun");
 		String testCaseStatus= suiteToRun.get(0);
 		
@@ -96,15 +106,15 @@ public class CreateDivisionTimeTable
 		if (!testCaseStatus.toLowerCase().equals("yes"))
 		{
 			//To report SuiteOne as 'Skipped' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = no.
-			suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,testCaseName,"Pass/Fail/Skip","Skipped");
+			suiteRunManager.writeResultInSuiteAC(suiteFileName,sheetName,testCaseName,"Pass/Fail/Skip","Skipped");
 			//It will throw SkipException to skip test suite's execution and suite will be marked as skipped In testng report.
 			
-			throw new SkipException(testCaseName+"'s TestCaseToRun  Is 'No' Or Blank. So Skipping Execution Of "+SuiteName);
+			throw new SkipException(testCaseName+"'s TestCaseToRun  Is 'No' Or Blank. So Skipping Execution Of "+suiteName);
 			
 		}
 		  //To report SuiteOne as 'Executed' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = Y.
 		
-		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,testCaseName,"Pass/Fail/Skip","Executed");
+		suiteRunManager.writeResultInSuiteAC(suiteFileName,sheetName,testCaseName,"Pass/Fail/Skip","Executed");*/
 		
 				
 	}	
@@ -149,11 +159,11 @@ public class CreateDivisionTimeTable
 	public void tearDown(ITestResult result)
 	{   
 		testCaseName = this.getClass().getSimpleName();
-		SheetName = "DivisionTimeTable";
+		sheetName = "DivisionTimeTable";
 		suiteFileName = "CollegeTestSuites";
 		TestCaseResult testCaseResult1 = new TestCaseResult();
 		String status = testCaseResult1.testCaseResult(result);
-		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,testCaseName,"Pass/Fail/Skip",status);
+		suiteRunManager.writeResultInSuiteAC(suiteFileName,sheetName,testCaseName,"Pass/Fail/Skip",status);
 	}
 	
 	

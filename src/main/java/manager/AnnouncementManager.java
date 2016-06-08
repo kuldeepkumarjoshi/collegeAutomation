@@ -32,7 +32,7 @@ public class AnnouncementManager
 		 //Input in Title
 	     List<String> announcementTitle = (List<String>)announcementMap.get("Title");
 		 String name1 = announcementTitle.get(0);
-		 String title= DateUtility.addTimeStamp(name1);
+		 String title= DateUtility.getRandom(name1);
 		 
 		 WebElement inputTitle = driver.findElement(By.xpath(XpathProvider.ANNOUNCEMENT_TITLE));
 		 inputTitle.sendKeys(title);
@@ -54,7 +54,7 @@ public class AnnouncementManager
 	     //click on searched value
 	     WebElement clickOnSearchValue = driver.findElement(By.xpath(XpathProvider.ANNOUNCEMENT_FOR_DROP_CLICK_SEARCHED_VALUE));
 	     clickOnSearchValue.click();
-	     driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+	     driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
 	     
 	     //This part of code for selecting Division   Botany/Batch BSC (CHY) 2015-16 MORNING(2) 
  
@@ -106,7 +106,7 @@ public class AnnouncementManager
 	     CommanUtility.uploadAttachment(attachmentFilePath);
 	    // driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
 	       
-	     Thread.sleep(10000);
+	     Thread.sleep(12000);
 	     //click on save button for saving Announcement
 	     WebElement saveButton = driver.findElement(By.xpath(XpathProvider.ANNOUNCEMENT_SAVE_BUTTON));
 	     saveButton.click();
@@ -148,7 +148,7 @@ public class AnnouncementManager
 		  List<String> announcementTitle = (List<String>)announcementMap.get("EditTitle");
 		  String oldTitle = announcementTitle.get(0);
 		 	     
-	     String title= DateUtility.addTimeStamp(oldTitle);
+	     String title= DateUtility.getRandom(oldTitle);
 		 WebElement inputTitle = driver.findElement(By.xpath(XpathProvider.ANNOUNCEMENT_TITLE));
 		 inputTitle.clear();
 		 inputTitle.sendKeys(title);

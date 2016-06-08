@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="SendReports">
+
+<!-- If add more test cases In this suite, You need to add them as bellow. -->
+<test name="SendReportOfTestCasesExecutionStatus">
+    <classes>
+        <class name="test.SendReports.SendReportOfTestCasesExecutionStatus" ></class>  
+    </classes>
+</test>
+</suite>

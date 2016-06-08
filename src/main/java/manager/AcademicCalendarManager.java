@@ -46,8 +46,9 @@ public class AcademicCalendarManager
 		//This is list of items of academicCalendarName from Excel data Set
 		List<String> listAcademicCalendarName = (List<String>)academicCalendarMap.get("Name");
 		//String acaCalName= listAcademicCalendarName.get(0);
-		String acaCalName= DateUtility.addTimeStamp(listAcademicCalendarName.get(0));
-				
+		//String acaCalName= DateUtility.addTimeStamp(listAcademicCalendarName.get(0));
+		String acaCalName= DateUtility.getRandom(listAcademicCalendarName.get(0));
+					
 		//find element  academicCalendar Name text box
 		WebElement academicCalendarName = driver.findElement(By.xpath(XpathProvider.ACADEMIC_CALENDAR_NAME));
 		academicCalendarName.sendKeys(acaCalName);
@@ -113,14 +114,14 @@ public class AcademicCalendarManager
 		List<WebElement> evenNames = driver.findElements(By.xpath(XpathProvider.ACADEMIC_CALENDAR_EVENT_NAME));
 		for(WebElement evenName :evenNames)
 		{
-			//System.out.println("even::"+evenName.getText().trim()+"  match :: " +academicEventName.trim());
+			System.out.println("even::"+evenName.getText().trim()+"  match :: " +academicEventName.trim());
 			if(academicEventName.trim().equals(evenName.getText().trim()))
 			{
 				flag = true;
 				break;
 			}
 		}
-		//System.out.println("Method: "+ flag);
+		System.out.println("Method: "+ flag);
 		return flag;
 	}
 
@@ -186,8 +187,9 @@ public class AcademicCalendarManager
 		//This is list of items of academicCalendarName from Excel data Set
 		List<String> listAcademicCalendarName = (List<String>)academicCalendarMap.get("EditName");
 		//String acaCalName= listAcademicCalendarName.get(0);
-		String editAcademicCalName= DateUtility.addTimeStamp(listAcademicCalendarName.get(0));
-								
+		//String editAcademicCalName= DateUtility.addTimeStamp(listAcademicCalendarName.get(0));
+		String editAcademicCalName= DateUtility.getRandom(listAcademicCalendarName.get(0));
+				
 		//find element   Name text box To edit this field
 		WebElement academicCalendarName = driver.findElement(By.xpath(XpathProvider.ACADEMIC_CALENDAR_NAME));
 		academicCalendarName.clear();
@@ -236,7 +238,7 @@ public class AcademicCalendarManager
 		datePicker.click();
 		driver = DateUtility.selectDateFromDatePicker(driver, date1);
 					
-				//Click on save button FOR  Create Academic calendar
+				//Click on save button FOR  EDIT Academic calendar
 		WebElement saveButton = driver.findElement(By.xpath(XpathProvider.SAVE_BUTTON));
 		saveButton.click();
 		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);

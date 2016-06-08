@@ -5,6 +5,7 @@ import java.util.List;
 
 import main.java.manager.SuiteRunManager;
 import main.java.utility.ReadExcel;
+import main.java.utility.RunStatusUtility;
 
 import org.apache.commons.collections.MultiMap;
 import org.testng.SkipException;
@@ -13,7 +14,8 @@ import org.testng.annotations.BeforeSuite;
 public class DivisionTimeTableSuite
 {
 	MultiMap suiteRunMap;
-	private SuiteRunManager suiteRunManager = new SuiteRunManager();
+	
+	private RunStatusUtility runStatusUtility = new RunStatusUtility();
 	ReadExcel FilePath = null;
 	String SheetName = null;
 	String SuiteName = null;
@@ -24,7 +26,16 @@ public class DivisionTimeTableSuite
 	@BeforeSuite
 	public void checkSuiteToRun() throws IOException
 	{
-		//System.out.println("checkSuiteToRun");
+		int suiterow = 2;
+		SheetName = "TestSuiteList";
+		suiteFileName = "CollegeTestSuites";
+		SuiteName = "DivisionTimeTable";
+		runStatusUtility.checkRunSuiteStatusToBeRun(suiteFileName,SheetName,SuiteName,suiterow);
+		
+		
+		
+		
+		/*//System.out.println("checkSuiteToRun");
 		//To set TestSuiteList.xls file's path In FilePath Variable.
 		//FilePath = "TestSuiteList";
 		SheetName = "TestSuiteList";
@@ -46,7 +57,7 @@ public class DivisionTimeTableSuite
 			throw new SkipException(SuiteName+"'s SuiteToRun  Is 'No' Or Blank. So Skipping Execution Of "+SuiteName);
 		}
 		  //To report SuiteOne as 'Executed' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = Y.
-		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,SuiteName,"Skipped/Executed","Executed");
+		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,SuiteName,"Skipped/Executed","Executed");*/
 	}
 
 }

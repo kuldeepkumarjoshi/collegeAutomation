@@ -21,10 +21,10 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 
-public class emailUtil {
+public class EmailUtil {
 
 	//== send mail
-	public void sendAttachmentThroughEmail(String fileName)
+	public static void sendAttachmentThroughEmail(String fileName)
 	{
 		 // Recipient's email ID needs to be mentioned.
 	      String to = "ashok.singh@metacube.com";
@@ -83,7 +83,8 @@ public class emailUtil {
 
 	         // Part two is attachment
 	         messageBodyPart = new MimeBodyPart();
-	         String filename = "C:\\1AutomationDrive\\FileSave\\"+fileName;
+	       //String filename = "C:\\1AutomationDrive\\FileSave\\"+fileName;
+	         String filename = "C:\\College Workspace\\College\\test-output\\"+ fileName;
 	         DataSource source = new FileDataSource(filename);
 	         messageBodyPart.setDataHandler(new DataHandler(source));
 	         messageBodyPart.setFileName(filename);

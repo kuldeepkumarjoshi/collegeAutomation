@@ -2,12 +2,15 @@ package test.java.suite.AcademicCalendar;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import main.java.constant.ServerCommonConstant;
 import main.java.manager.AcademicCalendarManager;
 import main.java.manager.SuiteRunManager;
 import main.java.utility.CommanUtility;
 import main.java.utility.DriverUtility;
 import main.java.utility.ReadExcel;
+import main.java.utility.RunStatusUtility;
 import main.java.utility.TabUtilities;
 import main.java.utility.TestCaseResult;
 import main.java.utility.XpathProvider;
@@ -34,51 +37,64 @@ public class EditAcademicCalendar
 	 private CommanUtility commanUtility = new CommanUtility(); 
 	 MultiMap academicCalendarMap;
 	 private AcademicCalendarManager academicCalendarManager = new AcademicCalendarManager();	  	
-	 String TestCaseName = null;	
+		
 	 
 	 MultiMap suiteRunMap;
 	 private SuiteRunManager suiteRunManager = new SuiteRunManager();
-	
+	 private RunStatusUtility runStatusUtility = new RunStatusUtility();
 	ReadExcel FilePath = null;
-	String SheetName = null;
-	String SuiteName = null;
+	String sheetName = null;
+	String suiteName = null;
 	String ToRunColumnName = null;	
 	String suiteFileName = null;
-	 
+	String testCaseName = null;
 	 
 	 
 	 
 	@BeforeClass
 	public void applicationLogin() throws InterruptedException
-	{	   
-		driver = driverUtility.launchBrowser();
+	{	  
+		driver = DriverUtility.launchBrowser();
+	   	String url = ServerCommonConstant.URL;
+	   	driver = DriverUtility.passCollegeApplicationUrl(driver,url);
+	   	driver = CommanUtility.loginByAdmin(driver);
+	   	
+		/*driver = driverUtility.launchBrowser();
 	    String url = "http://metacampus1.appspot.com/" ;
 	    driver = driverUtility.passCollegeApplicationUrl(driver,url);
-	   	driver = commanUtility.loginByAdmin(driver);	   
+	   	driver = commanUtility.loginByAdmin(driver);	   */
 	}
 	
 	@BeforeTest
 	public void testData()
 	{
-        TestCaseName = this.getClass().getSimpleName();
-		System.out.println(TestCaseName);
+        testCaseName = this.getClass().getSimpleName();
+		System.out.println(testCaseName);
 		//System.out.println(" under Test case");
-		academicCalendarMap = academicCalendarManager.getAcademicCalendar(TestCaseName);	  
+		academicCalendarMap = academicCalendarManager.getAcademicCalendar(testCaseName);	  
 	}
 	
 	
 	@BeforeTest
 	public void checkTestCaseToRun() throws IOException
 	{
-		//System.out.println("checkSuiteToRun");
+		
+		int suiterow = 1;
+		sheetName = "AcademicCalendar";
+		suiteFileName = "CollegeTestSuites";
+		suiteName = "AcademicCalendar";
+		testCaseName = this.getClass().getSimpleName();
+		runStatusUtility.checkRunTestCaseStatusToBeRun(suiteFileName,sheetName,suiteName,suiterow,testCaseName);
+		
+		/*//System.out.println("checkSuiteToRun");
 		//To set TestSuiteList.xls file's path In FilePath Variable.
 		//FilePath = "TestSuiteList";
-		SheetName = "AcademicCalendar";
+		sheetName = "AcademicCalendar";
 		suiteFileName = "CollegeTestSuites";
-		SuiteName = "AcademicCalendar";
+		suiteName = "AcademicCalendar";
 		ToRunColumnName = "SuiteToRun";
-		TestCaseName = this.getClass().getSimpleName();
-		suiteRunMap = suiteRunManager.getRunStatusOfSuiteOrTestCaseAtManager(suiteFileName,SheetName);	
+		testCaseName = this.getClass().getSimpleName();
+		suiteRunMap = suiteRunManager.getRunStatusOfSuiteOrTestCaseAtManager(suiteFileName,sheetName);	
 		List<String> suiteToRun = (List<String>)suiteRunMap.get("CaseToRun");
 		String testCaseStatus= suiteToRun.get(1);
 		System.out.println("Test Case: "+testCaseStatus);
@@ -87,12 +103,12 @@ public class EditAcademicCalendar
 		if (!testCaseStatus.toLowerCase().equals("yes"))
 		{
 			//To report SuiteOne as 'Skipped' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = no.
-			suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,TestCaseName,"Pass/Fail/Skip","Skipped");
+			suiteRunManager.writeResultInSuiteAC(suiteFileName,sheetName,testCaseName,"Pass/Fail/Skip","Skipped");
 			//It will throw SkipException to skip test suite's execution and suite will be marked as skipped In testng report.
-			throw new SkipException(TestCaseName+"'s TestCaseToRun  Is 'No' Or Blank. So Skipping Execution Of "+SuiteName);
+			throw new SkipException(testCaseName+"'s TestCaseToRun  Is 'No' Or Blank. So Skipping Execution Of "+suiteName);
 		}
 		  //To report SuiteOne as 'Executed' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = Y.
-		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,TestCaseName,"Pass/Fail/Skip","Executed");
+		suiteRunManager.writeResultInSuiteAC(suiteFileName,sheetName,testCaseName,"Pass/Fail/Skip","Executed");*/
 		
 				
 	}	
@@ -106,7 +122,7 @@ public class EditAcademicCalendar
 		try{
 				
 		commanUtility.openModuleTab(driver, TabUtilities.ACADEMIC_CALENDAR_TAB_NAME); 
-		Thread.sleep(5000);
+		Thread.sleep(6000);
 		//Open Event in Edit form to be updated
 		//driver=academicCalendarManager.OpeneEventToBeEdit(driver,eventToBeEdit);
 		
@@ -115,10 +131,10 @@ public class EditAcademicCalendar
 		createAcadCalendar.click(); 
 		String academicCalenderName =academicCalendarManager.createAcademicCalendar(driver,academicCalendarMap);
 		String editAcademicCalenderName = academicCalendarManager.academicCalendarToBeEdit(driver,academicCalendarMap,academicCalenderName);
-		
+		driver.manage().timeouts().implicitlyWait(140, TimeUnit.SECONDS);
 	
 		Boolean flag = academicCalendarManager.isAcademicCalendarMatch(driver, editAcademicCalenderName);
-		//System.out.println("Out of Method: "+ flag);
+		System.out.println("Out of Method: "+ flag);
 		Assert.assertTrue(flag);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -128,12 +144,12 @@ public class EditAcademicCalendar
 	@AfterMethod
 	public void tearDown(ITestResult result)
 	{   
-		TestCaseName = this.getClass().getSimpleName();
-		SheetName = "AcademicCalendar";
+		testCaseName = this.getClass().getSimpleName();
+		sheetName = "AcademicCalendar";
 		suiteFileName = "CollegeTestSuites";
 		TestCaseResult testCaseResult = new TestCaseResult();
 		String status = testCaseResult.testCaseResult(result);
-		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,TestCaseName,"Pass/Fail/Skip",status);
+		suiteRunManager.writeResultInSuiteAC(suiteFileName,sheetName,testCaseName,"Pass/Fail/Skip",status);
 	}
 	
 		

@@ -21,7 +21,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 
-public class emailUtil {
+public class EmailUtil {
 
 	//== send mail
 	public void sendAttachmentThroughEmail(String fileName)

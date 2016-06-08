@@ -5,7 +5,7 @@ import org.testng.ITestResult;
 public class TestCaseResult 
 {
 	
-	public String testCaseResult(ITestResult result)
+	public static String testCaseResult(ITestResult result)
 	{
 		String status="";
 	     if (result.getStatus() == ITestResult.FAILURE) 

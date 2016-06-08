@@ -118,31 +118,32 @@ public class CommanUtility
 			case TabUtilities.ACADEMIC_CALENDAR_TAB_NAME : //Click on notification tab
 				WebElement notificationTab = driver.findElement(By.xpath(XpathProvider.NOTIFICATION_TAB));
 				notificationTab.click();
-				driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+				driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
 				//Click on Academic_Calendar
 				WebElement academic_Calendar = driver.findElement(By.xpath(XpathProvider.ACADEMIC_CALENDAR_TAB));
 				academic_Calendar.click();
-				driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+				driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
 				break;
 			case TabUtilities.ANNOUCEMENT_TAB_NAME:
 			  //Click on notification tab
 			   WebElement notificationTab1 = driver.findElement(By.xpath(XpathProvider.NOTIFICATION_TAB));
 		       notificationTab1.click();
-		       driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		       driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
 		  
 		      //Click on Announcement
 		      WebElement announcement = driver.findElement(By.xpath(XpathProvider.ANNOUNCEMENT_TAB));
 		      announcement.click();
-		      driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		      driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
 				break;
 			case TabUtilities.DIVISION_TIMETABLE_TAB_NAME:
 				 //Click on Attendance
 				 WebElement attendanceTab = driver.findElement(By.xpath(XpathProvider.Attendance_TAB));	
 				 attendanceTab.click();
-				 driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+				 driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
 				//Click on Division Time Table
 				 WebElement divisionTimeTable = driver.findElement(By.xpath(XpathProvider.DIVISION_TIME_TABLE));	
 				 divisionTimeTable.click();
+				 driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
 				 break;
 			default :System.out.println("tab name not found in application."); 
 		}

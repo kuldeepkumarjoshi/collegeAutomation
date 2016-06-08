@@ -1,6 +1,7 @@
 package main.java.utility;
 
 import java.util.List;
+import java.util.Random;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,7 +13,7 @@ import java.util.Date;
 
 public class DateUtility
 {
-	public WebDriver selectDateFromDatePicker(WebDriver driver, String date) throws InterruptedException
+	public  WebDriver selectDateFromDatePicker(WebDriver driver, String date) throws InterruptedException
 	{
 		//Date format example "20-July 2017"; Date is breaked into date, month and year
 		String Spliter[] = date.split("-");
@@ -50,7 +51,7 @@ public class DateUtility
         return driver;
 	}
 	//This method for date selection of submission of assignment when assignment date current month_Year 
-	public WebDriver currentMonthYear(String assignmentDay,WebDriver driver)
+	public  WebDriver currentMonthYear(String assignmentDay,WebDriver driver)
 	{ 
 		String[] activeDate = new String[31];
 		List<WebElement> allDaysListOfcurrentMonthYear = driver.findElements(By.xpath(XpathProvider.ALL_DAYS_LIST_OF_CURRENT_MONTH_YEAR));
@@ -102,7 +103,7 @@ public class DateUtility
 	
 	/*---------------------------------------------*/
 	//This method for date selection of submission of assignment when assignment date is Future month but current year
-  public WebDriver futureMonthYear(String assignmentDay,String assignentYear,String assignmentMonthNumber,WebDriver driver ) throws InterruptedException
+  public static WebDriver futureMonthYear(String assignmentDay,String assignentYear,String assignmentMonthNumber,WebDriver driver ) throws InterruptedException
  {
 					  
 		//Future month year 
@@ -143,7 +144,7 @@ public class DateUtility
   } 
 	
 
-  public WebDriver futureMonth(String assignmentMonthNumber,WebDriver driver )
+  public static WebDriver futureMonth(String assignmentMonthNumber,WebDriver driver )
  {   
 		int j=0;
 		String[] activeMonth = new String[12];
@@ -167,7 +168,7 @@ public class DateUtility
         return driver; 
  } //End of method futureMonth
 	
-  public WebDriver futureDate(String assignmentDay,WebDriver driver )
+  public static WebDriver futureDate(String assignmentDay,WebDriver driver )
  {
 		 boolean monthStart1 = false;
     	 boolean monthEnd1 = false;
@@ -211,7 +212,7 @@ public class DateUtility
   
 	
 	//this method return month in string of numeric like "4" for April
-  public String convertMonthInNumber(String assignentMonth)
+  public static String convertMonthInNumber(String assignentMonth)
   {
 		String month ="";
 		int monthInt=0;
@@ -263,7 +264,7 @@ public class DateUtility
 		String currentYear = Spliter1[0];
 		return currentYear;
    }
-  private WebDriver yearSelect(WebDriver driver, String assignentYear) throws InterruptedException
+  private static  WebDriver yearSelect(WebDriver driver, String assignentYear) throws InterruptedException
   {
 	  int j=0;
 	  String[] activeYear = new String[20];
@@ -306,8 +307,14 @@ public class DateUtility
 		return name1;
 		
 	}
-public static String getRandom(String string) {
-	// TODO Auto-generated method stub
-	return null;
-}
+  public static String getRandom(String label)
+  {
+	   /*int array [] = {A,B,C,D,E,F,G,8,9,10,11,12};
+      int rnd = new Random().nextInt(array.length);*/
+	   Random randomno = new Random();
+	   int rnd= randomno.nextInt(1000);
+      String label1 = label + String.valueOf(rnd) ;
+      return label1;
+  }
+
 }

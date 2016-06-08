@@ -4,12 +4,14 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.util.List;
 
+import main.java.constant.ServerCommonConstant;
 import main.java.manager.AnnouncementManager;
 import main.java.manager.SuiteRunManager;
 import main.java.utility.CommanUtility;
 import main.java.utility.DateUtility;
 import main.java.utility.DriverUtility;
 import main.java.utility.ReadExcel;
+import main.java.utility.RunStatusUtility;
 import main.java.utility.TabUtilities;
 import main.java.utility.TestCaseResult;
 import main.java.utility.XpathProvider;
@@ -39,10 +41,10 @@ public class EditAnnouncement
 	
 	MultiMap suiteRunMap;
 	 private SuiteRunManager suiteRunManager = new SuiteRunManager();
-		
+	 private RunStatusUtility runStatusUtility = new RunStatusUtility();	
 	ReadExcel FilePath = null;	
-	String SheetName = null;
-	String TestCaseName = null;	
+	String sheetName = null;
+	String testCaseName = null;	
 	String ToRunColumnNameTestCase = null;
 	String ToRunColumnNameTestData = null;
 	String TestDataToRun[]=null;
@@ -51,7 +53,7 @@ public class EditAnnouncement
 	static boolean Testskip=false;
 		
 	
-	String SuiteName = null;
+	String suiteName = null;
 	String ToRunColumnName = null;	
 	String suiteFileName = null;
 	
@@ -60,35 +62,48 @@ public class EditAnnouncement
 	@BeforeClass
 	public void applicationLogin() throws InterruptedException
 	{
-	    driver = driverUtility.launchBrowser();
+		driver = DriverUtility.launchBrowser();
+	   	String url = ServerCommonConstant.URL;
+	   	driver = DriverUtility.passCollegeApplicationUrl(driver,url);
+	   	driver = CommanUtility.loginByAdmin(driver);
+				
+	   /* driver = driverUtility.launchBrowser();
 	    String url = "http://metacampus1.appspot.com/" ;
 	    driver = driverUtility.passCollegeApplicationUrl(driver,url);
 	    driver = commanUtility.loginByAdmin(driver);
-	   
+*/	   
 	}
 	 	 
 
 	@BeforeTest
 	public void testData()
 	{
-		TestCaseName = this.getClass().getSimpleName();
+		testCaseName = this.getClass().getSimpleName();
 		//System.out.println(TestCaseName);
-		announcementMap = announcementManager.getAnnouncementManager(TestCaseName);
+		announcementMap = announcementManager.getAnnouncementManager(testCaseName);
 	  
 	}
 	
 	@BeforeTest
 	public void checkTestCaseToRun() throws IOException
 	{
-		System.out.println("checkSuiteToRun");
+		int suiterow = 1;
+		sheetName = "Announcement";
+		suiteFileName = "CollegeTestSuites";
+		suiteName = "Announcement";
+		testCaseName = this.getClass().getSimpleName();
+		runStatusUtility.checkRunTestCaseStatusToBeRun(suiteFileName,sheetName,suiteName,suiterow,testCaseName);
+		
+		
+		/*System.out.println("checkSuiteToRun");
 		//To set TestSuiteList.xls file's path In FilePath Variable.
 		//FilePath = "TestSuiteList";
-		SheetName = "Announcement";
+		sheetName = "Announcement";
 		suiteFileName = "CollegeTestSuites";
-		SuiteName = "Announcement";
+		suiteName = "Announcement";
 		ToRunColumnName = "SuiteToRun";
-		TestCaseName = this.getClass().getSimpleName();
-		suiteRunMap = suiteRunManager.getRunStatusOfSuiteOrTestCaseAtManager(suiteFileName,SheetName);	
+		testCaseName = this.getClass().getSimpleName();
+		suiteRunMap = suiteRunManager.getRunStatusOfSuiteOrTestCaseAtManager(suiteFileName,sheetName);	
 		List<String> suiteToRun = (List<String>)suiteRunMap.get("CaseToRun");
 		String testCaseStatus= suiteToRun.get(1);
 		System.out.println("Test Case: "+testCaseStatus);
@@ -97,12 +112,12 @@ public class EditAnnouncement
 		if (!testCaseStatus.toLowerCase().equals("yes"))
 		{
 			//To report SuiteOne as 'Skipped' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = no.
-			suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,TestCaseName,"Pass/Fail/Skip","Skipped");
+			suiteRunManager.writeResultInSuiteAC(suiteFileName,sheetName,testCaseName,"Pass/Fail/Skip","Skipped");
 			//It will throw SkipException to skip test suite's execution and suite will be marked as skipped In testng report.
-			throw new SkipException(TestCaseName+"'s TestCaseToRun  Is 'No' Or Blank. So Skipping Execution Of "+TestCaseName);
+			throw new SkipException(testCaseName+"'s TestCaseToRun  Is 'No' Or Blank. So Skipping Execution Of "+testCaseName);
 		}
 		  //To report SuiteOne as 'Executed' In SuitesList sheet of TestSuiteList.xls If SuiteToRun = Y.
-		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,TestCaseName,"Pass/Fail/Skip","Executed");
+		suiteRunManager.writeResultInSuiteAC(suiteFileName,sheetName,testCaseName,"Pass/Fail/Skip","Executed");*/
 		
 				
 	}	
@@ -113,8 +128,8 @@ public class EditAnnouncement
 	public void editAnnouncement() throws InterruptedException, AWTException, IOException
 	{
 		try{
-			commanUtility.openModuleTab(driver, TabUtilities.ANNOUCEMENT_TAB_NAME); 
-			Thread.sleep(5000);
+			CommanUtility.openModuleTab(driver, TabUtilities.ANNOUCEMENT_TAB_NAME); 
+			Thread.sleep(6000);
 			
 			//Click on  createAnnouncement button
 			WebElement createAnnouncement = driver.findElement(By.xpath(XpathProvider.ANNOUNCEMENT_CREATE_BUTTON));
@@ -136,12 +151,12 @@ public class EditAnnouncement
 	@AfterMethod
 	public void tearDown(ITestResult result)
 	{   
-		TestCaseName = this.getClass().getSimpleName();
-		SheetName = "Announcement";
+		testCaseName = this.getClass().getSimpleName();
+		sheetName = "Announcement";
 		suiteFileName = "CollegeTestSuites";
 		TestCaseResult testCaseResult = new TestCaseResult();
 		String status = testCaseResult.testCaseResult(result);
-		suiteRunManager.writeResultInSuiteAC(suiteFileName,SheetName,TestCaseName,"Pass/Fail/Skip",status);
+		suiteRunManager.writeResultInSuiteAC(suiteFileName,sheetName,testCaseName,"Pass/Fail/Skip",status);
 	}
 	
 	@AfterClass

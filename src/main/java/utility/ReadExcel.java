@@ -33,7 +33,7 @@ public class ReadExcel
 	}
 	
 	//To retrieve No Of Rows from .xls file's sheets.
-	public int retrieveNoOfRows(String wsName){		
+	public  int retrieveNoOfRows(String wsName){		
 		int sheetIndex=wb.getSheetIndex(wsName);
 		if(sheetIndex==-1)
 			return 0;

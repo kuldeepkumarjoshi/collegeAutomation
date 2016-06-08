@@ -61,7 +61,7 @@ public class DivisionTimeTableManager
 		//This is list of items of listDivisionTimeTableLabel from Excel data Set
 		List<String> listDivisionTimeTableLabel = (List<String>)divisionTimeTableMap.get("Label");
 		//String timeTableLabel= listDivisionTimeTableLabel.get(0);
-		String timeTableLabel= DateUtility.getRandom(listDivisionTimeTableLabel.get(0));
+		String timeTableLabel=DateUtility.getRandom(listDivisionTimeTableLabel.get(0));
 		//String timeTableLabel= DateUtility.addTimeStamp(listDivisionTimeTableLabel.get(0));
 		WebElement enterLabel = driver.findElement(By.xpath(XpathProvider.TIME_TABLE_LABEL));
 		enterLabel.sendKeys(timeTableLabel);
@@ -87,82 +87,111 @@ public class DivisionTimeTableManager
 			{
 				System.out.println("TimeTable: " + timeTable.getText().trim());
 				flag = true;
-				//deleteTimeTableEntry(driver, timeTable);
 				break;
 			}
 		} 
 		return flag;
 	}
 
-	public void createTimeTableEntry(WebDriver driver,MultiMap divisionTimeTableMap) throws InterruptedException
-	{
-		Actions actions = new Actions(driver);
-		WebElement periodMonday = driver.findElement(By.xpath(XpathProvider.TIME_TABLE_PERIOD_MONDAY_BUTTON));
-		actions.moveToElement(periodMonday);
-		WebElement EditIcon = driver.findElement(By.xpath(XpathProvider.TIME_TABLE_PERIOD_MONDAY_EDIT_ICON));
-		actions.moveToElement(EditIcon);
-		actions.click().build().perform();
-		
-		//Entry in new pop window for period
-		System.out.println("Period***************window");
-		//Select Location of Period 
-		List<String> locationValue = (List<String>)divisionTimeTableMap.get("Location");
-		String periodLocation= locationValue.get(0);
-		//String periodLocation= DateUtility.addTimeStamp(listDivisionTimeTableLabel.get(0));
-		System.out.println("Location: "+periodLocation);
-		WebElement location = driver.findElement(By.xpath(XpathProvider.LOCATION_OF_PERIOD));
-		location.click();
-		WebElement locationInput = driver.findElement(By.xpath(XpathProvider.LOCATION_INPUT ));
-		locationInput.sendKeys(periodLocation);
-		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
-		
-		WebElement selectLocation = driver.findElement(By.xpath(XpathProvider.LOCATION_SELECT_INPUT ));
-		selectLocation.click();
-		
-		
-		//Enter value in Super class Name text box
-			
-		List<String> superClassName  = (List<String>)divisionTimeTableMap.get("SuperClassName");
-		String superClassValue= superClassName.get(0);
-		//String superClassValue= DateUtility.addTimeStamp(listDivisionTimeTableLabel.get(0));
-		WebElement superClassTextField = driver.findElement(By.xpath(XpathProvider.SUPER_CLASS_NAME));
-		superClassTextField.sendKeys(superClassValue);
-		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
-		WebElement selectSuperClassName = driver.findElement(By.xpath(XpathProvider.SUPER_CLASS_SELECT_FROM_SEARCH_REASULT));
-		selectSuperClassName.click();
-		
-		
-		//Enter value in teacher text box
-		List<String> teacherName  = (List<String>)divisionTimeTableMap.get("Teachers");
-		String teacherName1= teacherName.get(0);
-		System.out.println("Teacher: "+teacherName1);
-		//String teacherName1= DateUtility.addTimeStamp(teacherName.get(0));
-		WebElement teacherInput = driver.findElement(By.xpath(XpathProvider.TEACHER_TEXT_BOX));
-		teacherInput.sendKeys(teacherName1);
-		Thread.sleep(5000);
-		driver.manage().timeouts().implicitlyWait(140, TimeUnit.SECONDS);
-		WebElement teacherSelect = driver.findElement(By.xpath(XpathProvider.SELECT_TEACHER_FROM_SEARCH_RESULT));
-		teacherSelect.click();
-		
-		
-		//CLICK ON SAVE BUTTON
-		WebElement saveButtonPeriod = driver.findElement(By.xpath(XpathProvider.SAVE_BUTTON_TIME_TABLE_PERIOD));
-		saveButtonPeriod.click();
-		driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
-		
-	}
+	
     
 	 //Delete timetable
-	public void deleteTimeTableEntry(WebDriver driver,WebElement timeTable)
+	public Boolean deleteTimeTableEntry(WebDriver driver, String divisionTimeTableName) throws InterruptedException
 	{
+		Boolean flag = false;
+		Boolean flag1 = true;
+		int count = 0;
 		
-		timeTable.click();
-		WebElement deleteButton = driver.findElement(By.xpath("//div[@class='panel-heading']/span/span/button"));
-		deleteButton.click();
-		WebElement deleteButtonConfirmation = driver.findElement(By.xpath("//div[@id='deleteModel']/div/div/div[3]/button[1]"));
-		deleteButtonConfirmation.click();
-		driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+	    do{	
+	    	//Boolean flag1 = true;
+	    	List<WebElement> listOfTimeTable = driver.findElements(By.xpath("//ul[@role='tree']/li/span/span"));
+	    	for(WebElement timeTable :listOfTimeTable)
+	    	{
+			
+		    	if(divisionTimeTableName.trim().equals(timeTable.getText().trim()))
+		    	{
+				
+			    	if(flag1)
+			    	{
+			        	timeTable.click();
+			        	System.out.println("TimeTable: " + timeTable.getText().trim());
+				
+				        WebElement deleteButton = driver.findElement(By.xpath("//div[@class='panel-heading']/span/span/button"));
+				        deleteButton.click();
+				        Thread.sleep(5000);
+				        WebElement deleteButtonConfirmation = driver.findElement(By.xpath("//div[@id='deleteModel']/div/div/div[3]/button[1]"));
+				        deleteButtonConfirmation.click();
+				        Thread.sleep(5000);
+				        ///driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+				        driver.navigate().refresh();
+				        Thread.sleep(5000);
+
+				        count ++;
+				        System.out.println("count: " +count);
+				        flag = true;
+				        flag1 = false;
+				        break;
+				    }
+				    else
+				    {
+				    	
+					    timeTable.click();
+					    Actions actions = new Actions(driver);
+					   // WebElement periodMonday =  XpathProvider.TIME_TABLE_PERIOD_MONDAY_BUTTON;
+						WebElement periodMonday = driver.findElement(By.xpath("//div[@class='panel-body']/div/table/tbody/tr[2]/td[3]/div/div[2]"));
+						actions.moveToElement(periodMonday);
+						WebElement revisionButton = driver.findElement(By.xpath(XpathProvider.TIME_TABLE_PERIOD_MONDAY_RIVISION_ICON));
+						actions.moveToElement(revisionButton);
+						actions.click().build().perform();
+						
+						WebElement deleteRevision = driver.findElement(By.xpath("//table/tbody/tr[2]/td[7]/span"));
+						deleteRevision.click();
+						Thread.sleep(5000);
+						//driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+						WebElement deleteRevisionConfirmation = driver.findElement(By.xpath("//div[2][@id='deleteRevisionModel']/div/div/div[3]/button[1]"));
+						deleteRevisionConfirmation.click();
+						Thread.sleep(5000);
+						WebElement deleteMessage = driver.findElement(By.xpath("//div[5][@id='errorModal']/div/div/div[1]/button"));
+						deleteMessage.click();
+						Thread.sleep(5000);
+						//driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+						WebElement deleteButton = driver.findElement(By.xpath("//div[@class='panel-heading']/span/span/button"));
+				        deleteButton.click();
+				        Thread.sleep(5000);
+				       // driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+				        driver.navigate().refresh();
+				       // driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+				        flag1 = true;
+				        flag = false;
+				        count ++;
+				        System.out.println("count: " +count);
+				        break;
+				      } //close else
+		    	   
+		    	}//close if
+		    	
+	    	}  //End of for loop
+			
+	    }while(flag);
+	    
+	    List<WebElement> listOfTimeTable = driver.findElements(By.xpath("//ul[@role='tree']/li/span/span"));
+	    if(!listOfTimeTable.isEmpty())	
+	    {
+	    	flag = isDivisionTimeTableMatch(driver,divisionTimeTableName);
+	    	
+	    }
+	    else
+	    	flag =false;
+	    System.out.println("Flag value for deletion from Manager: " + flag);
+	    return flag;
+	 				
 	}
+	
+	
+				
+			
+		
+
 
 	public void createTimeTableEntryNew(WebDriver driver,MultiMap divisionTimeTableMap,String BUTTON,String EDIT_ICON ) throws InterruptedException
 	{
@@ -221,8 +250,64 @@ public class DivisionTimeTableManager
 		driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
 		
 	}
-	
-	
+	/*public void createTimeTableEntry(WebDriver driver,MultiMap divisionTimeTableMap) throws InterruptedException
+	{
+		Actions actions = new Actions(driver);
+		WebElement periodMonday = driver.findElement(By.xpath(XpathProvider.TIME_TABLE_PERIOD_MONDAY_BUTTON));
+		actions.moveToElement(periodMonday);
+		WebElement EditIcon = driver.findElement(By.xpath(XpathProvider.TIME_TABLE_PERIOD_MONDAY_EDIT_ICON));
+		actions.moveToElement(EditIcon);
+		actions.click().build().perform();
+		
+		//Entry in new pop window for period
+		System.out.println("Period***************window");
+		//Select Location of Period 
+		List<String> locationValue = (List<String>)divisionTimeTableMap.get("Location");
+		String periodLocation= locationValue.get(0);
+		//String periodLocation= DateUtility.addTimeStamp(listDivisionTimeTableLabel.get(0));
+		System.out.println("Location: "+periodLocation);
+		WebElement location = driver.findElement(By.xpath(XpathProvider.LOCATION_OF_PERIOD));
+		location.click();
+		WebElement locationInput = driver.findElement(By.xpath(XpathProvider.LOCATION_INPUT ));
+		locationInput.sendKeys(periodLocation);
+		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+		
+		WebElement selectLocation = driver.findElement(By.xpath(XpathProvider.LOCATION_SELECT_INPUT ));
+		selectLocation.click();
+		
+		
+		//Enter value in Super class Name text box
+			
+		List<String> superClassName  = (List<String>)divisionTimeTableMap.get("SuperClassName");
+		String superClassValue= superClassName.get(0);
+		//String superClassValue= DateUtility.addTimeStamp(listDivisionTimeTableLabel.get(0));
+		WebElement superClassTextField = driver.findElement(By.xpath(XpathProvider.SUPER_CLASS_NAME));
+		superClassTextField.sendKeys(superClassValue);
+		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+		WebElement selectSuperClassName = driver.findElement(By.xpath(XpathProvider.SUPER_CLASS_SELECT_FROM_SEARCH_REASULT));
+		selectSuperClassName.click();
+		
+		
+		//Enter value in teacher text box
+		List<String> teacherName  = (List<String>)divisionTimeTableMap.get("Teachers");
+		String teacherName1= teacherName.get(0);
+		System.out.println("Teacher: "+teacherName1);
+		//String teacherName1= DateUtility.addTimeStamp(teacherName.get(0));
+		WebElement teacherInput = driver.findElement(By.xpath(XpathProvider.TEACHER_TEXT_BOX));
+		teacherInput.sendKeys(teacherName1);
+		Thread.sleep(5000);
+		driver.manage().timeouts().implicitlyWait(140, TimeUnit.SECONDS);
+		WebElement teacherSelect = driver.findElement(By.xpath(XpathProvider.SELECT_TEACHER_FROM_SEARCH_RESULT));
+		teacherSelect.click();
+		
+		
+		//CLICK ON SAVE BUTTON
+		WebElement saveButtonPeriod = driver.findElement(By.xpath(XpathProvider.SAVE_BUTTON_TIME_TABLE_PERIOD));
+		saveButtonPeriod.click();
+		driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+		
+	}
+	*/
 		
 
 }
